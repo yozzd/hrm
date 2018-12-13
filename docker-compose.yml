@@ -1,0 +1,17 @@
+version: '3.7'
+services:
+  app:
+    image: tarampampam/node:alpine
+    volumes:
+        - ".:/home/node/hrm"
+    ports:
+        - "3000:3000"
+    depends_on:
+        - mongo
+    tty: true
+  mongo:
+    image: mvertes/alpine-mongo
+    ports:
+        - "27017:27017"
+    volumes:
+        - ./db:/data/db
