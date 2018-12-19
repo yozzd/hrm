@@ -48,7 +48,7 @@ const validatePresenceOf = (value) => {
 }
 
 UserSchema
-  .pre('save', function(next) {
+  .pre('save', async function(next) {
     if(!this.isModified('password')) {
       return next()
     }
@@ -57,21 +57,13 @@ UserSchema
       return next(new Error('Invalid password'))
     }
 
-    this.makeSalt()
-      .then(salt => {
-        this.salt = salt
-      })
-      .then(() => {
-        return this.encryptPassword(this.password)
-      })
-      .then(hashedPassword => {
-        this.password = hashedPassword
-        return next()
-      })
+    this.salt = await this.makeSalt()
+    this.password = await this.encryptPassword(this.password)
+    next()
   })
 
 UserSchema.methods = {
-  makeSalt: async function makeSalt() {
+  makeSalt: async function () {
     try {
       const bytes = 16
       const salt = await crypto.randomBytes(bytes).toString('base64')
@@ -80,7 +72,7 @@ UserSchema.methods = {
       throw err
     }
   },
-  encryptPassword: async function encryptPassword(password) {
+  encryptPassword: async function (password) {
     try {
       const defaultIterations = 10000
       const defaultKeyLength = 64
@@ -91,7 +83,7 @@ UserSchema.methods = {
       throw err
     }
   },
-  authenticate: async function authenticate(password) {
+  authenticate: async function (password) {
     try {
       const pwgen = await this.encryptPassword(password)
       if(this.password === pwgen) {
