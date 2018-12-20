@@ -155,6 +155,7 @@ export default class Auth {
 
   async logout() {
     this.reset()
+    this.redirect('logout')
   }
 
   syncToken() {
