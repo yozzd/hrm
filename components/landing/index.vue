@@ -14,16 +14,16 @@
         <Form ref="form" :model="form" :rules="rules" @submit.native.prevent="handleSubmit('form')">
             <FormItem prop="username">
             <Input type="text" v-model="form.username" placeholder="Username">
-            <Icon type="ios-person-outline" slot="prepend" size="16"></Icon>
+            <Icon custom="iconfont icon-user" slot="prepend" size="16" />
             </Input>
             </FormItem>
             <FormItem prop="password">
             <Input type="password" v-model="form.password" placeholder="Password">
-            <Icon type="ios-lock-outline" slot="prepend" size="16"></Icon>
+            <Icon custom="iconfont icon-lock" slot="prepend" size="16" />
             </Input>
             </FormItem>
             <FormItem>
-            <Button icon="ios-log-in" type="primary" html-type="submit" class="login-btn">Login</Button>
+            <Button custom-icon="iconfont icon-login" type="primary" html-type="submit" class="login-btn">Login</Button>
             </FormItem>
         </Form>
         </Col>
