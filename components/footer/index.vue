@@ -19,4 +19,7 @@ a {
 a:hover {
     color: #303133;
 }
+.ivu-icon.iconfont.icon-copyright {
+    margin-top: -2px;
+} 
 </style>

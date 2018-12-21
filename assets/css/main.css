@@ -67,3 +67,6 @@ body, input, textarea, select, button {
     margin-bottom: -3px;
     font-size: 16px;
 }
+.ivu-menu-item > i {
+    margin-top: -3px;
+}
