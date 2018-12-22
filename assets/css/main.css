@@ -44,6 +44,7 @@ body, input, textarea, select, button {
 }
 .ivu-layout-content {
     padding: 24px 50px;
+    margin-bottom: 40px;
 }
 .ivu-layout-footer {
     position: absolute;
