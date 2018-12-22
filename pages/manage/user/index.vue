@@ -1,8 +1,6 @@
 <template>
     <div>
-        <el-row>
-            <user/>
-        </el-row>
+        <user/>
     </div>
 </template>
 
