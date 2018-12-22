@@ -2,7 +2,7 @@
     <div>
         <Row type="flex" justify="space-between" align="middle">
         <ul class="list-inline">
-            <li><Icon custom="iconfont icon-copyright" size="12"></Icon> 2018 IT</li>
+            <li><Icon custom="iconfont icon-copyright" size="12"></Icon>2018 IT</li>
         </ul>
         <ul class="list-inline">
             <li><a href="https://github.com/yozzd" target="_blank"><Icon custom="iconfont icon-github-fill" size="18"></Icon></a></li>
@@ -21,5 +21,6 @@ a:hover {
 }
 .ivu-icon.iconfont.icon-copyright {
     margin-top: -2px;
+    margin-right: 4px;
 } 
 </style>
