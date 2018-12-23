@@ -26,6 +26,9 @@
                size="small"
                @on-filter-change="handleFilterChange"
                @on-selection-change="selection => emitEventHandler('on-selection-change', selection)">
+               <template slot-scope="{ index }" slot="reIndex">
+                   {{ reIndex(index) }}
+               </template>
         </Table>
 
         <Row type="flex" justify="end" class="pagination" v-if="showPagination">

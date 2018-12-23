@@ -44,7 +44,7 @@ export default {
             },
             columns: [
                 { type: 'selection', width: 40, align: 'center' },
-                { type: 'index', width: 60, align: 'center' },
+                { title: '#', width: 60, align: 'center', slot: 'reIndex' },
                 { title: 'Username', key: 'username', sortable: true },
                 { title: 'Role', key: 'role',
                     render: (h, params) => {
