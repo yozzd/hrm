@@ -71,3 +71,6 @@ body, input, textarea, select, button {
 .ivu-menu-item > i {
     margin-top: -3px;
 }
+.ivu-table-filter i {
+    margin-top: -2px;
+}

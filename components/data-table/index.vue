@@ -19,9 +19,12 @@
         </Col>
         </Row>
 
-        <Table ref="table" :columns="columns" :data="tableData"
-               size="small"
+        <Table ref="table"
+               :columns="columns"
+               :data="tableData"
                :loading="loading"
+               size="small"
+               @on-filter-change="handleFilterChange"
                @on-selection-change="selection => emitEventHandler('on-selection-change', selection)">
         </Table>
 
@@ -42,8 +45,6 @@
 </template>
 
 <script>
-import _ from 'lodash'
-
 export default {
     props: {
         data: {
@@ -153,8 +154,7 @@ export default {
             this.dataFilterHandler()
         },
         dataFilterHandler() {
-            const { cacheLocalData, pagination } = this
-            const { pageIndex, pageSize } = pagination
+            const { cacheLocalData } = this
             if(this.filter) {
                 const filterData = cacheLocalData.filter(o => {
                     let arrData = []
@@ -166,8 +166,31 @@ export default {
                 this.tableData = this.dataFilter(filterData)
                 this.total = filterData.length
             } else {
-                this.total = cacheLocalData.length
                 this.tableData = this.dataFilter(cacheLocalData)
+                this.total = cacheLocalData.length
+            }
+        },
+        handleFilterChange(column) {
+            const { cacheLocalData } = this
+            if(column._filterChecked.length) {
+                const roles = _.reduce(column.filters, (r, v, k) => {
+                    r.push(v.value)
+                    return r
+                }, [])
+                const pullAll = _.pullAll(roles, column._filterChecked)
+                const reduceRoles = _.reduce(pullAll, (r, v, k) => {
+                    const obj = {
+                        role: v
+                    }
+                    r.push(obj)
+                    return r
+                }, [])
+                const pullRoles = _.differenceBy(cacheLocalData, reduceRoles, 'role')
+                this.tableData = this.dataFilter(pullRoles)
+                this.total = pullRoles.length
+            } else {
+                this.tableData = this.dataFilter(cacheLocalData)
+                this.total = cacheLocalData.length
             }
         }
     }

@@ -11,6 +11,17 @@
 <script>
 import { USER_ALL, USER_CREATE, USER_DELETE, USER_UPDATE } from '@/apollo/queries/user'
 import DataTable from '@/components/data-table'
+import _ from 'lodash'
+import { userRoles } from '@/auth/auth.roles'
+
+const roles = _.reduce(_.slice(userRoles, 0, userRoles.length - 1), (r, v, k) => {
+    const obj = {
+        value: v,
+        label: _.capitalize(v)
+    }
+    r.push(obj)
+    return r
+}, [])
 
 export default {
     components: {
@@ -27,16 +38,25 @@ export default {
             filterOptions: {
                 select: {
                     options: [
-                        { value: 'username', label: 'Username' },
-                        { value: 'role', label: 'Role' }
+                        { value: 'username', label: 'Username' }
                     ]
                 }
             },
             columns: [
                 { type: 'selection', width: 40, align: 'center' },
                 { type: 'index', width: 60, align: 'center' },
-                { title: 'Username', key: 'username' },
-                { title: 'Role', key: 'role' }
+                { title: 'Username', key: 'username', sortable: true },
+                { title: 'Role', key: 'role',
+                    render: (h, params) => {
+                        return h('div', [
+                            h('span', _.capitalize(params.row.role))
+                        ]);
+                    },
+                    filters: roles,
+                    filterMethod (value, row) {
+                        return row.role.indexOf(value) > -1;
+                    }
+                }
             ]
         }
     },
