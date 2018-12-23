@@ -15,7 +15,7 @@
         </Input>
         </Col>
         <Col :span="4" style="text-align: right;">
-        <slot name="filter" />
+        <slot name="action" />
         </Col>
         </Row>
 
