@@ -1,7 +1,7 @@
 <template>
     <div>
         <Row type="flex" justify="space-between" class="toolbar">
-        <Col :span="10">
+        <Col :md="14" :lg="11">
         <Input v-model="filter" @keyup.enter="handleFilter" :placeholder="`Filter By ${cap(select)}`" class="filter">
         <Select v-model="select" slot="prepend" placeholder="Select">
             <Option
@@ -14,7 +14,7 @@
         <Button slot="append" custom-icon="iconfont icon-search"></Button>
         </Input>
         </Col>
-        <Col :span="4" style="text-align: right;">
+        <Col :md="6" :lg="5" style="text-align: right;">
         <slot name="action" />
         </Col>
         </Row>

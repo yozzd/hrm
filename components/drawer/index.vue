@@ -3,7 +3,7 @@
         <Drawer
             :title="title"
             v-model="show"
-            width="720"
+            :width="width"
             :formOptions="formOptions"
             :mask-closable="false"
             :styles="styles"
@@ -51,6 +51,7 @@
 export default {
     props: {
         title: String,
+        width: String,
         visible: {
             type: Boolean,
             default: false

@@ -74,3 +74,6 @@ body, input, textarea, select, button {
 .ivu-table-filter i {
     margin-top: -2px;
 }
+.ivu-page-item a {
+    font-family: 'robotoregular';
+}

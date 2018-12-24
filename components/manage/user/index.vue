@@ -8,7 +8,7 @@
             </ButtonGroup>
         </data-table>
 
-        <drawer title="Create User" v-if="isCreate" :visible="isCreate" :form-options="createForm" :errors="errors" @cancel="handleCancel" @action="handleSave" @on-close="handleOnClose" />
+        <drawer title="Create User" width="280" v-if="isCreate" :visible="isCreate" :form-options="createForm" :errors="errors" @cancel="handleCancel" @action="handleSave" @on-close="handleOnClose" />
         </Row>
     </div>
 </template>
