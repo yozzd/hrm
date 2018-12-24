@@ -8,7 +8,8 @@
             </ButtonGroup>
         </data-table>
 
-        <drawer title="Create User" width="300" v-if="isCreate" :visible="isCreate" :form-options="createForm" :errors="errors" @cancel="handleCancel" @action="handleSave" @on-close="handleOnClose" />
+        <drawer title="Create User" width="300" v-if="isCreate" :value="isCreate" :form-options="createForm" :errors="errors" @cancel="handleCancel" @action="handleSave" @on-close="handleOnClose" save-button />
+        <drawer title="Edit User" width="300" v-if="isEdit" :value="isEdit" :form-options="editForm" :edit-row="editRow" :errors="errors" @cancel="handleCancel" @action="handleEdit" @on-close="handleOnClose" />
         </Row>
     </div>
 </template>
@@ -45,6 +46,7 @@ export default {
             userAll: [],
             multipleSelection: [],
             isCreate: false,
+            isEdit: false,
             errors: [],
             filterOptions: {
                 select: {
@@ -67,6 +69,30 @@ export default {
                     filterMethod (value, row) {
                         return row.role.indexOf(value) > -1;
                     }
+                },
+                {
+                    title: 'Action',
+                    key: 'action',
+                    width: 150,
+                    align: 'center',
+                    render: (h, params) => {
+                        return h('div', [
+                            h('Button', {
+                                props: {
+                                    type: 'primary',
+                                    size: 'small'
+                                },
+                                style: {
+                                    marginRight: '5px'
+                                },
+                                on: {
+                                    click: () => {
+                                        this.show('edit', params.row)
+                                    }
+                                }
+                            }, 'Edit')
+                        ])
+                    }
                 }
             ],
             createForm: {
@@ -81,6 +107,20 @@ export default {
                         rules: [
                             { required: true, message: 'Please input Password', trigger: 'blur' },
                             { min: 6, message: 'Password must be at least 6 characters length', trigger: 'blur' }
+                        ]
+                    },
+                    { prop: 'role', label: 'Role', itemType: 'select', options: roles,
+                        rules: [
+                            { required: true, message: 'Please select Role', trigger: 'change' }
+                        ]
+                    }
+                ]
+            },
+            editForm: {
+                forms: [
+                    { prop: 'username', label: 'Username', disabled: true,
+                        rules: [
+                            { required: true, message: 'Please input Username', trigger: 'blur' }
                         ]
                     },
                     { prop: 'role', label: 'Role', itemType: 'select', options: roles,
@@ -106,9 +146,11 @@ export default {
         },
         handleOnClose() {
             this.isCreate = false
+            this.isEdit = false
         },
         handleCancel(form) {
             this.isCreate = false
+            this.isEdit = false
             this.errors = []
             form.resetFields()
         },
@@ -189,6 +231,51 @@ export default {
             } catch(err) {
                 this.errors = errorHandler(err)
             }
+        },
+        handleEdit: function(form) {
+            this.errors = []
+            form.validate(async (valid) => {
+                if(valid) {
+                    try {
+                        const { data } = await this.$apollo.mutate({
+                            mutation: USER_UPDATE,
+                            variables: {
+                                id: this.editRow.id,
+                                username: form.model.username,
+                                role: form.model.role
+                            },
+                            update: (store, { data: { userUpdate } }) => {
+                                const data = store.readQuery({ query: USER_ALL })
+                                const idx = _.findIndex(data.userAll, { id: userUpdate.id })
+                                data.userAll[idx].username = userUpdate.username
+                                data.userAll[idx].role = userUpdate.role
+                                store.writeQuery({ query: USER_ALL, data })
+                            },
+                            optimisticResponse: {
+                                __typename: 'Mutation',
+                                userUpdate: {
+                                    __typename: 'UserType',
+                                    id: this.editRow.id,
+                                    username: form.model.username,
+                                    role: form.model.role
+                                }
+                            }
+                        })
+                        if(data.userUpdate) {
+                            form.resetFields()
+                            this.isEdit = false
+                            this.editRow = ''
+                            this.$Notice.success({
+                                title: 'User updated succesfully'
+                            })
+                        }
+                    } catch(err) {
+                        this.errors = errorHandler(err)
+                    }
+                } else {
+                    return false
+                }
+            })
         }
     }
 }

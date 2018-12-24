@@ -2,16 +2,14 @@
     <div>
         <Drawer
             :title="title"
-            v-model="show"
+            :value="value"
             :width="width"
             :formOptions="formOptions"
             :mask-closable="false"
             :styles="styles"
             @on-close="() => emitEventHandler('on-close')">
-            <Alert type="error" v-if="errors.length">
-            <ul>
-                <li v-for="error in errors">{{ error }}</li>
-            </ul>
+            <Alert type="error" v-if="errors.length" v-for="(error, errorIndex) in errors" :key="errorIndex">
+            {{ error }}
             </Alert>
             <Form ref="form" :model="params">
                 <FormItem
@@ -41,7 +39,9 @@
             </Form>
             <div class="demo-drawer-footer">
                 <Button style="margin-right: 8px" @click="() => emitEventHandler('cancel', $refs.form)" custom-icon="iconfont icon-close">CANCEL</Button>
-                <Button type="primary" @click="() => emitEventHandler('action', $refs.form)" custom-icon="iconfont icon-save">SAVE</Button>
+                <Button type="primary" @click="() => emitEventHandler('action', $refs.form)" custom-icon="iconfont icon-save">
+                    {{saveButton ? 'SAVE' : 'UPDATE'}}
+                </Button>
             </div>
         </Drawer>
     </div>
@@ -52,7 +52,11 @@ export default {
     props: {
         title: String,
         width: String,
-        visible: {
+        saveButton: {
+            type: Boolean,
+            default: false
+        },
+        value: {
             type: Boolean,
             default: false
         },
@@ -61,6 +65,9 @@ export default {
         },
         errors: {
             type: Array
+        },
+        editRow: {
+            type: Object
         }
     },
     data () {
@@ -77,7 +84,6 @@ export default {
             }
         })
         return {
-            show: this.visible,
             params,
             rules,
             styles: {

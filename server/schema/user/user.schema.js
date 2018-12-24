@@ -10,7 +10,7 @@ const Query = {
     type: new GraphQLList(UserType),
     resolve: auth.hasRole('admin', async (_, args, ctx) => {
       try {
-        const users = await User.find()
+        const users = await User.find().sort('username')
         return ld.filter(users, o => {
           return o.role !== 'root'
         })
