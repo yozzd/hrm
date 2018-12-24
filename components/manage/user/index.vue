@@ -4,11 +4,11 @@
         <data-table :data="userAll" :filter-options="filterOptions" :columns="columns" :loading="$apollo.loading" @on-selection-change="handleSelectionChange">
             <ButtonGroup slot="action">
             <Button type="primary" custom-icon="iconfont icon-plus" @click="show('create')">CREATE</Button>
-            <Button type="error" custom-icon="iconfont icon-delete" :disabled="!multipleSelection.length">DELETE</Button>
+            <Button type="error" custom-icon="iconfont icon-delete" :disabled="!multipleSelection.length" @click="handleDelete">DELETE</Button>
             </ButtonGroup>
         </data-table>
 
-        <drawer title="Create User" width="280" v-if="isCreate" :visible="isCreate" :form-options="createForm" :errors="errors" @cancel="handleCancel" @action="handleSave" @on-close="handleOnClose" />
+        <drawer title="Create User" width="300" v-if="isCreate" :visible="isCreate" :form-options="createForm" :errors="errors" @cancel="handleCancel" @action="handleSave" @on-close="handleOnClose" />
         </Row>
     </div>
 </template>
@@ -142,7 +142,9 @@ export default {
                         if(data.userCreate) {
                             form.resetFields();
                             this.isCreate = false;
-                            this.$Message.success('User created successfully')
+                            this.$Notice.success({
+                                title: 'User created successfully'
+                            })
                         }
                     } catch(err) {
                         this.errors = errorHandler(err)
@@ -151,6 +153,42 @@ export default {
                     return false
                 }
             })
+        },
+        handleDelete: function() {
+            try {
+                this.$Modal.confirm({
+                    title: 'Warning',
+                    content: '<p>This will permanently delete the data. Continue?</p>',
+                    okText: 'YES',
+                    cancelText: 'CANCEL',
+                    loading: true,
+                    onOk: async () => {
+                        const { data } = await this.$apollo.mutate({
+                            mutation: USER_DELETE,
+                            variables: {
+                                input: this.multipleSelection
+                            },
+                            update: async function (store, { data: { userDelete } }) {
+                                const data = store.readQuery({ query: USER_ALL })
+                                _.pullAllBy(data.userAll, userDelete, 'id')
+                                store.writeQuery({ query: USER_ALL, data })
+                            },
+                            optimisticResponse: {
+                                __typename: 'Mutation',
+                                userDelete: this.userAll
+                            }
+                        })
+                        if(data.userDelete) {
+                            await this.$Modal.remove()
+                            this.$Notice.success({
+                                title: 'Data succesfully deleted'
+                            })
+                        }
+                    }
+                })
+            } catch(err) {
+                this.errors = errorHandler(err)
+            }
         }
     }
 }
