@@ -202,7 +202,6 @@ export default {
 
 <style scoped>
 .toolbar {
-    padding: 10px 0;
     margin: 10px 0;
 }
 .pagination.ivu-row-flex.ivu-row-flex-end {
