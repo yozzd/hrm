@@ -14,15 +14,9 @@ const UserSchema = new Schema({
     type: String,
     unique: 'The specified Username "{VALUE}" is already in use'
   },
-  password: {
-    type: String
-  },
-  role: {
-    type: String
-  },
-  salt: {
-    type: String
-  }
+  password: String,
+  role: String,
+  salt: String
 })
 
 UserSchema

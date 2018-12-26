@@ -44,7 +44,7 @@ const Mutation = {
         const newUser = new User(args)
         return await newUser.save()
       } catch(err) {
-        if(err.errors) {
+        if(err.errors.username) {
           throw new UserError(err.errors.username.message)
         }
         throw err

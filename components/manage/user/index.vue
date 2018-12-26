@@ -1,6 +1,9 @@
 <template>
     <div>
         <Row>
+        <h3>Manage User</h3>
+        </Row>
+        <Row>
         <data-table :data="userAll" :filter-options="filterOptions" :columns="columns" :loading="$apollo.loading" @on-selection-change="handleSelectionChange">
             <ButtonGroup slot="action">
             <Button type="primary" custom-icon="iconfont icon-plus" @click="show('create')">CREATE</Button>
@@ -118,7 +121,7 @@ export default {
             },
             editForm: {
                 forms: [
-                    { prop: 'username', label: 'Username', disabled: true,
+                    { prop: 'username', label: 'Username',
                         rules: [
                             { required: true, message: 'Please input Username', trigger: 'blur' }
                         ]
