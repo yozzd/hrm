@@ -195,8 +195,8 @@ export default {
                             }
                         })
                         if(data.employeeCreate) {
-                            form.resetFields();
-                            this.isCreate = false;
+                            form.resetFields()
+                            this.isCreate = false
                             this.$Notice.success({
                                 title: 'Success',
                                 desc: `Employee No "${data.employeeCreate.no}" has created succesfully`

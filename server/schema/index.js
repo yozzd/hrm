@@ -1,4 +1,4 @@
-const { GraphQLSchema, GraphQLObjectType } = require('graphql');
+const { GraphQLSchema, GraphQLObjectType } = require('graphql')
 const _ = require('lodash')
 const Auth = require('./auth/auth.schema')
 const User = require('./user/user.schema')

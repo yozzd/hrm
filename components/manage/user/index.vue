@@ -66,11 +66,11 @@ export default {
                     render: (h, params) => {
                         return h('div', [
                             h('span', _.capitalize(params.row.role))
-                        ]);
+                        ])
                     },
                     filters: roles,
                     filterMethod (value, row) {
-                        return row.role.indexOf(value) > -1;
+                        return row.role.indexOf(value) > -1
                     }
                 },
                 {
@@ -185,8 +185,8 @@ export default {
                             }
                         })
                         if(data.userCreate) {
-                            form.resetFields();
-                            this.isCreate = false;
+                            form.resetFields()
+                            this.isCreate = false
                             this.$Notice.success({
                                 title: 'Success',
                                 desc: `Username "${data.userCreate.username}" has created succesfully`

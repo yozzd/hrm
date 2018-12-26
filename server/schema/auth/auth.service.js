@@ -6,7 +6,7 @@ const { UserError } = require('graphql-errors')
 
 const validateJwt = expressJwt({
   secret: config.secret.session
-});
+})
 
 exports.signToken = (id, role) => {
   return jwt.sign({

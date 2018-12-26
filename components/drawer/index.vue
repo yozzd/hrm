@@ -109,7 +109,7 @@ export default {
             if (propType === 'string') {
                 v.modelValue = v.prop
                 params[v.prop] = !row ? '' : row[v.prop]
-                rules[v.prop] = v.rules;
+                rules[v.prop] = v.rules
             }
         })
         return {

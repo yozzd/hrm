@@ -6,7 +6,7 @@ const graphqlHTTP = require('express-graphql')
 const schema = require('./schema')
 const { maskErrors } = require('graphql-errors')
 const passport = require('passport')
-const authPassport = require('./schema/auth/auth.passport');
+const authPassport = require('./schema/auth/auth.passport')
 const User = require('./schema/user/user.model')
 const auth = require('./schema/auth/auth.service')
 maskErrors(schema)
