@@ -11,6 +11,13 @@
                 </template>
                 <MenuItem name="/manage/user" to="/manage/user" v-if="$auth.hasRole('root')"><Icon custom="iconfont icon-user" size="18" />User</MenuItem>
                 </Submenu>
+                <Submenu name="employee" v-if="$auth.hasRole('personalia')">
+                <template slot="title">
+                    <Icon custom="iconfont icon-team" size="18" />
+                    Employee
+                </template>
+                <MenuItem name="/employee/list" to="/employee/list"><Icon custom="iconfont icon-orderedlist" size="18" />List</MenuItem>
+                </Submenu>
                 <Submenu name="3" v-if="$auth.state.loggedIn">
                 <template slot="title">
                     <Icon custom="iconfont icon-user" size="18" />
