@@ -188,7 +188,8 @@ export default {
                             form.resetFields();
                             this.isCreate = false;
                             this.$Notice.success({
-                                title: 'User created successfully'
+                                title: 'Success',
+                                desc: `Username "${data.userCreate.username}" has created succesfully`
                             })
                         }
                     } catch(err) {
@@ -226,7 +227,8 @@ export default {
                         if(data.userDelete) {
                             await this.$Modal.remove()
                             this.$Notice.success({
-                                title: 'Data succesfully deleted'
+                                title: 'Deleted',
+                                desc: 'Data succesfully deleted'
                             })
                         }
                     }
@@ -269,7 +271,8 @@ export default {
                             this.isEdit = false
                             this.editRow = ''
                             this.$Notice.success({
-                                title: 'User updated succesfully'
+                                title: 'Success',
+                                desc: `Username "${data.userUpdate.username}" has updated succesfully`
                             })
                         }
                     } catch(err) {

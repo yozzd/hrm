@@ -37,7 +37,8 @@ module.exports = {
    */
   plugins: [
     '@/plugins/auth',
-    '@/plugins/iview'
+    '@/plugins/iview',
+    '@/plugins/vue-the-mask'
   ],
 
   /*

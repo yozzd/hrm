@@ -173,22 +173,22 @@ export default {
                 this.total = cacheLocalData.length
             }
         },
-        handleFilterChange(column) {
+        handleFilterChange: async function (column) {
             const { cacheLocalData } = this
             if(column._filterChecked.length) {
-                const roles = _.reduce(column.filters, (r, v, k) => {
+                const roles = await Promise.all(_.reduce(column.filters, (r, v, k) => {
                     r.push(v.value)
                     return r
-                }, [])
-                const pullAll = _.pullAll(roles, column._filterChecked)
-                const reduceRoles = _.reduce(pullAll, (r, v, k) => {
+                }, []))
+                const pullAll = await Promise.all(_.pullAll(roles, column._filterChecked))
+                const reduceRoles = await Promise.all(_.reduce(pullAll, (r, v, k) => {
                     const obj = {
                         role: v
                     }
                     r.push(obj)
                     return r
-                }, [])
-                const pullRoles = _.differenceBy(cacheLocalData, reduceRoles, 'role')
+                }, []))
+                const pullRoles = await Promise.all(_.differenceBy(cacheLocalData, reduceRoles, 'role'))
                 this.tableData = this.dataFilter(pullRoles)
                 this.total = pullRoles.length
             } else {

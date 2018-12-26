@@ -23,6 +23,14 @@
                     :type="form.type"
                     :disabled="form.disabled"
                     :placeholder="form.placeholder" />
+                <Input
+                    v-else-if="form.itemType === 'mask'"
+                    v-model="params[form.modelValue]"
+                    :type="form.type"
+                    v-mask="form.mask"
+                    :readonly="form.readonly"
+                    :disabled="form.disabled"
+                    :placeholder="form.placeholder" />
                 <Select
                     v-else-if="form.itemType === 'select'"
                     v-model="params[form.modelValue]"
@@ -35,6 +43,27 @@
                         :label="(typeof option === 'object') ? option[form.labelKey || 'label'] : option">
                     </Option>
                 </Select>
+                <DatePicker
+                    v-else-if="form.itemType === 'date'"
+                    v-model="params[form.modelValue]"
+                    type="date"
+                    v-mask="'##-##-####'"
+                    format="dd-MM-yyyy"
+                    :placeholder="form.placeholder"
+                    :disabled="form.disabled"
+                    :readonly="form.readonly"
+                    style="width: 100%;">
+                </DatePicker>
+                <RadioGroup
+                    v-else-if="form.itemType === 'radio'"
+                    v-model="params[form.modelValue]"
+                    type="button"
+                    style="width: 100%;">
+                    <Radio
+                        v-for="(option, optionIndex) in form.options" :key="optionIndex"
+                        :label="option.label">
+                    </Radio>
+                </RadioGroup>
                 </FormItem>
             </Form>
             <div class="demo-drawer-footer">
@@ -97,7 +126,7 @@ export default {
     methods: {
         emitEventHandler(event) {
             this.$emit(event, ...Array.from(arguments).slice(1))
-        },
+        }
     }
 }
 </script>

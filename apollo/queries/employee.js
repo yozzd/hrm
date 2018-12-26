@@ -13,9 +13,9 @@ query {
   }
 }`
 
-export const EMPLOYEE_PERSONAL = gql`
-query employeeDetail($id: String!) {
-  employeeDetail(id: $id) {
+export const EMPLOYEE_CREATE = gql`
+mutation employeeCreate($no: String!, $name: String!, $placeOfBirth: String!, $dateOfBirth: Date!, $dateOfJoin: Date!, $gender: GenderEnumType!, $religion: ReligionEnumType!, $maritalStatus: MaritalStatusEnumType!, $phoneNumber: String!) {
+  employeeCreate(no: $no, name: $name, placeOfBirth: $placeOfBirth, dateOfBirth: $dateOfBirth, dateOfJoin: $dateOfJoin, gender: $gender, religion: $religion, maritalStatus: $maritalStatus, phoneNumber: $phoneNumber) {
     id
     no
     name
@@ -29,9 +29,9 @@ query employeeDetail($id: String!) {
   }
 }`
 
-export const EMPLOYEE_CREATE = gql`
-mutation employeeCreate($no: String!, $name: String!, $placeOfBirth: String!, $dateOfBirth: Date!, $dateOfJoin: Date!, $gender: GenderEnumType!, $religion: ReligionEnumType!, $maritalStatus: MaritalStatusEnumType!, $phoneNumber: String!) {
-  employeeCreate(no: $no, name: $name, placeOfBirth: $placeOfBirth, dateOfBirth: $dateOfBirth, dateOfJoin: $dateOfJoin, gender: $gender, religion: $religion, maritalStatus: $maritalStatus, phoneNumber: $phoneNumber) {
+export const EMPLOYEE_PERSONAL = gql`
+query employeeDetail($id: String!) {
+  employeeDetail(id: $id) {
     id
     no
     name
