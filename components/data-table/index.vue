@@ -2,7 +2,7 @@
     <div>
         <Row type="flex" justify="space-between" class="toolbar">
         <Col :md="14" :lg="11">
-        <Input v-model="filter" @keyup.enter="handleFilter" :placeholder="`Filter By ${cap(select)}`" class="filter">
+        <Input v-model="filter" @on-enter="handleFilter" :placeholder="`Filter By ${cap(select)}`" class="filter">
         <Select v-model="select" slot="prepend" placeholder="Select">
             <Option
                 v-for="item in filterOptions.select.options"
@@ -11,7 +11,7 @@
                 :key="item.value">
             </Option>
         </Select>
-        <Button slot="append" custom-icon="iconfont icon-search"></Button>
+        <Button slot="append" custom-icon="iconfont icon-search" @click="handleFilter"></Button>
         </Input>
         </Col>
         <Col :md="6" :lg="5" style="text-align: right;">
@@ -98,11 +98,6 @@ export default {
     mounted() {
         const { data } = this
         this.loadLocalData(data)
-        window.addEventListener('keyup', event => {
-            if (event.keyCode === 13) {
-                this.handleFilter()
-            }
-        })
     },
     watch: {
         data: function(value) {
