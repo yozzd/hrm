@@ -1,12 +1,12 @@
 <template>
     <div>
         <Row type="flex" justify="space-around" align="middle" class="login">
-        <Col :xs="12" :sm="12" :md="11" :lg="9" :xl="6">
+        <Col :xs="12" :sm="12" :md="11" :lg="9">
         <p class="title">Welcome to <strong>App 1.0</strong></p>
         <p class="title-helper">A Modern Way To Manage Your Stone Age Brain</p>
         <p class="title-helper">Save Your Useless Time Now!</p>
         </Col>
-        <Col :xs="9" :sm="9" :md="7" :lg="6" :xl="4">
+        <Col :xs="9" :sm="9" :md="7" :lg="5">
         <div class="header">
             <h2>Log In to Your Account</h2>
         </div>

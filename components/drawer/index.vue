@@ -131,7 +131,7 @@ export default {
 }
 </script>
 <style>
-.demo-drawer-footer{
+.demo-drawer-footer {
     width: 100%;
     position: absolute;
     bottom: 0;

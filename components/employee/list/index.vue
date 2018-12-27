@@ -277,9 +277,9 @@ export default {
 
 <style scoped>
 /deep/ .ivu-btn-text {
-    color: #57a3f3
+    color: #57a3f3;
 }
 /deep/ .ivu-btn-text:hover {
-    background-color: transparent
+    background-color: transparent;
 }
 </style>

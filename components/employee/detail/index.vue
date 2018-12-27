@@ -1,10 +1,10 @@
 <template>
     <div>
-        <Row type="flex" :gutter="20">
-            <Col :xs="7" :sm="7" :md="6" :lg="5" :xl="3">
+        <Row type="flex" gutter="20">
+            <Col :xs="7" :sm="7" :md="6" :lg="5">
                 <sidebar :navs="navs" />
             </Col>
-            <Col :xs="17" :sm="17" :md="18" :lg="19" :xl="21">
+            <Col :xs="17" :sm="17" :md="18" :lg="19">
                 <nuxt-child :key="$route.params.id" />
             </Col>
         </Row>

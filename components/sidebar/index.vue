@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Menu :active-name="$route.params.index" :open-names="['0']" :accordion="true">
+        <Menu :active-name="$route.params.index" :open-names="['0']" :accordion="true" width="100%">
             <Submenu v-for="(nav, i) in navs" :key="i" :name="`${i}`">
             <template slot="title">
                 <Icon :custom="`iconfont icon-${nav.icon}`" size="18" />
@@ -27,7 +27,7 @@ export default {
 
 <style scoped>
 /deep/ .ivu-menu-light {
-    background: transparent
+    background: transparent;
 }
 /deep/ .ivu-menu-light.ivu-menu-vertical .ivu-menu-item-active:not(.ivu-menu-submenu) {
     background: #e6f7ff;
