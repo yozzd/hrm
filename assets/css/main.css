@@ -77,3 +77,6 @@ body, input, textarea, select, button {
 .ivu-page-item a {
     font-family: 'robotoregular';
 }
+.ivu-btn:focus {
+    box-shadow: none;
+}

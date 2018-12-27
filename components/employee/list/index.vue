@@ -178,7 +178,7 @@ export default {
             this.errors = []
             form.resetFields()
         },
-        handleSave: function(form) {
+        handleSave(form) {
             this.errors = []
             form.validate(async (valid) => {
                 if(valid) {
@@ -223,7 +223,7 @@ export default {
                             this.isCreate = false
                             this.$Notice.success({
                                 title: 'Success',
-                                desc: `Employee No "${data.employeeCreate.no}" has created succesfully`
+                                desc: `Employee No "${data.employeeCreate.no}" has been created succesfully`
                             })
                         }
                     } catch(err) {
@@ -234,43 +234,43 @@ export default {
                 }
             })
         },
-            handleDelete() {
-                try {
-                    this.$Modal.confirm({
-                        title: 'Warning',
-                        content: '<p>This will permanently delete the data. Continue?</p>',
-                        okText: 'YES',
-                        cancelText: 'CANCEL',
-                        loading: true,
-                        onOk: async () => {
-                            const { data } = await this.$apollo.mutate({
-                                mutation: EMPLOYEE_DELETE,
-                                variables: {
-                                    input: this.multipleSelection
-                                },
-                                update: async function (store, { data: { employeeDelete } }) {
-                                    const data = store.readQuery({ query: EMPLOYEE_ALL })
-                                    _.pullAllBy(data.employeeAll, employeeDelete, 'id')
-                                    store.writeQuery({ query: EMPLOYEE_ALL, data })
-                                },
-                                optimisticResponse: {
-                                    __typename: 'Mutation',
-                                    employeeDelete: this.employeeAll
-                                }
-                            })
-                            if(data.employeeDelete) {
-                                await this.$Modal.remove()
-                                this.$Notice.success({
-                                    title: 'Deleted',
-                                    desc: 'Data succesfully deleted'
-                                })
+        handleDelete() {
+            try {
+                this.$Modal.confirm({
+                    title: 'Warning',
+                    content: '<p>This will permanently delete the data. Continue?</p>',
+                    okText: 'YES',
+                    cancelText: 'CANCEL',
+                    loading: true,
+                    onOk: async () => {
+                        const { data } = await this.$apollo.mutate({
+                            mutation: EMPLOYEE_DELETE,
+                            variables: {
+                                input: this.multipleSelection
+                            },
+                            update: async function (store, { data: { employeeDelete } }) {
+                                const data = store.readQuery({ query: EMPLOYEE_ALL })
+                                _.pullAllBy(data.employeeAll, employeeDelete, 'id')
+                                store.writeQuery({ query: EMPLOYEE_ALL, data })
+                            },
+                            optimisticResponse: {
+                                __typename: 'Mutation',
+                                employeeDelete: this.employeeAll
                             }
+                        })
+                        if(data.employeeDelete) {
+                            await this.$Modal.remove()
+                            this.$Notice.success({
+                                title: 'Deleted',
+                                desc: 'Data succesfully deleted'
+                            })
                         }
-                    })
-                } catch(err) {
-                    this.errors = errorHandler(err)
-                }
+                    }
+                })
+            } catch(err) {
+                this.errors = errorHandler(err)
             }
+        }
     }
 }
 </script>

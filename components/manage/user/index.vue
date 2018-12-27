@@ -153,7 +153,7 @@ export default {
             this.errors = []
             form.resetFields()
         },
-        handleSave: function(form) {
+        handleSave(form) {
             this.errors = []
             form.validate(async (valid) => {
                 if(valid) {
@@ -185,7 +185,7 @@ export default {
                             this.isCreate = false
                             this.$Notice.success({
                                 title: 'Success',
-                                desc: `Username "${data.userCreate.username}" has created succesfully`
+                                desc: `Username "${data.userCreate.username}" has been created succesfully`
                             })
                         }
                     } catch(err) {
@@ -233,7 +233,7 @@ export default {
                 this.errors = errorHandler(err)
             }
         },
-        handleEdit: function(form) {
+        handleEdit(form) {
             this.errors = []
             form.validate(async (valid) => {
                 if(valid) {
@@ -268,7 +268,7 @@ export default {
                             this.editRow = ''
                             this.$Notice.success({
                                 title: 'Success',
-                                desc: `Username "${data.userUpdate.username}" has updated succesfully`
+                                desc: `Username "${data.userUpdate.username}" data has been updated succesfully`
                             })
                         }
                     } catch(err) {

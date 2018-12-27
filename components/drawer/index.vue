@@ -49,6 +49,7 @@
                     :placeholder="form.placeholder"
                     :disabled="form.disabled"
                     :readonly="form.readonly"
+                    :clearable="false"
                     style="width: 100%;">
                 </DatePicker>
                 <RadioGroup
@@ -140,5 +141,6 @@ export default {
     padding: 10px 16px;
     text-align: right;
     background: #fff;
+    z-index: 2;
 }
 </style>

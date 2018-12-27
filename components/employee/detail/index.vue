@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Row type="flex" gutter="20">
+        <Row type="flex" :gutter="20">
             <Col :xs="7" :sm="7" :md="6" :lg="5">
                 <sidebar :navs="navs" />
             </Col>
