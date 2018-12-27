@@ -51,8 +51,32 @@ export default {
             columns: [
                 { type: 'selection', width: 40, align: 'center' },
                 { title: '#', width: 60, align: 'center', slot: 'reIndex' },
-                { title: 'Employee No', key: 'no', sortable: true },
-                { title: 'Employee Name', key: 'name', sortable: true },
+                { title: 'Employee No', key: 'no', sortable: true,
+                    render: (h, params) => {
+                        return h('div', [
+                            h('Button', {
+                                props: {
+                                    type: 'text',
+                                    size: 'small',
+                                    to: `detail/${params.row.id}/personal`
+                                }
+                            }, params.row.no)
+                        ])
+                    }
+                },
+                { title: 'Employee Name', key: 'name', sortable: true,
+                    render: (h, params) => {
+                        return h('div', [
+                            h('Button', {
+                                props: {
+                                    type: 'text',
+                                    size: 'small',
+                                    to: `detail/${params.row.id}/personal`
+                                }
+                            }, params.row.name)
+                        ])
+                    }
+                },
                 { title: 'Place Of Birth', key: 'placeOfBirth', width: 180 },
                 { title: 'Date Of Birth', key: 'dateOfBirth', width: 180,
                     render: (h, params) => {
@@ -210,43 +234,52 @@ export default {
                 }
             })
         },
-        handleDelete() {
-            try {
-                this.$Modal.confirm({
-                    title: 'Warning',
-                    content: '<p>This will permanently delete the data. Continue?</p>',
-                    okText: 'YES',
-                    cancelText: 'CANCEL',
-                    loading: true,
-                    onOk: async () => {
-                        const { data } = await this.$apollo.mutate({
-                            mutation: EMPLOYEE_DELETE,
-                            variables: {
-                                input: this.multipleSelection
-                            },
-                            update: async function (store, { data: { employeeDelete } }) {
-                                const data = store.readQuery({ query: EMPLOYEE_ALL })
-                                _.pullAllBy(data.employeeAll, employeeDelete, 'id')
-                                store.writeQuery({ query: EMPLOYEE_ALL, data })
-                            },
-                            optimisticResponse: {
-                                __typename: 'Mutation',
-                                employeeDelete: this.employeeAll
-                            }
-                        })
-                        if(data.employeeDelete) {
-                            await this.$Modal.remove()
-                            this.$Notice.success({
-                                title: 'Deleted',
-                                desc: 'Data succesfully deleted'
+            handleDelete() {
+                try {
+                    this.$Modal.confirm({
+                        title: 'Warning',
+                        content: '<p>This will permanently delete the data. Continue?</p>',
+                        okText: 'YES',
+                        cancelText: 'CANCEL',
+                        loading: true,
+                        onOk: async () => {
+                            const { data } = await this.$apollo.mutate({
+                                mutation: EMPLOYEE_DELETE,
+                                variables: {
+                                    input: this.multipleSelection
+                                },
+                                update: async function (store, { data: { employeeDelete } }) {
+                                    const data = store.readQuery({ query: EMPLOYEE_ALL })
+                                    _.pullAllBy(data.employeeAll, employeeDelete, 'id')
+                                    store.writeQuery({ query: EMPLOYEE_ALL, data })
+                                },
+                                optimisticResponse: {
+                                    __typename: 'Mutation',
+                                    employeeDelete: this.employeeAll
+                                }
                             })
+                            if(data.employeeDelete) {
+                                await this.$Modal.remove()
+                                this.$Notice.success({
+                                    title: 'Deleted',
+                                    desc: 'Data succesfully deleted'
+                                })
+                            }
                         }
-                    }
-                })
-            } catch(err) {
-                this.errors = errorHandler(err)
+                    })
+                } catch(err) {
+                    this.errors = errorHandler(err)
+                }
             }
-        }
     }
 }
 </script>
+
+<style scoped>
+/deep/ .ivu-btn-text {
+    color: #57a3f3
+}
+/deep/ .ivu-btn-text:hover {
+    background-color: transparent
+}
+</style>

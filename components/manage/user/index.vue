@@ -73,11 +73,7 @@ export default {
                         return row.role.indexOf(value) > -1
                     }
                 },
-                {
-                    title: 'Action',
-                    key: 'action',
-                    width: 150,
-                    align: 'center',
+                { title: 'Action', key: 'action', width: 150, align: 'center',
                     render: (h, params) => {
                         return h('div', [
                             h('Button', {

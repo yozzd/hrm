@@ -8,9 +8,6 @@
             :mask-closable="false"
             :styles="styles"
             @on-close="() => emitEventHandler('on-close')">
-            <Alert type="error" v-if="errors.length" v-for="(error, errorIndex) in errors" :key="errorIndex">
-            {{ error }}
-            </Alert>
             <Form ref="form" :model="params">
                 <FormItem
                     v-for="(form, index) in formOptions.forms" :key="index"
@@ -66,6 +63,9 @@
                 </RadioGroup>
                 </FormItem>
             </Form>
+            <Alert type="error" v-if="errors.length" v-for="(error, errorIndex) in errors" :key="errorIndex">
+            {{ error }}
+            </Alert>
             <div class="demo-drawer-footer">
                 <Button style="margin-right: 8px" @click="() => emitEventHandler('cancel', $refs.form)" custom-icon="iconfont icon-close">CANCEL</Button>
                 <Button type="primary" @click="() => emitEventHandler('action', $refs.form)" custom-icon="iconfont icon-save">
