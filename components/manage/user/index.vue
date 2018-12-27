@@ -200,7 +200,7 @@ export default {
                 }
             })
         },
-        handleDelete: function() {
+        handleDelete() {
             try {
                 this.$Modal.confirm({
                     title: 'Warning',
