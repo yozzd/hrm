@@ -10,6 +10,10 @@ import Personal from '@/components/employee/detail/personal'
 import Address from '@/components/employee/detail/address'
 
 export default {
+    middleware: ['auth'],
+    meta: {
+        guard: 'personalia'
+    },
     components: {
         Personal,
         Address

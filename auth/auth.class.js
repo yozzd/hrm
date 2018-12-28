@@ -59,7 +59,6 @@ export default class Auth {
       if(routeOption(this.$route, 'auth', false)) {
         return
       }
-      //this.redirect('home')
       this.redirect('dashboard')
     })
   }

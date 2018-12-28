@@ -1,22 +1,25 @@
 <template>
     <div>
+        <toolbar :id="$route.params.id" />
         <Row type="flex" :gutter="20">
-            <Col :xs="7" :sm="7" :md="6" :lg="5">
-                <sidebar :navs="navs" />
-            </Col>
-            <Col :xs="17" :sm="17" :md="18" :lg="19">
-                <nuxt-child :key="$route.params.id" />
-            </Col>
+        <Col :xs="7" :sm="7" :md="6" :lg="5">
+        <sidebar :navs="navs" />
+        </Col>
+        <Col :xs="17" :sm="17" :md="18" :lg="19">
+        <nuxt-child :key="$route.params.id" />
+        </Col>
         </Row>
     </div>
 </template>
 
 <script>
 import Sidebar from '@/components/sidebar'
+import Toolbar from '@/components/employee/toolbar'
 
 export default {
     components: {
-        Sidebar
+        Sidebar,
+        Toolbar
     },
     data() {
         return {

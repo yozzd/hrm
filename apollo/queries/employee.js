@@ -13,6 +13,13 @@ query {
   }
 }`
 
+export const EMPLOYEE_ALL_ID = gql`
+query {
+  employeeAll {
+    id
+  }
+}`
+
 export const EMPLOYEE_CREATE = gql`
 mutation employeeCreate($no: String!, $name: String!, $placeOfBirth: String!, $dateOfBirth: Date!, $dateOfJoin: Date!, $gender: GenderEnumType!, $religion: ReligionEnumType!, $maritalStatus: MaritalStatusEnumType!, $phoneNumber: String!) {
   employeeCreate(no: $no, name: $name, placeOfBirth: $placeOfBirth, dateOfBirth: $dateOfBirth, dateOfJoin: $dateOfJoin, gender: $gender, religion: $religion, maritalStatus: $maritalStatus, phoneNumber: $phoneNumber) {

@@ -8,11 +8,11 @@
 import Dashboard from '@/components/dashboard'
 export default {
     middleware: ['auth'],
-    components: {
-        Dashboard
-    },
     meta: {
         guard: 'user'
+    },
+    components: {
+        Dashboard
     }
 }
 </script>
