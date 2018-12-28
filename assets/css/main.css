@@ -80,3 +80,7 @@ body, input, textarea, select, button {
 .ivu-btn:focus {
     box-shadow: none;
 }
+.ivu-menu-vertical .ivu-menu-item,
+.ivu-menu-vertical .ivu-menu-submenu-title {
+    padding: 10px 24px;
+}

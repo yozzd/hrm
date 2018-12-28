@@ -78,11 +78,8 @@ export default {
                         return h('div', [
                             h('Button', {
                                 props: {
-                                    type: 'primary',
+                                    type: 'dashed',
                                     size: 'small'
-                                },
-                                style: {
-                                    marginRight: '5px'
                                 },
                                 on: {
                                     click: () => {
