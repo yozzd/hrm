@@ -2,8 +2,8 @@
     <div>
         <Row type="flex" justify="end">
         <ButtonGroup>
-        <Button type="dashed" custom-icon="iconfont icon-left" @click="handlePrevious" :disabled="disabledPrevious"></Button>
-        <Button type="dashed" custom-icon="iconfont icon-right" @click="handleNext" :disabled="disabledNext"></Button>
+            <Button type="dashed" custom-icon="iconfont icon-left" :to="toPrevious" :disabled="!toPrevious"></Button>
+            <Button type="dashed" custom-icon="iconfont icon-right" :to="toNext" :disabled="!toNext"></Button>
         </ButtonGroup>
         </Row>
     </div>
@@ -29,29 +29,25 @@ export default {
             disabledNext: false,
         }
     },
+    computed: {
+        toPrevious() {
+            const idx = this.findIndex(this.id)
+            if(this.employeeAll[idx-1]) {
+                return `/employee/detail/${this.employeeAll[idx-1].id}/personal`
+            }
+        },
+        toNext() {
+            const idx = this.findIndex(this.id)
+            if(this.employeeAll[idx+1]) {
+                return `/employee/detail/${this.employeeAll[idx+1].id}/personal`
+            }
+        }
+    },
     methods: {
         findIndex(id) {
             return _.findIndex(this.employeeAll, o => {
                 return o.id === id
             })
-        },
-        handlePrevious() {
-            const idx = this.findIndex(this.id)
-            if(this.employeeAll[idx-1]) {
-                this.disabledNext = false
-                this.$router.push(`/employee/detail/${this.employeeAll[idx-1].id}/personal`)
-            } else {
-                this.disabledPrevious = true
-            }
-        },
-        handleNext() {
-            const idx = this.findIndex(this.id)
-            if(this.employeeAll[idx+1]) {
-                this.disabledPrevious = false
-                this.$router.push(`/employee/detail/${this.employeeAll[idx+1].id}/personal`)
-            } else {
-                this.disabledNext = true
-            }
         }
     }
 }
