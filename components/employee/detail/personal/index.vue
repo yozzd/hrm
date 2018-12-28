@@ -1,8 +1,6 @@
 <template>
     <div>
-        <Row type="flex">
-        <h3>Employee Personal</h3>
-        </Row>
+        <child-header v-if="employeeDetail" :data="employeeDetail" />
 
         <info-table :data="employeeDetail" :rows="rows">
             <tr slot="append">
@@ -21,13 +19,15 @@
 import { EMPLOYEE_PERSONAL, EMPLOYEE_UPDATE_PERSONAL } from '@/apollo/queries/employee'
 import Drawer from '@/components/drawer'
 import InfoTable from '@/components/info-table'
+import ChildHeader from '@/components/employee/child-header'
 import errorHandler from '@/apollo/config/errorHandler'
 import moment from 'moment'
 
 export default {
     components: {
         Drawer,
-        InfoTable
+        InfoTable,
+        ChildHeader
     },
     apollo: {
         employeeDetail: {
