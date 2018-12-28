@@ -18,9 +18,6 @@ export default {
         navs: {
             type: Array
         }
-    },
-    data() {
-        return {}
     }
 }
 </script>

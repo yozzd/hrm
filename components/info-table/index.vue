@@ -34,6 +34,9 @@ export default {
 .info-table > table > tr > td {
     padding: 5px 0;
 }
+.info-table > table > tr > td:first-child {
+    text-align: right;
+}
 .info-table > table > tr > td:last-child {
     padding-left: 20px;
 }

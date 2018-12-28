@@ -54,10 +54,8 @@ export default {
                 { title: 'Employee No', key: 'no', sortable: true,
                     render: (h, params) => {
                         return h('div', [
-                            h('Button', {
+                            h('nuxt-link', {
                                 props: {
-                                    type: 'text',
-                                    size: 'small',
                                     to: `detail/${params.row.id}/personal`
                                 }
                             }, params.row.no)
@@ -67,10 +65,8 @@ export default {
                 { title: 'Employee Name', key: 'name', sortable: true,
                     render: (h, params) => {
                         return h('div', [
-                            h('Button', {
+                            h('nuxt-link', {
                                 props: {
-                                    type: 'text',
-                                    size: 'small',
                                     to: `detail/${params.row.id}/personal`
                                 }
                             }, params.row.name)
@@ -274,12 +270,3 @@ export default {
     }
 }
 </script>
-
-<style scoped>
-/deep/ .ivu-btn-text {
-    color: #57a3f3;
-}
-/deep/ .ivu-btn-text:hover {
-    background-color: transparent;
-}
-</style>
