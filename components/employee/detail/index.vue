@@ -1,7 +1,8 @@
 <template>
     <div>
         <toolbar :id="$route.params.id" />
-        <Row type="flex" :gutter="20">
+
+        <Row type="flex" :gutter="20" class="main">
         <Col :xs="7" :sm="7" :md="6" :lg="5">
         <sidebar :navs="navs" />
         </Col>
@@ -41,3 +42,9 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+.main.ivu-row-flex {
+    margin-top: 10px;
+}
+</style>

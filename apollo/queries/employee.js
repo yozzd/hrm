@@ -17,6 +17,8 @@ export const EMPLOYEE_ALL_ID = gql`
 query {
   employeeAll {
     id
+    no
+    name
   }
 }`
 

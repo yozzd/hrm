@@ -29,7 +29,7 @@ export default {
 
 <style scoped>
 .info-table {
-    margin-top: 20px;
+    margin-top: 10px;
 }
 .info-table > table > tr > td {
     padding: 5px 0;
