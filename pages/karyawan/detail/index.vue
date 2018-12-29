@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import Detail from '@/components/employee/detail'
+import Detail from '@/components/karyawan/detail'
 export default {
     middleware: ['auth'],
     meta: {

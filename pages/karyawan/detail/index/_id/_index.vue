@@ -1,13 +1,13 @@
 <template>
     <div>
         <personal v-if="$route.params.index === 'personal'" />
-        <Address v-else-if="$route.params.index === 'address'" />
+        <Alamat v-else-if="$route.params.index === 'alamat'" />
     </div>
 </template>
 
 <script>
-import Personal from '@/components/employee/detail/personal'
-import Address from '@/components/employee/detail/address'
+import Personal from '@/components/karyawan/detail/personal'
+import Alamat from '@/components/karyawan/detail/alamat'
 
 export default {
     middleware: ['auth'],
@@ -16,7 +16,7 @@ export default {
     },
     components: {
         Personal,
-        Address
+        Alamat
     }
 }
 </script>

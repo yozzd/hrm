@@ -2,8 +2,8 @@
     <div>
         <Row type="flex" justify="end">
         <Select v-model="select" filterable class="jumpSelect" @on-change="handleOnChange">
-            <Option v-for="(item, itemIndex) in employeeAll" :key="itemIndex" :value="item.id" :label="item.name">
-            <span>{{ item.name }}</span>
+            <Option v-for="(item, itemIndex) in karyawanAll" :key="itemIndex" :value="item.id" :label="item.nama">
+            <span>{{ item.nama }}</span>
             <span style="float: right;">{{ item.no }}</span>
             </Option>
         </Select>
@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { EMPLOYEE_ALL_ID } from '@/apollo/queries/employee'
+import { KARYAWAN_ALL_ID } from '@/apollo/queries/karyawan'
 import _ from 'lodash'
 
 export default {
@@ -24,13 +24,13 @@ export default {
         id: String
     },
     apollo: {
-        employeeAll: {
-            query: EMPLOYEE_ALL_ID
+        karyawanAll: {
+            query: KARYAWAN_ALL_ID
         }
     },
     data() {
         return {
-            employeeAll: [],
+            karyawanAll: [],
             select: '',
             disabledPrevious: false,
             disabledNext: false,
@@ -39,27 +39,27 @@ export default {
     computed: {
         toPrevious() {
             const idx = this.findIndex(this.id)
-            if(this.employeeAll[idx-1]) {
-                this.select = this.employeeAll[idx].id
-                return `/employee/detail/${this.employeeAll[idx-1].id}/personal`
+            if(this.karyawanAll[idx-1]) {
+                this.select = this.karyawanAll[idx].id
+                return `/karyawan/detail/${this.karyawanAll[idx-1].id}/personal`
             }
         },
         toNext() {
             const idx = this.findIndex(this.id)
-            if(this.employeeAll[idx+1]) {
-                this.select = this.employeeAll[idx].id
-                return `/employee/detail/${this.employeeAll[idx+1].id}/personal`
+            if(this.karyawanAll[idx+1]) {
+                this.select = this.karyawanAll[idx].id
+                return `/karyawan/detail/${this.karyawanAll[idx+1].id}/personal`
             }
         }
     },
     methods: {
         findIndex(id) {
-            return _.findIndex(this.employeeAll, o => {
+            return _.findIndex(this.karyawanAll, o => {
                 return o.id === id
             })
         },
         handleOnChange(id) {
-            this.$router.push(`/employee/detail/${id}/personal`)
+            this.$router.push(`/karyawan/detail/${id}/personal`)
         }
     }
 }

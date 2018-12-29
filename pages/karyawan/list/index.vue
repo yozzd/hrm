@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import List from '@/components/employee/list'
+import List from '@/components/karyawan/list'
 export default {
     middleware: ['auth'],
     meta: {

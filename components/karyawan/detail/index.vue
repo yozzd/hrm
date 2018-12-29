@@ -15,7 +15,7 @@
 
 <script>
 import Sidebar from '@/components/sidebar'
-import Toolbar from '@/components/employee/toolbar'
+import Toolbar from '@/components/karyawan/toolbar'
 
 export default {
     components: {
@@ -28,7 +28,7 @@ export default {
                 { title: 'Detail', icon: 'idcard',
                     items: [
                         { title: 'Personal', path: 'personal'},
-                        { title: 'Address', path: 'address'}
+                        { title: 'Alamat', path: 'alamat'}
                     ]
                 },
                 { title: 'Employment', icon: 'solution',

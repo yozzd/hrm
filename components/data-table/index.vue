@@ -203,7 +203,7 @@ export default {
     margin-top: 10px;
 }
 .ivu-select {
-    width: 120px;
+    width: 140px;
 }
 .ivu-input-group {
     width: 450px;

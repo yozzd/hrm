@@ -1,7 +1,7 @@
 <template>
     <div>
         <Row type="flex" class="header">
-        <h3>{{ data.name }} - {{ data.no }}</h3>
+        <h3>{{ data.nama }} - {{ data.no }}</h3>
         </Row>
     </div>
 </template>

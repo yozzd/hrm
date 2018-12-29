@@ -4,35 +4,35 @@ const uuidv1 = require('uuid/v1')
 const beautifyUnique = require('mongoose-beautiful-unique-validation')
 const timestamps = require('mongoose-timestamp')
 
-const EmployeeSchema = new Schema({
+const KaryawanSchema = new Schema({
   _id: {
     type: String,
     default: uuidv1
   },
   no: {
     type: String,
-    unique: 'The specified Employee No "{VALUE}" is already in use'
+    unique: 'No Karyawan "{VALUE}" sudah terpakai'
   },
-  name: String,
-  placeOfBirth: String,
-  dateOfBirth: Date,
-  dateOfJoin: Date,
-  gender: {
+  nama: String,
+  tempatLahir: String,
+  tanggalLahir: Date,
+  tanggalBergabung: Date,
+  jenisKelamin: {
     type: Number,
     enum: [0, 1]
   },
-  religion: {
+  agama: {
     type: Number,
     enum: [0, 1, 2, 3]
   },
-  maritalStatus: {
+  statusPerkawinan: {
     type: Number,
     enum: [0, 1, 2, 3, 4]
   },
-  phoneNumber: String
+  telepon: String
 })
 
-EmployeeSchema.plugin(beautifyUnique)
-EmployeeSchema.plugin(timestamps)
+KaryawanSchema.plugin(beautifyUnique)
+KaryawanSchema.plugin(timestamps)
 
-module.exports = mongoose.model('Employee', EmployeeSchema, 'employee')
+module.exports = mongoose.model('Karyawan', KaryawanSchema, 'karyawan')

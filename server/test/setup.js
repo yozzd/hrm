@@ -6,13 +6,13 @@ const schema = require('../schema')
 const auth = require('../schema/auth/auth.service')
 const authPassport = require('../schema/auth/auth.passport')
 const User = require('../schema/user/user.model')
-const Employee = require('../schema/employee/employee.model')
+const Karyawan = require('../schema/karyawan/karyawan.model')
 
 const start = async () => {
   await config.mongo.connect()
 
   await User.deleteMany()
-  await Employee.deleteMany()
+  await Karyawan.deleteMany()
 
   const newUser = new User({
     username: 'gableh',

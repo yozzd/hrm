@@ -68,9 +68,9 @@
             {{ error }}
             </Alert>
             <div class="demo-drawer-footer">
-                <Button style="margin-right: 8px" @click="() => emitEventHandler('cancel', $refs.form)" custom-icon="iconfont icon-close">CANCEL</Button>
+                <Button style="margin-right: 8px" @click="() => emitEventHandler('cancel', $refs.form)" custom-icon="iconfont icon-close">BATAL</Button>
                 <Button type="primary" @click="() => emitEventHandler('action', $refs.form)" custom-icon="iconfont icon-save">
-                    {{saveButton ? 'SAVE' : 'UPDATE'}}
+                    {{saveButton ? 'SIMPAN' : 'UPDATE'}}
                 </Button>
             </div>
         </Drawer>
@@ -141,6 +141,6 @@ export default {
     padding: 10px 16px;
     text-align: right;
     background: #fff;
-    z-index: 2;
+    z-index: 4;
 }
 </style>
