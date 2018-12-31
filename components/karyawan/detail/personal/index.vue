@@ -1,17 +1,17 @@
 <template>
     <div>
-        <child-header v-if="karyawanDetail" :data="karyawanDetail" />
+        <child-header v-if="karyawanDetail" :data="karyawanDetail"></child-header>
 
-            <info-table :data="karyawanDetail" :rows="rows">
-                <tr slot="append">
-                    <td></td>
-                    <td>
-                        <Button type="dashed" size="small" @click="show(karyawanDetail)">Edit</Button>
-                    </td>
-                </tr>
-            </info-table>
+        <info-table :data="karyawanDetail" :rows="rows">
+            <tr slot="append">
+                <td></td>
+                <td>
+                    <Button type="dashed" size="small" @click="show(karyawanDetail)">Edit</Button>
+                </td>
+            </tr>
+        </info-table>
 
-            <drawer title="Edit Karyawan" width="300" v-if="isEdit" :value="isEdit" :form-options="editForm" :edit-row="editRow" :errors="errors" @cancel="handleCancel" @action="handleEdit" @on-close="handleOnClose" />
+        <drawer title="Edit Karyawan" width="300" v-if="isEdit" :value="isEdit" :form-options="editForm" :edit-row="editRow" :errors="errors" @cancel="handleCancel" @action="handleEdit" @on-close="handleOnClose" />
     </div>
 </template>
 

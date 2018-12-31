@@ -1,14 +1,19 @@
 <template>
     <div>
         <Row type="flex" class="info-table">
-            <table v-if="data">
-                <tr v-for="(row, rowIndex) in rows" :key="rowIndex">
-                    <td>{{ row.label }}</td>
+        <table v-if="data">
+            <tr v-for="(row, rowIndex) in rows" :key="rowIndex">
+                <td>{{ row.label }}</td>
+                <template v-if="data[row.prop]">
                     <td v-if="row.formatter"><strong>{{ row.formatter(data[row.prop]) }}</strong></td>
                     <td v-else><strong>{{ data[row.prop] }}</strong></td>
-                </tr>
-                <slot name="append" />
-            </table>
+                </template>
+                <template v-else>
+                    <td><strong>-</strong></td>
+                </template>
+            </tr>
+            <slot name="append" />
+        </table>
         </Row>
     </div>
 </template>
@@ -41,6 +46,6 @@ export default {
     padding-left: 20px;
 }
 /deep/ .ivu-btn-small {
-   margin-left: 20px; 
+    margin-left: 20px;
 }
 </style>

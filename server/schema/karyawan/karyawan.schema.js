@@ -72,7 +72,15 @@ const Mutation = {
       jenisKelamin: { type: JenisKelaminEnumType },
       agama: { type: AgamaEnumType },
       statusPerkawinan: { type: MaritalStatusEnumType },
-      telepon: { type: GraphQLString }
+      telepon: { type: GraphQLString },
+      perumahan: { type: GraphQLString },
+      blok: { type: GraphQLString },
+      noP: { type: GraphQLString },
+      rt: { type: GraphQLString },
+      rw: { type: GraphQLString },
+      kelurahan: { type: GraphQLString },
+      kecamatan: { type: GraphQLString },
+      kota: { type: GraphQLString }
     },
     resolve: auth.hasRole('personalia', async (_, args, ctx) => {
       try {

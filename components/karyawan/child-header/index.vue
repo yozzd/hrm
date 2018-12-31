@@ -1,7 +1,8 @@
 <template>
     <div>
         <Row type="flex" class="header">
-        <h3>{{ data.nama }} - {{ data.no }}</h3>
+        <Badge :text="data.no" type="primary"></Badge>
+        <h3>{{ data.nama }}</h3>
         </Row>
     </div>
 </template>
@@ -18,5 +19,8 @@ export default {
 .header.ivu-row-flex {
     padding: 10px 0;
     border-bottom: 1px dashed #cccccc;
+}
+.header.ivu-row-flex > h3 {
+    margin-left: 10px;
 }
 </style>

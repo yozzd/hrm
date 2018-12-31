@@ -29,7 +29,15 @@ const KaryawanSchema = new Schema({
     type: Number,
     enum: [0, 1, 2, 3, 4]
   },
-  telepon: String
+  telepon: String,
+  perumahan: String,
+  blok: String,
+  noP: String,
+  rt: String,
+  rw: String,
+  kelurahan: String,
+  kecamatan: String,
+  kota: String
 })
 
 KaryawanSchema.plugin(beautifyUnique)

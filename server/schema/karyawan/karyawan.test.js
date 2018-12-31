@@ -18,6 +18,14 @@ const action = {
     agama: 'Islam',
     statusPerkawinan: 'M1',
     telepon: '082157777231',
+    perumahan: 'Mekar Sari',
+    blok: 'C',
+    noP: '40',
+    rt: '001',
+    rw: '005',
+    kelurahan: 'Tiban Lama',
+    kecamatan: 'Sekupang',
+    kota: 'Batam'
   },
   update: {
     no: 'B.5555',
@@ -29,6 +37,14 @@ const action = {
     agama: 'Islam',
     statusPerkawinan: 'M1',
     telepon: '082157777231',
+    perumahan: 'Mekar Sari',
+    blok: 'C',
+    noP: '40',
+    rt: '001',
+    rw: '005',
+    kelurahan: 'Tiban Lama',
+    kecamatan: 'Sekupang',
+    kota: 'Batam'
   }
 }
 
@@ -117,7 +133,7 @@ describe('karyawan schema test', () => {
     done()
   })
 
-  test('should update karyawan with authorization', async (done) => {
+  test('should update karyawan basic with authorization', async (done) => {
     const { update } = action
     const response = await request(uri)
       .post('/graphql')
@@ -144,6 +160,35 @@ describe('karyawan schema test', () => {
 
     const { data } = response.body
     expect(data.karyawanUpdate.tempatLahir).toEqual(update.tempatLahir)
+    done()
+  })
+
+  test('should update karyawan address with authorization', async (done) => {
+    const { update } = action
+    const response = await request(uri)
+      .post('/graphql')
+      .set('Accept', 'application/json')
+      .set('Authorization', `Bearer ${token}`)
+      .send({ query: `
+        mutation {
+          karyawanUpdate(id: "${id}", perumahan: "${update.perumahan}", blok: "${update.blok}", noP: "${update.noP}", rt: "${update.rt}", rw: "${update.rw}", kelurahan: "${update.kelurahan}", kecamatan: "${update.kecamatan}", kota: "${update.kota}")
+          {
+            id
+            perumahan
+            blok
+            noP
+            rt
+            rw
+            kelurahan
+            kecamatan
+            kota
+          }
+        }`
+      })
+      .expect(200)
+
+    const { data } = response.body
+    expect(data.karyawanUpdate.perumahan).toEqual(update.perumahan)
     done()
   })
 
