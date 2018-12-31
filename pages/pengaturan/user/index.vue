@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import User from '@/components/manage/user'
+import User from '@/components/pengaturan/user'
 export default {
     middleware: 'auth',
     components: {

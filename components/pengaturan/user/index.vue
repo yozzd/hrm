@@ -1,17 +1,17 @@
 <template>
     <div>
         <Row>
-        <h3>Manage User</h3>
+        <h3>Pengaturan User</h3>
         </Row>
         <Row>
         <data-table :data="userAll" :filter-options="filterOptions" :columns="columns" :loading="$apollo.loading" @on-selection-change="handleSelectionChange">
             <ButtonGroup slot="action">
-            <Button type="primary" custom-icon="iconfont icon-plus" @click="show('create')">CREATE</Button>
-            <Button type="error" custom-icon="iconfont icon-delete" :disabled="!multipleSelection.length" @click="handleDelete">DELETE</Button>
+            <Button type="primary" custom-icon="iconfont icon-plus" @click="show('create')">TAMBAH</Button>
+            <Button type="error" custom-icon="iconfont icon-delete" :disabled="!multipleSelection.length" @click="handleDelete">HAPUS</Button>
             </ButtonGroup>
         </data-table>
 
-        <drawer title="Create User" width="300" v-if="isCreate" :value="isCreate" :form-options="createForm" :errors="errors" @cancel="handleCancel" @action="handleSave" @on-close="handleOnClose" save-button />
+        <drawer title="Tambah User" width="300" v-if="isCreate" :value="isCreate" :form-options="createForm" :errors="errors" @cancel="handleCancel" @action="handleSave" @on-close="handleOnClose" save-button />
         <drawer title="Edit User" width="300" v-if="isEdit" :value="isEdit" :form-options="editForm" :edit-row="editRow" :errors="errors" @cancel="handleCancel" @action="handleEdit" @on-close="handleOnClose" />
         </Row>
     </div>
@@ -73,7 +73,7 @@ export default {
                         return row.role.indexOf(value) > -1
                     }
                 },
-                { title: 'Action', key: 'action', width: 150, align: 'center',
+                { title: 'Aksi', key: 'action', width: 150, align: 'center',
                     render: (h, params) => {
                         return h('div', [
                             h('Button', {
@@ -95,19 +95,19 @@ export default {
                 forms: [
                     { prop: 'username', label: 'Username',
                         rules: [
-                            { required: true, message: 'Please input Username', trigger: 'blur' },
-                            { min: 4, message: 'Username must be at least 4 characters length', trigger: 'blur' }
+                            { required: true, message: 'Username tidak boleh kosong', trigger: 'blur' },
+                            { min: 4, message: 'Username minimal 4 karakter', trigger: 'blur' }
                         ]
                     },
                     { prop: 'password', label: 'Password', type: 'password',
                         rules: [
-                            { required: true, message: 'Please input Password', trigger: 'blur' },
-                            { min: 6, message: 'Password must be at least 6 characters length', trigger: 'blur' }
+                            { required: true, message: 'Password tidak boleh kosong', trigger: 'blur' },
+                            { min: 6, message: 'Password minimal 6 karakter', trigger: 'blur' }
                         ]
                     },
                     { prop: 'role', label: 'Role', itemType: 'select', options: roles,
                         rules: [
-                            { required: true, message: 'Please select Role', trigger: 'change' }
+                            { required: true, message: 'Pilih Role', trigger: 'change' }
                         ]
                     }
                 ]
@@ -116,12 +116,12 @@ export default {
                 forms: [
                     { prop: 'username', label: 'Username',
                         rules: [
-                            { required: true, message: 'Please input Username', trigger: 'blur' }
+                            { required: true, message: 'Username tidak boleh kosong', trigger: 'blur' },
                         ]
                     },
                     { prop: 'role', label: 'Role', itemType: 'select', options: roles,
                         rules: [
-                            { required: true, message: 'Please select Role', trigger: 'change' }
+                            { required: true, message: 'Password tidak boleh kosong', trigger: 'blur' },
                         ]
                     }
                 ]
@@ -182,7 +182,7 @@ export default {
                             this.isCreate = false
                             this.$Notice.success({
                                 title: 'Success',
-                                desc: `Username "${data.userCreate.username}" has been created succesfully`
+                                desc: `Username "${data.userCreate.username}" berhasil ditambahkan`
                             })
                         }
                     } catch(err) {
@@ -196,10 +196,10 @@ export default {
         handleDelete() {
             try {
                 this.$Modal.confirm({
-                    title: 'Warning',
-                    content: '<p>This will permanently delete the data. Continue?</p>',
-                    okText: 'YES',
-                    cancelText: 'CANCEL',
+                    title: 'PERHATIAN',
+                    content: '<p>Tindakan ini akan menghapus data secara permanen. Lanjutkan?</p>',
+                    okText: 'YA',
+                    cancelText: 'BATAL',
                     loading: true,
                     onOk: async () => {
                         const { data } = await this.$apollo.mutate({
@@ -265,7 +265,7 @@ export default {
                             this.editRow = ''
                             this.$Notice.success({
                                 title: 'Success',
-                                desc: `Username "${data.userUpdate.username}" data has been updated succesfully`
+                                desc: `Data denganUsername "${data.userUpdate.username}" berhasil diperbaharui`
                             })
                         }
                     } catch(err) {

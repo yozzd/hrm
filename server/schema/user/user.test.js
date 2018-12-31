@@ -84,7 +84,7 @@ describe('user schema test', () => {
       .expect(200)
 
     const { errors } = response.body
-    expect(errors[0].message).toEqual(`The specified Username "${user.username}" is already in use`)
+    expect(errors[0].message).toEqual(`Username "${user.username}" sudah terpakai`)
     done()
   })
 

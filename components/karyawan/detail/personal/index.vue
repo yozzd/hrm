@@ -216,7 +216,7 @@ export default {
                             this.editRow = '';
                             this.$Notice.success({
                                 title: 'Sukses',
-                                desc: `Data karyawan dengan nomor "${data.karyawanUpdate.no}" berhasil diupdate`
+                                desc: `Data karyawan dengan nomor "${data.karyawanUpdate.no}" berhasil diperbaharui`
                             })
                         }
                     } catch(err) {

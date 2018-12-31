@@ -1,7 +1,7 @@
 <template>
     <div>
         <Row>
-        <h3>Karyawan List</h3>
+        <h3>Daftar Karyawan</h3>
         </Row>
         <Row>
         <data-table :data="karyawanAll" :filter-options="filterOptions" :columns="columns" :loading="$apollo.loading" @on-selection-change="handleSelectionChange">

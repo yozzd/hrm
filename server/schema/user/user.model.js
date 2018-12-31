@@ -12,7 +12,7 @@ const UserSchema = new Schema({
   },
   username: {
     type: String,
-    unique: 'The specified Username "{VALUE}" is already in use'
+    unique: 'Username "{VALUE}" sudah terpakai'
   },
   password: String,
   role: String,

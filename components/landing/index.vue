@@ -2,13 +2,13 @@
     <div>
         <Row type="flex" justify="space-around" align="middle" class="login">
         <Col :xs="12" :sm="12" :md="11" :lg="9">
-        <p class="title">Welcome to <strong>App 1.0</strong></p>
+        <p class="title">Selamat Datang di <strong>App 1.0</strong></p>
         <p class="title-helper">A Modern Way To Manage Your Stone Age Brain</p>
         <p class="title-helper">Save Your Useless Time Now!</p>
         </Col>
         <Col :xs="9" :sm="9" :md="7" :lg="5">
         <div class="header">
-            <h2>Log In to Your Account</h2>
+            <h2>Log In</h2>
         </div>
         <Alert type="error" v-if="error" @on-close="handleErrorClose" closable>{{error}}</Alert>
         <Form ref="form" :model="form" :rules="rules" @submit.native.prevent="handleSubmit('form')">
@@ -41,10 +41,10 @@ export default {
             },
             rules: {
                 username: [
-                    { required: true, message: 'Enter your username', trigger: 'blur' }
+                    { required: true, message: 'Username tidak boleh kosong', trigger: 'blur' }
                 ],
                 password: [
-                    { required: true, message: 'Enter your password', trigger: 'blur' }
+                    { required: true, message: 'Password tidak boleh kosong', trigger: 'blur' }
                 ]
             },
             error: ''

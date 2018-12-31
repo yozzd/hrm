@@ -4,19 +4,19 @@
             <div class="navbar-logo">App</div>
             <div class="navbar-nav">
                 <MenuItem name="/dashboard" to="/dashboard" v-if="$auth.state.loggedIn"><Icon custom="iconfont icon-dashboard" size="18"></Icon>Dashboard</MenuItem>
-                <Submenu name="manage" v-if="$auth.hasRole('personalia')">
+                <Submenu name="pengaturan" v-if="$auth.hasRole('personalia')">
                 <template slot="title">
                     <Icon custom="iconfont icon-wrench" size="18" />
-                    Manage
+                    Pengaturan
                 </template>
-                <MenuItem name="/manage/user" to="/manage/user" v-if="$auth.hasRole('root')"><Icon custom="iconfont icon-user" size="18" />User</MenuItem>
+                <MenuItem name="/pengaturan/user" to="/pengaturan/user" v-if="$auth.hasRole('root')"><Icon custom="iconfont icon-user" size="18" />User</MenuItem>
                 </Submenu>
                 <Submenu name="karyawan" v-if="$auth.hasRole('personalia')">
                 <template slot="title">
                     <Icon custom="iconfont icon-team" size="18" />
                     Karyawan
                 </template>
-                <MenuItem name="/karyawan/list" to="/karyawan/list"><Icon custom="iconfont icon-orderedlist" size="18" />List</MenuItem>
+                <MenuItem name="/karyawan/daftar" to="/karyawan/daftar"><Icon custom="iconfont icon-orderedlist" size="18" />Daftar</MenuItem>
                 </Submenu>
                 <Submenu name="3" v-if="$auth.state.loggedIn">
                 <template slot="title">

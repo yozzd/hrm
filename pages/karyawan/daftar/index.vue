@@ -1,18 +1,18 @@
 <template>
     <div>
-        <list/>
+        <daftar/>
     </div>
 </template>
 
 <script>
-import List from '@/components/karyawan/list'
+import Daftar from '@/components/karyawan/daftar'
 export default {
     middleware: ['auth'],
     meta: {
         guard: 'personalia'
     },
     components: {
-        List
+        Daftar
     }
 }
 </script>

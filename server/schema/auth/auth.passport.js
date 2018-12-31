@@ -6,14 +6,14 @@ const localAuthenticate = async (User, username, password, done) => {
     const user = await User.findOne({username: username})
     if(!user) {
       return done(null, false, {
-        message: 'Incorrect username or password'
+        message: 'Username atau Password anda salah'
       })
     }
 
     const authPassword = await user.authenticate(password)
     if(!authPassword) {
       return done(null, false, {
-        message: 'Incorrect username or password'
+        message: 'Username atau Password anda salah'
       })
     } else {
       return done(null, user)
