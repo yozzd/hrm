@@ -1,7 +1,7 @@
 <template>
     <div>
         <personal v-if="$route.params.index === 'personal'" />
-        <Alamat v-else-if="$route.params.index === 'alamat'" />
+        <alamat v-else-if="$route.params.index === 'alamat'" />
     </div>
 </template>
 

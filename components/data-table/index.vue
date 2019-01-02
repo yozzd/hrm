@@ -2,7 +2,7 @@
     <div>
         <Row type="flex" justify="space-between" class="toolbar">
         <Col :md="14" :lg="11">
-        <Input v-model="filter" @on-enter="handleFilter" :placeholder="`Filter By ${cap(select)}`" class="filter">
+        <Input v-model="filter" @on-enter="handleFilter" :placeholder="`Filter By ${cap(select)}`" class="filter" v-if="showFilter">
         <Select v-model="select" slot="prepend" placeholder="Select">
             <Option
                 v-for="item in filterOptions.select.options"
@@ -59,6 +59,10 @@ export default {
         },
         filterOptions: {
             type: Object
+        },
+        showFilter: {
+            type: Boolean,
+            default: true
         },
         showPagination: {
             type: Boolean,
