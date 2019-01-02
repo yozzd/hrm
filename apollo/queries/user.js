@@ -28,8 +28,8 @@ mutation userCreate($username: String!, $password: String!, $role: String!) {
 }`
 
 export const USER_DELETE = gql`
-mutation userDelete($input: [UserTypeInput]!) {
-  userDelete(input: $input) {
+mutation userDelete($delete: [UserDeleteInputType]!) {
+  userDelete(delete: $delete) {
     id
   }
 }`

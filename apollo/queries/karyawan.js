@@ -23,7 +23,7 @@ query {
 }`
 
 export const KARYAWAN_CREATE = gql`
-mutation karyawanCreate($no: String!, $nama: String!, $tempatLahir: String!, $tanggalLahir: Date!, $tanggalBergabung: Date!, $jenisKelamin: JenisKelaminEnumType!, $agama: AgamaEnumType!, $statusPerkawinan: MaritalStatusEnumType!, $telepon: String!) {
+mutation karyawanCreate($no: String!, $nama: String!, $tempatLahir: String!, $tanggalLahir: Date!, $tanggalBergabung: Date!, $jenisKelamin: JenisKelaminEnumType!, $agama: AgamaEnumType!, $statusPerkawinan: StatusPerkawinanEnumType!, $telepon: String!) {
   karyawanCreate(no: $no, nama: $nama, tempatLahir: $tempatLahir, tanggalLahir: $tanggalLahir, tanggalBergabung: $tanggalBergabung, jenisKelamin: $jenisKelamin, agama: $agama, statusPerkawinan: $statusPerkawinan, telepon: $telepon) {
     id
     no
@@ -55,7 +55,7 @@ query karyawanDetail($id: String!) {
 }`
 
 export const KARYAWAN_UPDATE_PERSONAL = gql`
-mutation karyawanUpdate($id: String!, $no: String!, $nama: String!, $tempatLahir: String!, $tanggalLahir: Date!, $tanggalBergabung: Date!, $jenisKelamin: JenisKelaminEnumType!, $agama: AgamaEnumType!, $statusPerkawinan: MaritalStatusEnumType!, $telepon: String!) {
+mutation karyawanUpdate($id: String!, $no: String!, $nama: String!, $tempatLahir: String!, $tanggalLahir: Date!, $tanggalBergabung: Date!, $jenisKelamin: JenisKelaminEnumType!, $agama: AgamaEnumType!, $statusPerkawinan: StatusPerkawinanEnumType!, $telepon: String!) {
   karyawanUpdate(id: $id, no: $no, nama: $nama, tempatLahir: $tempatLahir, tanggalLahir: $tanggalLahir, tanggalBergabung: $tanggalBergabung, jenisKelamin: $jenisKelamin, agama: $agama, statusPerkawinan: $statusPerkawinan, telepon: $telepon) {
     id
     no
@@ -103,8 +103,8 @@ mutation karyawanUpdate($id: String!, $perumahan: String, $blok: String, $noP: S
 }`
 
 export const KARYAWAN_DELETE = gql`
-mutation karyawanDelete($input: [KaryawanTypeInput]!) {
-  karyawanDelete(input: $input) {
+mutation karyawanDelete($delete: [KaryawanDeleteInputType]!) {
+  karyawanDelete(delete: $delete) {
     id
   }
 }`

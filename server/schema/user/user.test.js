@@ -140,7 +140,7 @@ describe('user schema test', () => {
       .set('Authorization', `Bearer ${token}`)
       .send({ query: `
         mutation {
-          userDelete(input: [{id: "${user.id}"}]) {
+          userDelete(delete: [{id: "${user.id}"}]) {
             id
           }
         }`

@@ -2,7 +2,7 @@ const { GraphQLObjectType, GraphQLList, GraphQLString } = require('graphql')
 const ld = require('lodash')
 const auth = require('../auth/auth.service')
 const User = require('./user.model')
-const { UserType, UserTypeInput } = require('./user.type')
+const { UserType, UserDeleteInputType } = require('./user.type')
 const { UserError } = require('graphql-errors')
 
 const Query = {
@@ -72,14 +72,14 @@ const Mutation = {
   userDelete: {
     type: new GraphQLList(UserType),
     args: {
-      input: { type: new GraphQLList(UserTypeInput) }
+      delete: { type: new GraphQLList(UserDeleteInputType) }
     },
     resolve: auth.hasRole('admin', async (_, args, ctx) => {
       try {
-        await Promise.all(args.input.map(async (val) => {
+        await Promise.all(args.delete.map(async (val) => {
           await User.findOneAndDelete({ _id : val.id })
         }))
-        return args.input
+        return args.delete
       } catch(err) {
         throw err
       }

@@ -9,8 +9,8 @@ const UserType = new GraphQLObjectType({
   })
 })
 
-const UserTypeInput = new GraphQLInputObjectType({
-  name: 'UserTypeInput',
+const UserDeleteInputType = new GraphQLInputObjectType({
+  name: 'UserDeleteInputType',
   fields: () => ({
     id: { type: GraphQLString }
   })
@@ -18,5 +18,5 @@ const UserTypeInput = new GraphQLInputObjectType({
 
 module.exports = {
   UserType,
-  UserTypeInput
+  UserDeleteInputType
 }

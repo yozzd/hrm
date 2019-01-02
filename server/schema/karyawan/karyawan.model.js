@@ -4,6 +4,23 @@ const uuidv1 = require('uuid/v1')
 const beautifyUnique = require('mongoose-beautiful-unique-validation')
 const timestamps = require('mongoose-timestamp')
 
+const KeluargaSchema = new Schema({
+  _id: {
+    type: String,
+    default: uuidv1
+  },
+  nama: String,
+  hubungan: String,
+  tempatLahir: String,
+  tanggalLahir: Date,
+  pendidikan: {
+    type: Number,
+    enum: [0, 1, 2, 3, 4, 5, 6, 7]
+  },
+  pekerjaan: String,
+  alamat: String
+})
+
 const KaryawanSchema = new Schema({
   _id: {
     type: String,
@@ -37,7 +54,8 @@ const KaryawanSchema = new Schema({
   rw: String,
   kelurahan: String,
   kecamatan: String,
-  kota: String
+  kota: String,
+  keluarga: [KeluargaSchema]
 })
 
 KaryawanSchema.plugin(beautifyUnique)

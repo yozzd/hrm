@@ -1,7 +1,7 @@
 const { GraphQLObjectType, GraphQLList, GraphQLString } = require('graphql')
 const { GraphQLDate } = require('graphql-iso-date')
 const Karyawan = require('./karyawan.model')
-const { KaryawanType, KaryawanTypeInput, JenisKelaminEnumType, AgamaEnumType, MaritalStatusEnumType } = require('./karyawan.type')
+const { KaryawanType, KaryawanKeluargaType, KaryawanKeluargaInputType, KaryawanDeleteInputType, JenisKelaminEnumType, AgamaEnumType, StatusPerkawinanEnumType } = require('./karyawan.type')
 const { UserError } = require('graphql-errors')
 const auth = require('../auth/auth.service')
 const ld = require('lodash')
@@ -45,7 +45,7 @@ const Mutation = {
       tanggalBergabung: { type: GraphQLDate },
       jenisKelamin: { type: JenisKelaminEnumType },
       agama: { type: AgamaEnumType },
-      statusPerkawinan: { type: MaritalStatusEnumType },
+      statusPerkawinan: { type: StatusPerkawinanEnumType },
       telepon: { type: GraphQLString }
     },
     resolve: auth.hasRole('personalia', async (_, args, ctx) => {
@@ -71,7 +71,7 @@ const Mutation = {
       tanggalBergabung: { type: GraphQLDate },
       jenisKelamin: { type: JenisKelaminEnumType },
       agama: { type: AgamaEnumType },
-      statusPerkawinan: { type: MaritalStatusEnumType },
+      statusPerkawinan: { type: StatusPerkawinanEnumType },
       telepon: { type: GraphQLString },
       perumahan: { type: GraphQLString },
       blok: { type: GraphQLString },
@@ -92,17 +92,33 @@ const Mutation = {
       }
     })
   },
+  karyawanKeluargaCreate: {
+    type: KaryawanType,
+    args: {
+      id: { type: GraphQLString },
+      keluarga: { type: new GraphQLList(KaryawanKeluargaInputType) }
+    },
+    resolve: auth.hasRole('personalia', async (_, args, ctx) => {
+      try {
+        const karyawan = await Karyawan.findById(args.id)
+        karyawan.keluarga.push(args.keluarga[0])
+        return await karyawan.save()
+      } catch(err) {
+        throw err
+      }
+    })
+  },
   karyawanDelete: {
     type: new GraphQLList(KaryawanType),
     args: {
-      input: { type: new GraphQLList(KaryawanTypeInput) }
+      delete: { type: new GraphQLList(KaryawanDeleteInputType) }
     },
     resolve: auth.hasRole('personal', async (_, args, ctx) => {
       try {
-        await Promise.all(args.input.map(async (val) => {
+        await Promise.all(args.delete.map(async (val) => {
           await Karyawan.findOneAndDelete({ _id : val.id })
         }))
-        return args.input
+        return args.delete
       } catch(err) {
         throw err
       }

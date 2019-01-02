@@ -205,7 +205,7 @@ export default {
                         const { data } = await this.$apollo.mutate({
                             mutation: USER_DELETE,
                             variables: {
-                                input: this.multipleSelection
+                                delete: this.multipleSelection
                             },
                             update: async function (store, { data: { userDelete } }) {
                                 const data = store.readQuery({ query: USER_ALL })

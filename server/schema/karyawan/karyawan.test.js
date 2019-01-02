@@ -44,7 +44,16 @@ const action = {
     rw: '005',
     kelurahan: 'Tiban Lama',
     kecamatan: 'Sekupang',
-    kota: 'Batam'
+    kota: 'Batam',
+    keluarga: [{
+      nama: 'Jane Doe',
+      hubungan: 'Istri',
+      tempatLahir: 'Batam',
+      tanggalLahir: '1994-01-22',
+      pendidikan: 'S1',
+      pekerjaan: 'Karyawan Swasta',
+      alamat: 'Tes'
+    }]
   }
 }
 
@@ -192,17 +201,48 @@ describe('karyawan schema test', () => {
     done()
   })
 
+  test('update keluarga karyawan', async (done) => {
+    const { update } = action
+    const response = await request(uri)
+      .post('/graphql')
+      .set('Accept', 'application/json')
+      .set('Authorization', `Bearer ${token}`)
+      .send({ query: `
+            mutation {
+              karyawanKeluargaCreate(id: "${id}", keluarga: [{nama: "${update.keluarga[0].nama}", hubungan: "${update.keluarga[0].hubungan}", tempatLahir: "${update.keluarga[0].tempatLahir}", tanggalLahir: "${update.keluarga[0].tanggalLahir}", pendidikan: ${update.keluarga[0].pendidikan}, pekerjaan: "${update.keluarga[0].pekerjaan}", alamat: "${update.keluarga[0].alamat}"}])
+              {
+                id
+                keluarga {
+                  id
+                  nama
+                  hubungan
+                  tempatLahir
+                  tanggalLahir
+                  pendidikan
+                  pekerjaan
+                  alamat
+                }
+              }
+            }`
+      })
+      .expect(200)
+
+    const { data } = response.body
+    expect(data.karyawanKeluargaCreate.keluarga[0].nama).toEqual(update.keluarga[0].nama)
+    done()
+  })
+
   test('should delete karyawan with valid authorization', async (done) => {
     const response = await request(uri)
       .post('/graphql')
       .set('Accept', 'application/json')
       .set('Authorization', `Bearer ${token}`)
       .send({ query: `
-        mutation {
-          karyawanDelete(input: [{id: "${id}"}]) {
-            id
-          }
-        }`
+          mutation {
+            karyawanDelete(delete: [{id: "${id}"}]) {
+              id
+            }
+          }`
       })
       .expect(200)
 
