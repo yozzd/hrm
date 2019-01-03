@@ -112,13 +112,13 @@ const Mutation = {
     type: KaryawanType,
     args: {
       id: { type: GraphQLString },
-      kId: { type: GraphQLString },
+      keluargaId: { type: GraphQLString },
       keluarga: { type: KaryawanKeluargaInputType }
     },
     resolve: auth.hasRole('personalia', async (_, args, ctx) => {
       try {
         const karyawan = await Karyawan.findById(args.id)
-        ld.merge(karyawan.keluarga.id(args.kId), args.keluarga)
+        ld.merge(karyawan.keluarga.id(args.keluargaId), args.keluarga)
         return await karyawan.save()
       } catch(err) {
         throw err

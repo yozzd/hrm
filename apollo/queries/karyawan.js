@@ -141,6 +141,25 @@ mutation karyawanKeluargaCreate($id: String!, $keluarga: KaryawanKeluargaInputTy
   }
 }`
 
+export const KARYAWAN_UPDATE_KELUARGA = gql`
+mutation karyawanKeluargaUpdate($id: String!, $keluargaId: String!, $keluarga: KaryawanKeluargaInputType) {
+  karyawanKeluargaUpdate(id: $id, keluargaId: $keluargaId, keluarga: $keluarga)
+  {
+    id
+    keluarga {
+      id
+      nama
+      hubunganKeluarga
+      jenisKelamin
+      tempatLahir
+      tanggalLahir
+      pendidikan
+      pekerjaan
+      alamat
+    }
+  }
+}`
+
 export const KARYAWAN_DELETE_KELUARGA = gql`
 mutation karyawanKeluargaDelete($id: String!, $delete: [KaryawanDeleteInputType]!) {
   karyawanKeluargaDelete(id: $id, delete: $delete) {

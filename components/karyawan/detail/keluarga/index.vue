@@ -9,13 +9,13 @@
             </ButtonGroup>
         </data-table>
 
-        <drawer title="Tambah Keluarga" width="300" v-if="isCreate" :value="isCreate" :form-options="createForm" :errors="errors" @cancel="handleCancel" @action="handleSave" @on-close="handleOnClose" save-button />
-        <drawer title="Edit Keluarga" width="300" v-if="isEdit" :value="isEdit" :form-options="createForm" :edit-row="editRow" :errors="errors" @cancel="handleCancel" @action="handleEdit" @on-close="handleOnClose" />
+        <drawer title="Tambah Keluarga" width="300" v-if="isCreate" :value="isCreate" :form-options="formOption" :errors="errors" @cancel="handleCancel" @action="handleSave" @on-close="handleOnClose" save-button />
+        <drawer title="Edit Keluarga" width="300" v-if="isEdit" :value="isEdit" :form-options="formOption" :edit-row="editRow" :errors="errors" @cancel="handleCancel" @action="handleEdit" @on-close="handleOnClose" />
     </div>
 </template>
 
 <script>
-import { KARYAWAN_KELUARGA, KARYAWAN_CREATE_KELUARGA, KARYAWAN_DELETE_KELUARGA } from '@/apollo/queries/karyawan'
+import { KARYAWAN_KELUARGA, KARYAWAN_CREATE_KELUARGA, KARYAWAN_UPDATE_KELUARGA, KARYAWAN_DELETE_KELUARGA } from '@/apollo/queries/karyawan'
 import Drawer from '@/components/drawer'
 import DataTable from '@/components/data-table'
 import ChildHeader from '@/components/karyawan/child-header'
@@ -103,7 +103,7 @@ export default {
                     }
                 }
             ],
-            createForm: {
+            formOption: {
                 forms: [
                     { prop: 'nama', label: 'Nama',
                         rules: [
@@ -149,11 +149,17 @@ export default {
                             { required: true, message: 'Pilih Pendidikan', trigger: 'change' }
                         ]
                     },
-                    { prop: 'pekerjaan', label: 'Pekerjaan' },
-                    { prop: 'alamat', label: 'Alamat' },
+                    { prop: 'pekerjaan', label: 'Pekerjaan',
+                        rules: [
+                            { required: true, message: 'Pekerjaan tidak boleh kosong', trigger: 'blur' }
+                        ]
+                    },
+                    { prop: 'alamat', label: 'Alamat',
+                        rules: [
+                            { required: true, message: 'Alamat tidak boleh kosong', trigger: 'blur' }
+                        ]
+                    }
                 ]
-            },
-            editForm: {
             }
         }
     },
@@ -170,10 +176,10 @@ export default {
                 this.editRow = row
             }
         },
-            handleOnClose() {
-                this.isCreate = false
-                this.isEdit = false
-            },
+        handleOnClose() {
+            this.isCreate = false
+            this.isEdit = false
+        },
         handleCancel(form) {
             this.isCreate = false
             this.isEdit = false
@@ -205,7 +211,7 @@ export default {
                                     query: KARYAWAN_KELUARGA,
                                     variables: { id: this.$route.params.id }
                                 })
-                                const merge = _.merge(data, _.merge(data.karyawanDetail.keluargs, karyawanKeluargaCreate.keluarga))
+                                const merge = _.merge(data, _.merge(data.karyawanDetail.keluarga, karyawanKeluargaCreate.keluarga))
                                 store.writeQuery({
                                     query: KARYAWAN_KELUARGA,
                                     variables: {
@@ -250,53 +256,126 @@ export default {
                 }
             })
         },
-            handleDelete() {
-                try {
-                    this.$Modal.confirm({
-                        title: 'PERHATIAN',
-                        content: '<p>Tindakan ini akan menghapus data secara permanen. Lanjutkan?</p>',
-                        okText: 'YA',
-                        cancelText: 'BATAL',
-                        loading: true,
-                        onOk: async () => {
-                            const { data } = await this.$apollo.mutate({
-                                mutation: KARYAWAN_DELETE_KELUARGA,
-                                variables: {
-                                    id: this.$route.params.id,
-                                    delete: this.multipleSelection
-                                },
-                                update: async function (store, { data: { karyawanKeluargaDelete } }) {
-                                    const data = store.readQuery({
-                                        query: KARYAWAN_KELUARGA,
-                                        variables: { id: this.$nuxt.$route.params.id }
-                                    })
-                                    _.pullAllBy(data.karyawanDetail.keluarga, karyawanKeluargaDelete, 'id')
-                                    store.writeQuery({
-                                        query: KARYAWAN_KELUARGA,
-                                        variables: { id: this.$nuxt.$route.params.id },
-                                        data
-                                    })
-                                },
-                                optimisticResponse: {
-                                    __typename: 'Mutation',
-                                    karyawanKeluargaDelete: this.karyawanDetail
-                                }
-                            })
-                            if(data.karyawanKeluargaDelete) {
-                                await this.$Modal.remove()
-                                this.$Notice.success({
-                                    title: 'Sukses',
-                                    desc: 'Data berhasil dihapus'
+        handleDelete() {
+            try {
+                this.$Modal.confirm({
+                    title: 'PERHATIAN',
+                    content: '<p>Tindakan ini akan menghapus data secara permanen. Lanjutkan?</p>',
+                    okText: 'YA',
+                    cancelText: 'BATAL',
+                    loading: true,
+                    onOk: async () => {
+                        const { data } = await this.$apollo.mutate({
+                            mutation: KARYAWAN_DELETE_KELUARGA,
+                            variables: {
+                                id: this.$route.params.id,
+                                delete: this.multipleSelection
+                            },
+                            update: async function (store, { data: { karyawanKeluargaDelete } }) {
+                                const data = store.readQuery({
+                                    query: KARYAWAN_KELUARGA,
+                                    variables: { id: this.$nuxt.$route.params.id }
                                 })
+                                _.pullAllBy(data.karyawanDetail.keluarga, karyawanKeluargaDelete, 'id')
+                                store.writeQuery({
+                                    query: KARYAWAN_KELUARGA,
+                                    variables: { id: this.$nuxt.$route.params.id },
+                                    data
+                                })
+                            },
+                            optimisticResponse: {
+                                __typename: 'Mutation',
+                                karyawanKeluargaDelete: this.karyawanDetail
                             }
+                        })
+                        if(data.karyawanKeluargaDelete) {
+                            await this.$Modal.remove()
+                            this.$Notice.success({
+                                title: 'Sukses',
+                                desc: 'Data berhasil dihapus'
+                            })
                         }
-                    })
-                } catch(err) {
-                    this.errors = errorHandler(err)
-                }
-            },
-            handleEdit(form) {
+                    }
+                })
+            } catch(err) {
+                this.errors = errorHandler(err)
             }
+        },
+        handleEdit(form) {
+            this.errors = []
+            form.validate(async (valid) => {
+                if(valid) {
+                    try {
+                        const { data } = await this.$apollo.mutate({
+                            mutation: KARYAWAN_UPDATE_KELUARGA,
+                            variables: {
+                                id: this.$route.params.id,
+                                keluargaId: this.editRow.id,
+                                keluarga: {
+                                    nama: form.model.nama,
+                                    hubunganKeluarga: form.model.hubunganKeluarga,
+                                    jenisKelamin: form.model.jenisKelamin,
+                                    tempatLahir: form.model.tempatLahir,
+                                    tanggalLahir: moment(new Date(form.model.tanggalLahir)).format('YYYY-MM-DD'),
+                                    pendidikan: form.model.pendidikan,
+                                    pekerjaan: form.model.pekerjaan,
+                                    alamat: form.model.alamat
+                                }
+                            },
+                            update: (store, { data: { karyawanKeluargaUpdate } }) => {
+                                const data = store.readQuery({
+                                    query: KARYAWAN_KELUARGA,
+                                    variables: {
+                                        id: this.$route.params.id
+                                    }
+                                })
+                                const merge = _.merge(data, _.merge(data.karyawanDetail.keluarga, karyawanKeluargaUpdate.keluarga))
+                                store.writeQuery({
+                                    query: KARYAWAN_KELUARGA,
+                                    variables: {
+                                        id: this.$route.params.id
+                                    },
+                                    data: merge
+                                })
+                            },
+                            optimisticResponse: {
+                                __typename: 'Mutation',
+                                karyawanKeluargaUpdate: {
+                                    __typename: 'KaryawanType',
+                                    id: this.$route.params.id,
+                                    keluargaId: this.editRow.id,
+                                    keluarga: [{
+                                        __typename: 'KaryawanKeluargaType',
+                                        id: this.editRow.id,
+                                        nama: form.model.nama,
+                                        hubunganKeluarga: form.model.hubunganKeluarga,
+                                        jenisKelamin: form.model.jenisKelamin,
+                                        tempatLahir: form.model.tempatLahir,
+                                        tanggalLahir: moment(new Date(form.model.tanggalLahir)).format('YYYY-MM-DD'),
+                                        pendidikan: form.model.pendidikan,
+                                        pekerjaan: form.model.pekerjaan,
+                                        alamat: form.model.alamat
+                                    }]
+                                }
+                            }
+                        })
+                        if(data.karyawanKeluargaUpdate) {
+                            form.resetFields()
+                            this.isEdit = false
+                            this.editRow = ''
+                            this.$Notice.success({
+                                title: 'Sukses',
+                                desc: `Data karyawan dengan nomor "${this.karyawanDetail.no}" berhasil diperbaharui`
+                            })
+                        }
+                    } catch(err) {
+                        this.errors = errorHandler(err)
+                    }
+                } else {
+                    return false
+                }
+            })
+        }
     }
 }
 </script>

@@ -211,9 +211,9 @@ export default {
                             }
                         })
                         if(data.karyawanUpdate) {
-                            form.resetFields();
-                            this.isEdit = false;
-                            this.editRow = '';
+                            form.resetFields()
+                            this.isEdit = false
+                            this.editRow = ''
                             this.$Notice.success({
                                 title: 'Sukses',
                                 desc: `Data karyawan dengan nomor "${data.karyawanUpdate.no}" berhasil diperbaharui`

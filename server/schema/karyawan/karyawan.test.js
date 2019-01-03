@@ -243,7 +243,7 @@ describe('karyawan schema test', () => {
       .set('Authorization', `Bearer ${token}`)
       .send({ query: `
             mutation {
-              karyawanKeluargaUpdate(id: "${id}", kId: "${keluargaId}", keluarga: {nama: "Jenny Doe", hubunganKeluarga: "${update.keluarga[0].hubunganKeluarga}", jenisKelamin: ${update.keluarga[0].jenisKelamin}, tempatLahir: "${update.keluarga[0].tempatLahir}", tanggalLahir: "${update.keluarga[0].tanggalLahir}", pendidikan: ${update.keluarga[0].pendidikan}, pekerjaan: "${update.keluarga[0].pekerjaan}", alamat: "${update.keluarga[0].alamat}"})
+              karyawanKeluargaUpdate(id: "${id}", keluargaId: "${keluargaId}", keluarga: {nama: "Jenny Doe", hubunganKeluarga: "${update.keluarga[0].hubunganKeluarga}", jenisKelamin: ${update.keluarga[0].jenisKelamin}, tempatLahir: "${update.keluarga[0].tempatLahir}", tanggalLahir: "${update.keluarga[0].tanggalLahir}", pendidikan: ${update.keluarga[0].pendidikan}, pekerjaan: "${update.keluarga[0].pekerjaan}", alamat: "${update.keluarga[0].alamat}"})
               {
                 id
                 keluarga {
