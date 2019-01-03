@@ -108,6 +108,23 @@ const Mutation = {
       }
     })
   },
+  karyawanKeluargaUpdate: {
+    type: KaryawanType,
+    args: {
+      id: { type: GraphQLString },
+      kId: { type: GraphQLString },
+      keluarga: { type: KaryawanKeluargaInputType }
+    },
+    resolve: auth.hasRole('personalia', async (_, args, ctx) => {
+      try {
+        const karyawan = await Karyawan.findById(args.id)
+        ld.merge(karyawan.keluarga.id(args.kId), args.keluarga)
+        return await karyawan.save()
+      } catch(err) {
+        throw err
+      }
+    })
+  },
   karyawanKeluargaDelete: {
     type: new GraphQLList(KaryawanType),
     args: {

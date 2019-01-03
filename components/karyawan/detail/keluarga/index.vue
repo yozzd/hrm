@@ -10,6 +10,7 @@
         </data-table>
 
         <drawer title="Tambah Keluarga" width="300" v-if="isCreate" :value="isCreate" :form-options="createForm" :errors="errors" @cancel="handleCancel" @action="handleSave" @on-close="handleOnClose" save-button />
+        <drawer title="Edit Keluarga" width="300" v-if="isEdit" :value="isEdit" :form-options="createForm" :edit-row="editRow" :errors="errors" @cancel="handleCancel" @action="handleEdit" @on-close="handleOnClose" />
     </div>
 </template>
 
@@ -51,20 +52,20 @@ export default {
                 }
             },
             columns: [
-                { type: 'selection', width: 40, align: 'center' },
-                { title: '#', width: 60, align: 'center', slot: 'reIndex' },
-                { title: 'Nama', key: 'nama', sortable: true },
-                { title: 'Hubungan Keluarga', key: 'hubunganKeluarga' },
-                { title: 'Jenis Kelamin', key: 'jenisKelamin' },
-                { title: 'Tempat Lahir', key: 'tempatLahir' },
-                { title: 'Tanggal Lahir', key: 'tanggalLahir',
+                { type: 'selection', width: 50, align: 'center', fixed: 'left' },
+                { title: '#', width: 60, align: 'center', slot: 'reIndex', fixed: 'left' },
+                { title: 'Nama', key: 'nama', sortable: true, width: 180, fixed: 'left' },
+                { title: 'Hubungan Keluarga', key: 'hubunganKeluarga', width: 180 },
+                { title: 'Jenis Kelamin', key: 'jenisKelamin', width: 180 },
+                { title: 'Tempat Lahir', key: 'tempatLahir', width: 180 },
+                { title: 'Tanggal Lahir', key: 'tanggalLahir', width: 180,
                     render: (h, params) => {
                         return h('div', [
                             h('span', moment(new Date(params.row.tanggalLahir)).format('DD-MM-YYYY'))
                         ])
                     }
                 },
-                { title: 'Pendidikan', key: 'pendidikan',
+                { title: 'Pendidikan', key: 'pendidikan', width: 180,
                     render: (h, params) => {
                         const pendidikan = {
                             'BB': 'Belum Bersekolah',
@@ -82,8 +83,25 @@ export default {
                         ])
                     }
                 },
-                { title: 'Pekerjaan', key: 'pekerjaan' },
-                { title: 'Alamat', key: 'alamat' },
+                { title: 'Pekerjaan', key: 'pekerjaan', width: 180 },
+                { title: 'Alamat', key: 'alamat', width: 300 },
+                { title: 'Aksi', key: 'action', width: 150, align: 'center', fixed: 'right',
+                    render: (h, params) => {
+                        return h('div', [
+                            h('Button', {
+                                props: {
+                                    type: 'dashed',
+                                    size: 'small'
+                                },
+                                on: {
+                                    click: () => {
+                                        this.show('edit', params.row)
+                                    }
+                                }
+                            }, 'Edit')
+                        ])
+                    }
+                }
             ],
             createForm: {
                 forms: [
@@ -135,7 +153,8 @@ export default {
                     { prop: 'alamat', label: 'Alamat' },
                 ]
             },
-            editForm: {}
+            editForm: {
+            }
         }
     },
     methods: {
@@ -146,14 +165,15 @@ export default {
             if(action === 'create') {
                 this.isCreate = true
             } else {
+                row.tanggalLahir = new Date(row.tanggalLahir)
                 this.isEdit = true
                 this.editRow = row
             }
         },
-        handleOnClose() {
-            this.isCreate = false
-            this.isEdit = false
-        },
+            handleOnClose() {
+                this.isCreate = false
+                this.isEdit = false
+            },
         handleCancel(form) {
             this.isCreate = false
             this.isEdit = false
@@ -230,51 +250,53 @@ export default {
                 }
             })
         },
-        handleDelete() {
-            try {
-                this.$Modal.confirm({
-                    title: 'PERHATIAN',
-                    content: '<p>Tindakan ini akan menghapus data secara permanen. Lanjutkan?</p>',
-                    okText: 'YA',
-                    cancelText: 'BATAL',
-                    loading: true,
-                    onOk: async () => {
-                        const { data } = await this.$apollo.mutate({
-                            mutation: KARYAWAN_DELETE_KELUARGA,
-                            variables: {
-                                id: this.$route.params.id,
-                                delete: this.multipleSelection
-                            },
-                            update: async function (store, { data: { karyawanKeluargaDelete } }) {
-                                const data = store.readQuery({
-                                    query: KARYAWAN_KELUARGA,
-                                    variables: { id: this.$nuxt.$route.params.id }
-                                })
-                                _.pullAllBy(data.karyawanDetail.keluarga, karyawanKeluargaDelete, 'id')
-                                store.writeQuery({
-                                    query: KARYAWAN_KELUARGA,
-                                    variables: { id: this.$nuxt.$route.params.id },
-                                    data
-                                })
-                            },
-                            optimisticResponse: {
-                                __typename: 'Mutation',
-                                karyawanKeluargaDelete: this.karyawanDetail
-                            }
-                        })
-                        if(data.karyawanKeluargaDelete) {
-                            await this.$Modal.remove()
-                            this.$Notice.success({
-                                title: 'Sukses',
-                                desc: 'Data berhasil dihapus'
+            handleDelete() {
+                try {
+                    this.$Modal.confirm({
+                        title: 'PERHATIAN',
+                        content: '<p>Tindakan ini akan menghapus data secara permanen. Lanjutkan?</p>',
+                        okText: 'YA',
+                        cancelText: 'BATAL',
+                        loading: true,
+                        onOk: async () => {
+                            const { data } = await this.$apollo.mutate({
+                                mutation: KARYAWAN_DELETE_KELUARGA,
+                                variables: {
+                                    id: this.$route.params.id,
+                                    delete: this.multipleSelection
+                                },
+                                update: async function (store, { data: { karyawanKeluargaDelete } }) {
+                                    const data = store.readQuery({
+                                        query: KARYAWAN_KELUARGA,
+                                        variables: { id: this.$nuxt.$route.params.id }
+                                    })
+                                    _.pullAllBy(data.karyawanDetail.keluarga, karyawanKeluargaDelete, 'id')
+                                    store.writeQuery({
+                                        query: KARYAWAN_KELUARGA,
+                                        variables: { id: this.$nuxt.$route.params.id },
+                                        data
+                                    })
+                                },
+                                optimisticResponse: {
+                                    __typename: 'Mutation',
+                                    karyawanKeluargaDelete: this.karyawanDetail
+                                }
                             })
+                            if(data.karyawanKeluargaDelete) {
+                                await this.$Modal.remove()
+                                this.$Notice.success({
+                                    title: 'Sukses',
+                                    desc: 'Data berhasil dihapus'
+                                })
+                            }
                         }
-                    }
-                })
-            } catch(err) {
-                this.errors = errorHandler(err)
+                    })
+                } catch(err) {
+                    this.errors = errorHandler(err)
+                }
+            },
+            handleEdit(form) {
             }
-        }
     }
 }
 </script>

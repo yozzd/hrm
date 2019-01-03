@@ -202,7 +202,7 @@ describe('karyawan schema test', () => {
     done()
   })
 
-  test('update keluarga karyawan', async (done) => {
+  test('create keluarga karyawan', async (done) => {
     const { update } = action
     const response = await request(uri)
       .post('/graphql')
@@ -235,17 +235,49 @@ describe('karyawan schema test', () => {
     done()
   })
 
-  test('delete keluarga karyawan', async (done) => {
+  test('update keluarga karyawan', async (done) => {
+    const { update } = action
     const response = await request(uri)
       .post('/graphql')
       .set('Accept', 'application/json')
       .set('Authorization', `Bearer ${token}`)
       .send({ query: `
             mutation {
-              karyawanKeluargaDelete(id: "${id}", delete: [{id: "${keluargaId}"}]) {
+              karyawanKeluargaUpdate(id: "${id}", kId: "${keluargaId}", keluarga: {nama: "Jenny Doe", hubunganKeluarga: "${update.keluarga[0].hubunganKeluarga}", jenisKelamin: ${update.keluarga[0].jenisKelamin}, tempatLahir: "${update.keluarga[0].tempatLahir}", tanggalLahir: "${update.keluarga[0].tanggalLahir}", pendidikan: ${update.keluarga[0].pendidikan}, pekerjaan: "${update.keluarga[0].pekerjaan}", alamat: "${update.keluarga[0].alamat}"})
+              {
                 id
+                keluarga {
+                  id
+                  nama
+                  hubunganKeluarga
+                  jenisKelamin
+                  tempatLahir
+                  tanggalLahir
+                  pendidikan
+                  pekerjaan
+                  alamat
+                }
               }
             }`
+      })
+      .expect(200)
+
+    const { data } = response.body
+    expect(data.karyawanKeluargaUpdate.keluarga[0].nama).toEqual('Jenny Doe')
+    done()
+  })
+
+  test('delete keluarga karyawan', async (done) => {
+    const response = await request(uri)
+      .post('/graphql')
+      .set('Accept', 'application/json')
+      .set('Authorization', `Bearer ${token}`)
+      .send({ query: `
+              mutation {
+                karyawanKeluargaDelete(id: "${id}", delete: [{id: "${keluargaId}"}]) {
+                  id
+                }
+              }`
       })
       .expect(200)
 
@@ -260,11 +292,11 @@ describe('karyawan schema test', () => {
       .set('Accept', 'application/json')
       .set('Authorization', `Bearer ${token}`)
       .send({ query: `
-              mutation {
-                karyawanDelete(delete: [{id: "${id}"}]) {
-                  id
-                }
-              }`
+                mutation {
+                  karyawanDelete(delete: [{id: "${id}"}]) {
+                    id
+                  }
+                }`
       })
       .expect(200)
 
