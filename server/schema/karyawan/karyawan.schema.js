@@ -96,12 +96,12 @@ const Mutation = {
     type: KaryawanType,
     args: {
       id: { type: GraphQLString },
-      keluarga: { type: new GraphQLList(KaryawanKeluargaInputType) }
+      keluarga: { type: KaryawanKeluargaInputType }
     },
     resolve: auth.hasRole('personalia', async (_, args, ctx) => {
       try {
         const karyawan = await Karyawan.findById(args.id)
-        karyawan.keluarga.push(args.keluarga[0])
+        karyawan.keluarga.push(args.keluarga)
         return await karyawan.save()
       } catch(err) {
         throw err
