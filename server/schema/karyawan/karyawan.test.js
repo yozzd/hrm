@@ -1,7 +1,7 @@
 const request = require('supertest')
 const uri = 'http://0.0.0.0:3000'
 
-let token, id
+let token, id, keluargaId
 
 const action = {
   auth: {
@@ -230,7 +230,27 @@ describe('karyawan schema test', () => {
       .expect(200)
 
     const { data } = response.body
+    keluargaId = data.karyawanKeluargaCreate.keluarga[0].id
     expect(data.karyawanKeluargaCreate.keluarga[0].nama).toEqual(update.keluarga[0].nama)
+    done()
+  })
+
+  test('delete keluarga karyawan', async (done) => {
+    const response = await request(uri)
+      .post('/graphql')
+      .set('Accept', 'application/json')
+      .set('Authorization', `Bearer ${token}`)
+      .send({ query: `
+            mutation {
+              karyawanKeluargaDelete(id: "${id}", delete: [{id: "${keluargaId}"}]) {
+                id
+              }
+            }`
+      })
+      .expect(200)
+
+    const { data } = response.body
+    expect(data.karyawanKeluargaDelete[0].id).toEqual(keluargaId)
     done()
   })
 
@@ -240,11 +260,11 @@ describe('karyawan schema test', () => {
       .set('Accept', 'application/json')
       .set('Authorization', `Bearer ${token}`)
       .send({ query: `
-            mutation {
-              karyawanDelete(delete: [{id: "${id}"}]) {
-                id
-              }
-            }`
+              mutation {
+                karyawanDelete(delete: [{id: "${id}"}]) {
+                  id
+                }
+              }`
       })
       .expect(200)
 
