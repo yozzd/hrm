@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import { KARYAWAN_KELUARGA, KARYAWAN_CREATE_KELUARGA } from '@/apollo/queries/karyawan'
+import { KARYAWAN_KELUARGA, KARYAWAN_CREATE_KELUARGA, KARYAWAN_DELETE_KELUARGA } from '@/apollo/queries/karyawan'
 import Drawer from '@/components/drawer'
 import DataTable from '@/components/data-table'
 import ChildHeader from '@/components/karyawan/child-header'
@@ -219,7 +219,7 @@ export default {
                             this.isCreate = false
                             this.$Notice.success({
                                 title: 'Sukses',
-                                desc: `Karyawan dengan nomor "${data.karyawanCreate.no}" berhasil ditambahkan`
+                                desc: `Data karyawan dengan nomor "${this.karyawanDetail.no}" berhasil diperbaharui`
                             })
                         }
                     } catch(err) {
@@ -230,7 +230,51 @@ export default {
                 }
             })
         },
-        handleDelete() {}
+        handleDelete() {
+            try {
+                this.$Modal.confirm({
+                    title: 'PERHATIAN',
+                    content: '<p>Tindakan ini akan menghapus data secara permanen. Lanjutkan?</p>',
+                    okText: 'YA',
+                    cancelText: 'BATAL',
+                    loading: true,
+                    onOk: async () => {
+                        const { data } = await this.$apollo.mutate({
+                            mutation: KARYAWAN_DELETE_KELUARGA,
+                            variables: {
+                                id: this.$route.params.id,
+                                delete: this.multipleSelection
+                            },
+                            update: async function (store, { data: { karyawanKeluargaDelete } }) {
+                                const data = store.readQuery({
+                                    query: KARYAWAN_KELUARGA,
+                                    variables: { id: this.$nuxt.$route.params.id }
+                                })
+                                _.pullAllBy(data.karyawanDetail.keluarga, karyawanKeluargaDelete, 'id')
+                                store.writeQuery({
+                                    query: KARYAWAN_KELUARGA,
+                                    variables: { id: this.$nuxt.$route.params.id },
+                                    data
+                                })
+                            },
+                            optimisticResponse: {
+                                __typename: 'Mutation',
+                                karyawanKeluargaDelete: this.karyawanDetail
+                            }
+                        })
+                        if(data.karyawanKeluargaDelete) {
+                            await this.$Modal.remove()
+                            this.$Notice.success({
+                                title: 'Sukses',
+                                desc: 'Data berhasil dihapus'
+                            })
+                        }
+                    }
+                })
+            } catch(err) {
+                this.errors = errorHandler(err)
+            }
+        }
     }
 }
 </script>

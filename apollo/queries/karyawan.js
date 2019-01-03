@@ -141,6 +141,13 @@ mutation karyawanKeluargaCreate($id: String!, $keluarga: KaryawanKeluargaInputTy
   }
 }`
 
+export const KARYAWAN_DELETE_KELUARGA = gql`
+mutation karyawanKeluargaDelete($id: String!, $delete: [KaryawanDeleteInputType]!) {
+  karyawanKeluargaDelete(id: $id, delete: $delete) {
+    id
+  }
+}`
+
 export const KARYAWAN_DELETE = gql`
 mutation karyawanDelete($delete: [KaryawanDeleteInputType]!) {
   karyawanDelete(delete: $delete) {
