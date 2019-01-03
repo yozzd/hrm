@@ -49,7 +49,8 @@ const KaryawanKeluargaType = new GraphQLObjectType({
   fields: () => ({
     id: { type: GraphQLString },
     nama: { type: GraphQLString },
-    hubungan: { type: GraphQLString },
+    hubunganKeluarga: { type: GraphQLString },
+    jenisKelamin: { type: JenisKelaminEnumType },
     tempatLahir: { type: GraphQLString },
     tanggalLahir: { type: GraphQLDate },
     pendidikan: { type: PendidikanEnumType },
@@ -62,7 +63,8 @@ const KaryawanKeluargaInputType = new GraphQLInputObjectType({
   name: 'KaryawanKeluargaInputType',
   fields: () => ({
     nama: { type: GraphQLString },
-    hubungan: { type: GraphQLString },
+    hubunganKeluarga: { type: GraphQLString },
+    jenisKelamin: { type: JenisKelaminEnumType },
     tempatLahir: { type: GraphQLString },
     tanggalLahir: { type: GraphQLDate },
     pendidikan: { type: PendidikanEnumType },

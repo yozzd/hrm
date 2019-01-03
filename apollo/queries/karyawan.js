@@ -102,6 +102,45 @@ mutation karyawanUpdate($id: String!, $perumahan: String, $blok: String, $noP: S
   }
 }`
 
+export const KARYAWAN_KELUARGA = gql`
+query karyawanDetail($id: String!) {
+  karyawanDetail(id: $id) {
+    id
+    no
+    nama
+    keluarga {
+      id
+      nama
+      hubunganKeluarga
+      jenisKelamin
+      tempatLahir
+      tanggalLahir
+      pendidikan
+      pekerjaan
+      alamat
+    }
+  }
+}`
+
+export const KARYAWAN_CREATE_KELUARGA = gql`
+mutation karyawanKeluargaCreate($id: String!, $keluarga: KaryawanKeluargaInputType) {
+  karyawanKeluargaCreate(id: $id, keluarga: $keluarga)
+  {
+    id
+    keluarga {
+      id
+      nama
+      hubunganKeluarga
+      jenisKelamin
+      tempatLahir
+      tanggalLahir
+      pendidikan
+      pekerjaan
+      alamat
+    }
+  }
+}`
+
 export const KARYAWAN_DELETE = gql`
 mutation karyawanDelete($delete: [KaryawanDeleteInputType]!) {
   karyawanDelete(delete: $delete) {

@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { KARYAWAN_ALAMAT, KARYAWAN_UPDATE_ALAMAT} from '@/apollo/queries/karyawan'
+import { KARYAWAN_ALAMAT, KARYAWAN_UPDATE_ALAMAT } from '@/apollo/queries/karyawan'
 import Drawer from '@/components/drawer'
 import InfoTable from '@/components/info-table'
 import ChildHeader from '@/components/karyawan/child-header'

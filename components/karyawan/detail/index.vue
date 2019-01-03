@@ -28,7 +28,8 @@ export default {
                 { title: 'Detail', icon: 'idcard',
                     items: [
                         { title: 'Personal', path: 'personal'},
-                        { title: 'Alamat', path: 'alamat'}
+                        { title: 'Alamat', path: 'alamat'},
+                        { title: 'Keluarga', path: 'keluarga'}
                     ]
                 },
                 { title: 'Employment', icon: 'solution',

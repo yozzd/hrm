@@ -10,7 +10,11 @@ const KeluargaSchema = new Schema({
     default: uuidv1
   },
   nama: String,
-  hubungan: String,
+  hubunganKeluarga: String,
+  jenisKelamin: {
+    type: Number,
+    enum: [0, 1]
+  },
   tempatLahir: String,
   tanggalLahir: Date,
   pendidikan: {

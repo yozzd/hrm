@@ -47,7 +47,8 @@ const action = {
     kota: 'Batam',
     keluarga: [{
       nama: 'Jane Doe',
-      hubungan: 'Istri',
+      hubunganKeluarga: 'Istri',
+      jenisKelamin: 'P',
       tempatLahir: 'Batam',
       tanggalLahir: '1994-01-22',
       pendidikan: 'S1',
@@ -209,13 +210,14 @@ describe('karyawan schema test', () => {
       .set('Authorization', `Bearer ${token}`)
       .send({ query: `
             mutation {
-              karyawanKeluargaCreate(id: "${id}", keluarga: {nama: "${update.keluarga[0].nama}", hubungan: "${update.keluarga[0].hubungan}", tempatLahir: "${update.keluarga[0].tempatLahir}", tanggalLahir: "${update.keluarga[0].tanggalLahir}", pendidikan: ${update.keluarga[0].pendidikan}, pekerjaan: "${update.keluarga[0].pekerjaan}", alamat: "${update.keluarga[0].alamat}"})
+              karyawanKeluargaCreate(id: "${id}", keluarga: {nama: "${update.keluarga[0].nama}", hubunganKeluarga: "${update.keluarga[0].hubunganKeluarga}", jenisKelamin: ${update.keluarga[0].jenisKelamin}, tempatLahir: "${update.keluarga[0].tempatLahir}", tanggalLahir: "${update.keluarga[0].tanggalLahir}", pendidikan: ${update.keluarga[0].pendidikan}, pekerjaan: "${update.keluarga[0].pekerjaan}", alamat: "${update.keluarga[0].alamat}"})
               {
                 id
                 keluarga {
                   id
                   nama
-                  hubungan
+                  hubunganKeluarga
+                  jenisKelamin
                   tempatLahir
                   tanggalLahir
                   pendidikan
@@ -238,11 +240,11 @@ describe('karyawan schema test', () => {
       .set('Accept', 'application/json')
       .set('Authorization', `Bearer ${token}`)
       .send({ query: `
-          mutation {
-            karyawanDelete(delete: [{id: "${id}"}]) {
-              id
-            }
-          }`
+            mutation {
+              karyawanDelete(delete: [{id: "${id}"}]) {
+                id
+              }
+            }`
       })
       .expect(200)
 
