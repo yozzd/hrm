@@ -57,11 +57,18 @@
                     v-model="params[form.modelValue]"
                     type="button"
                     style="width: 100%;">
-                    <Radio
-                        v-for="(option, optionIndex) in form.options" :key="optionIndex"
-                        :label="option.label">
-                    </Radio>
+                <Radio
+                    v-for="(option, optionIndex) in form.options" :key="optionIndex"
+                    :label="option.label">
+                </Radio>
                 </RadioGroup>
+                <AutoComplete
+                    v-else-if="form.itemType === 'autocomplete'"
+                    v-model="params[form.modelValue]"
+                    :data="form.data"
+                    :filter-method="autoCompleteFilterMethod"
+                    :placeholder="form.placeholder">
+                </AutoComplete>
                 </FormItem>
             </Form>
             <Alert type="error" v-if="errors.length" v-for="(error, errorIndex) in errors" :key="errorIndex">
@@ -127,6 +134,9 @@ export default {
     methods: {
         emitEventHandler(event) {
             this.$emit(event, ...Array.from(arguments).slice(1))
+        },
+        autoCompleteFilterMethod (value, option) {
+            return option.toUpperCase().indexOf(value.toUpperCase()) !== -1;
         }
     }
 }
