@@ -44,7 +44,7 @@ const PendidikanEnumType = new GraphQLEnumType({
   }
 })
 
-const personal = {
+const personal = () => ({
   tempatLahir: { type: GraphQLString },
   tanggalLahir: { type: GraphQLDate },
   tanggalBergabung: { type: GraphQLDate },
@@ -52,16 +52,16 @@ const personal = {
   agama: { type: AgamaEnumType },
   statusPernikahan: { type: StatusPernikahanEnumType },
   telepon: { type: GraphQLString }
-}
+})
 
 const KaryawanPersonalType = new GraphQLObjectType({
   name: 'KaryawanPersonalType',
-  fields: () => (personal)
+  fields: personal
 })
 
 const KaryawanPersonalInputType = new GraphQLInputObjectType({
   name: 'KaryawanPersonalInputType',
-  fields: () => (personal)
+  fields: personal
 })
 
 const KaryawanKeluargaType = new GraphQLObjectType({

@@ -176,9 +176,9 @@ export default {
         handleSelectionChange(arr) {
             this.multipleSelection = arr.map(v => ({ id: v.id }))
         },
-            show(action) {
-                this.isCreate = true
-            },
+        show(action) {
+            this.isCreate = true
+        },
         handleOnClose() {
             this.isCreate = false
         },
@@ -248,43 +248,43 @@ export default {
                 }
             })
         },
-            handleDelete() {
-                try {
-                    this.$Modal.confirm({
-                        title: 'PERHATIAN',
-                        content: '<p>Tindakan ini akan menghapus data secara permanen. Lanjutkan?</p>',
-                        okText: 'YA',
-                        cancelText: 'BATAL',
-                        loading: true,
-                        onOk: async () => {
-                            const { data } = await this.$apollo.mutate({
-                                mutation: KARYAWAN_DELETE,
-                                variables: {
-                                    delete: this.multipleSelection
-                                },
-                                update: async function (store, { data: { karyawanDelete } }) {
-                                    const data = store.readQuery({ query: KARYAWAN_ALL })
-                                    _.pullAllBy(data.karyawanAll, karyawanDelete, 'id')
-                                    store.writeQuery({ query: KARYAWAN_ALL, data })
-                                },
-                                optimisticResponse: {
-                                    __typename: 'Mutation',
-                                    karyawanDelete: this.karyawanAll
-                                }
-                            })
-                            if(data.karyawanDelete) {
-                                await this.$Modal.remove()
-                                this.$Notice.success({
-                                    title: 'Sukses',
-                                    desc: 'Data berhasil dihapus'
-                                })
+        handleDelete() {
+            try {
+                this.$Modal.confirm({
+                    title: 'PERHATIAN',
+                    content: '<p>Tindakan ini akan menghapus data secara permanen. Lanjutkan?</p>',
+                    okText: 'YA',
+                    cancelText: 'BATAL',
+                    loading: true,
+                    onOk: async () => {
+                        const { data } = await this.$apollo.mutate({
+                            mutation: KARYAWAN_DELETE,
+                            variables: {
+                                delete: this.multipleSelection
+                            },
+                            update: async function (store, { data: { karyawanDelete } }) {
+                                const data = store.readQuery({ query: KARYAWAN_ALL })
+                                _.pullAllBy(data.karyawanAll, karyawanDelete, 'id')
+                                store.writeQuery({ query: KARYAWAN_ALL, data })
+                            },
+                            optimisticResponse: {
+                                __typename: 'Mutation',
+                                karyawanDelete: this.karyawanAll
                             }
+                        })
+                        if(data.karyawanDelete) {
+                            await this.$Modal.remove()
+                            this.$Notice.success({
+                                title: 'Sukses',
+                                desc: 'Data berhasil dihapus'
+                            })
                         }
-                    })
-                } catch(err) {
-                    this.errors = errorHandler(err)
-                }
+                    }
+                })
+            } catch(err) {
+                this.errors = errorHandler(err)
             }
+        }
     }
 }
 </script>
