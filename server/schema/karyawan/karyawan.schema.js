@@ -1,7 +1,12 @@
 const { GraphQLObjectType, GraphQLList, GraphQLString } = require('graphql')
 const { GraphQLDate } = require('graphql-iso-date')
 const Karyawan = require('./karyawan.model')
-const { KaryawanType, KaryawanPersonalInputType, KaryawanKeluargaInputType, KaryawanDeleteInputType, JenisKelaminEnumType, AgamaEnumType, StatusPerkawinanEnumType } = require('./karyawan.type')
+const { 
+  KaryawanType, 
+  KaryawanPersonalInputType, 
+  KaryawanAlamatInputType, 
+  KaryawanKeluargaInputType, 
+  KaryawanDeleteInputType } = require('./karyawan.type')
 const { UserError } = require('graphql-errors')
 const auth = require('../auth/auth.service')
 const ld = require('lodash')
@@ -60,15 +65,23 @@ const Mutation = {
       id: { type: GraphQLString },
       no: { type: GraphQLString },
       nama: { type: GraphQLString },
-      personal: { type: KaryawanPersonalInputType },
-      perumahan: { type: GraphQLString },
-      blok: { type: GraphQLString },
-      noP: { type: GraphQLString },
-      rt: { type: GraphQLString },
-      rw: { type: GraphQLString },
-      kelurahan: { type: GraphQLString },
-      kecamatan: { type: GraphQLString },
-      kota: { type: GraphQLString }
+      personal: { type: KaryawanPersonalInputType }
+    },
+    resolve: auth.hasRole('personalia', async (_, args, ctx) => {
+      try {
+        const karyawan = await Karyawan.findById(args.id)
+        const merge = ld.merge(karyawan, args)
+        return await merge.save()
+      } catch(err) {
+        throw err
+      }
+    })
+  },
+  karyawanAlamatUpdate: {
+    type: KaryawanType,
+    args: {
+      id: { type: GraphQLString },
+      alamat: { type: KaryawanAlamatInputType }
     },
     resolve: auth.hasRole('personalia', async (_, args, ctx) => {
       try {

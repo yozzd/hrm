@@ -87,29 +87,33 @@ query karyawanDetail($id: String!) {
     id
     no
     nama
-    perumahan
-    blok
-    noP
-    rt
-    rw
-    kelurahan
-    kecamatan
-    kota
+    alamat {
+      perumahan
+      blok
+      noP
+      rt
+      rw
+      kelurahan
+      kecamatan
+      kota
+    }
   }
 }`
 
 export const KARYAWAN_UPDATE_ALAMAT = gql`
-mutation karyawanUpdate($id: String!, $perumahan: String, $blok: String, $noP: String, $rt: String, $rw: String, $kelurahan: String, $kecamatan: String, $kota: String) {
-  karyawanUpdate(id: $id, perumahan: $perumahan, blok: $blok, noP: $noP, rt: $rt, rw: $rw, kelurahan: $kelurahan, kecamatan: $kecamatan, kota: $kota) {
+mutation karyawanAlamatUpdate($id: String!, $alamat: KaryawanAlamatInputType) {
+  karyawanAlamatUpdate(id: $id, alamat: $alamat) {
     id
-    perumahan
-    blok
-    noP
-    rt
-    rw
-    kelurahan
-    kecamatan
-    kota
+    alamat {
+      perumahan
+      blok
+      noP
+      rt
+      rw
+      kelurahan
+      kecamatan
+      kota
+    }
   }
 }`
 

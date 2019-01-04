@@ -44,14 +44,46 @@ export default {
             editRow: null,
             isEdit: false,
             rows: [
-                { prop: 'perumahan', label: 'Perumahan' },
-                { prop: 'blok', label: 'Blok' },
-                { prop: 'noP', label: 'No' },
-                { prop: 'rt', label: 'RT' },
-                { prop: 'rw', label: 'RW' },
-                { prop: 'kelurahan', label: 'Kelurahan' },
-                { prop: 'kecamatan', label: 'Kecamatan' },
-                { prop: 'kota', label: 'Kota' }
+                { prop: 'alamat', label: 'Perumahan',
+                    render: row => {
+                        return row.perumahan
+                    }
+                },
+                { prop: 'alamat', label: 'Blok',
+                    render: row => {
+                        return row.blok
+                    }
+                },
+                { prop: 'alamat', label: 'No',
+                    render: row => {
+                        return row.noP
+                    }
+                },
+                { prop: 'alamat', label: 'RT',
+                    render: row => {
+                        return row.rt
+                    }
+                },
+                { prop: 'alamat', label: 'RW',
+                    render: row => {
+                        return row.rw
+                    }
+                },
+                { prop: 'alamat', label: 'Kelurahan',
+                    render: row => {
+                        return row.kelurahan
+                    }
+                },
+                { prop: 'alamat', label: 'Kecamatan',
+                    render: row => {
+                        return row.kecamatan
+                    }
+                },
+                { prop: 'alamat', label: 'Kota',
+                    render: row => {
+                        return row.kota
+                    }
+                }
             ],
             editForm: {
                 forms: [
@@ -70,6 +102,14 @@ export default {
     methods: {
         show(row) {
             this.isEdit = true
+            row.perumahan = row.alamat.perumahan
+            row.blok = row.alamat.blok
+            row.noP = row.alamat.noP
+            row.rt = row.alamat.rt
+            row.rw = row.alamat.rw
+            row.kelurahan = row.alamat.kelurahan
+            row.kecamatan = row.alamat.kecamatan
+            row.kota = row.alamat.kota
             this.editRow = row
         },
         handleOnClose() {
@@ -89,23 +129,25 @@ export default {
                             mutation: KARYAWAN_UPDATE_ALAMAT,
                             variables: {
                                 id: this.editRow.id,
-                                perumahan: form.model.perumahan,
-                                blok: form.model.blok,
-                                noP: form.model.noP,
-                                rt: form.model.rt,
-                                rw: form.model.rw,
-                                kelurahan: form.model.kelurahan,
-                                kecamatan: form.model.kecamatan,
-                                kota: form.model.kota
+                                alamat: {
+                                    perumahan: form.model.perumahan,
+                                    blok: form.model.blok,
+                                    noP: form.model.noP,
+                                    rt: form.model.rt,
+                                    rw: form.model.rw,
+                                    kelurahan: form.model.kelurahan,
+                                    kecamatan: form.model.kecamatan,
+                                    kota: form.model.kota
+                                }
                             },
-                            update: (store, { data: { karyawanUpdate } }) => {
+                            update: (store, { data: { karyawanAlamatUpdate } }) => {
                                 const data = store.readQuery({
                                     query: KARYAWAN_ALAMAT,
                                     variables: {
                                         id: this.$route.params.id
                                     }
                                 })
-                                const merge = _.merge(data, _.merge(data.karyawanDetail, karyawanUpdate))
+                                const merge = _.merge(data, _.merge(data.karyawanDetail, karyawanAlamatUpdate))
                                 store.writeQuery({
                                     query: KARYAWAN_ALAMAT,
                                     variables: {
@@ -116,21 +158,24 @@ export default {
                             },
                             optimisticResponse: {
                                 __typename: 'Mutation',
-                                karyawanUpdate: {
+                                karyawanAlamatUpdate: {
                                     __typename: 'KaryawanType',
                                     id: this.editRow.id,
-                                    perumahan: form.model.perumahan,
-                                    blok: form.model.blok,
-                                    noP: form.model.noP,
-                                    rt: form.model.rt,
-                                    rw: form.model.rw,
-                                    kelurahan: form.model.kelurahan,
-                                    kecamatan: form.model.kecamatan,
-                                    kota: form.model.kota
+                                    alamat: {
+                                        __typename: 'KaryawanAlamatType',
+                                        perumahan: form.model.perumahan,
+                                        blok: form.model.blok,
+                                        noP: form.model.noP,
+                                        rt: form.model.rt,
+                                        rw: form.model.rw,
+                                        kelurahan: form.model.kelurahan,
+                                        kecamatan: form.model.kecamatan,
+                                        kota: form.model.kota
+                                    }
                                 }
                             }
                         })
-                        if(data.karyawanUpdate) {
+                        if(data.karyawanAlamatUpdate) {
                             form.resetFields()
                             this.isEdit = false
                             this.editRow = ''

@@ -219,35 +219,49 @@ describe('karyawan schema test', () => {
     done()
   })
 
-  //  test('should update karyawan address with authorization', async (done) => {
-  //    const { update } = field
-  //    const response = await request(uri)
-  //      .post('/graphql')
-  //      .set('Accept', 'application/json')
-  //      .set('Authorization', `Bearer ${token}`)
-  //      .send({ query: `
-  //        mutation {
-  //          karyawanUpdate(id: "${id}", perumahan: "${update.perumahan}", blok: "${update.blok}", noP: "${update.noP}", rt: "${update.rt}", rw: "${update.rw}", kelurahan: "${update.kelurahan}", kecamatan: "${update.kecamatan}", kota: "${update.kota}")
-  //          {
-  //            id
-  //            perumahan
-  //            blok
-  //            noP
-  //            rt
-  //            rw
-  //            kelurahan
-  //            kecamatan
-  //            kota
-  //          }
-  //        }`
-  //      })
-  //      .expect(200)
-  //
-  //    const { data } = response.body
-  //    expect(data.karyawanUpdate.perumahan).toEqual(update.perumahan)
-  //    done()
-  //  })
-  //
+  test('harusnya berhasil update alamat karyawan', async (done) => {
+    const { update } = field
+    const response = await request(uri)
+      .post('/graphql')
+      .set('Accept', 'application/json')
+      .set('Authorization', `Bearer ${token}`)
+      .send({ query: `
+        mutation karyawanAlamatUpdate($id: String!, $alamat: KaryawanAlamatInputType) {
+          karyawanAlamatUpdate(id: $id, alamat: $alamat) {
+            id
+            alamat {
+              perumahan
+              blok
+              noP
+              rt
+              rw
+              kelurahan
+              kecamatan
+              kota
+            }
+          }
+        }`,
+        variables: {
+          id: id,
+          alamat: {
+            perumahan: update.perumahan,
+            blok: update.blok,
+            noP: update.noP,
+            rt: update.rt,
+            rw: update.rw,
+            kelurahan: update.kelurahan,
+            kecamatan: update.kecamatan,
+            kota: update.kota
+          }
+        }
+      })
+      .expect(200)
+
+    const { data } = response.body
+    expect(data.karyawanAlamatUpdate.alamat.perumahan).toEqual(update.perumahan)
+    done()
+  })
+
   //  test('create keluarga karyawan', async (done) => {
   //    const { update } = field
   //    const response = await request(uri)
@@ -338,12 +352,12 @@ describe('karyawan schema test', () => {
   //      .set('Accept', 'application/json')
   //      .set('Authorization', `Bearer ${token}`)
   //      .send({ query: `
-    //                mutation {
+  //                mutation {
   //                  karyawanDelete(delete: [{id: "${id}"}]) {
   //                    id
   //                  }
   //                }`
-    //      })
+  //      })
   //      .expect(200)
   //
   //    const { data } = response.body
