@@ -262,106 +262,138 @@ describe('karyawan schema test', () => {
     done()
   })
 
-  //  test('create keluarga karyawan', async (done) => {
-  //    const { update } = field
-  //    const response = await request(uri)
-  //      .post('/graphql')
-  //      .set('Accept', 'application/json')
-  //      .set('Authorization', `Bearer ${token}`)
-  //      .send({ query: `
-  //            mutation {
-  //              karyawanKeluargaCreate(id: "${id}", keluarga: {nama: "${update.keluarga[0].nama}", hubunganKeluarga: "${update.keluarga[0].hubunganKeluarga}", jenisKelamin: ${update.keluarga[0].jenisKelamin}, tempatLahir: "${update.keluarga[0].tempatLahir}", tanggalLahir: "${update.keluarga[0].tanggalLahir}", pendidikan: ${update.keluarga[0].pendidikan}, pekerjaan: "${update.keluarga[0].pekerjaan}", alamat: "${update.keluarga[0].alamat}"})
-  //              {
-  //                id
-  //                keluarga {
-  //                  id
-  //                  nama
-  //                  hubunganKeluarga
-  //                  jenisKelamin
-  //                  tempatLahir
-  //                  tanggalLahir
-  //                  pendidikan
-  //                  pekerjaan
-  //                  alamat
-  //                }
-  //              }
-  //            }`
-  //      })
-  //      .expect(200)
-  //
-  //    const { data } = response.body
-  //    keluargaId = data.karyawanKeluargaCreate.keluarga[0].id
-  //    expect(data.karyawanKeluargaCreate.keluarga[0].nama).toEqual(update.keluarga[0].nama)
-  //    done()
-  //  })
-  //
-  //  test('update keluarga karyawan', async (done) => {
-  //    const { update } = field
-  //    const response = await request(uri)
-  //      .post('/graphql')
-  //      .set('Accept', 'application/json')
-  //      .set('Authorization', `Bearer ${token}`)
-  //      .send({ query: `
-  //            mutation {
-  //              karyawanKeluargaUpdate(id: "${id}", keluargaId: "${keluargaId}", keluarga: {nama: "Jenny Doe", hubunganKeluarga: "${update.keluarga[0].hubunganKeluarga}", jenisKelamin: ${update.keluarga[0].jenisKelamin}, tempatLahir: "${update.keluarga[0].tempatLahir}", tanggalLahir: "${update.keluarga[0].tanggalLahir}", pendidikan: ${update.keluarga[0].pendidikan}, pekerjaan: "${update.keluarga[0].pekerjaan}", alamat: "${update.keluarga[0].alamat}"})
-  //              {
-  //                id
-  //                keluarga {
-  //                  id
-  //                  nama
-  //                  hubunganKeluarga
-  //                  jenisKelamin
-  //                  tempatLahir
-  //                  tanggalLahir
-  //                  pendidikan
-  //                  pekerjaan
-  //                  alamat
-  //                }
-  //              }
-  //            }`
-  //      })
-  //      .expect(200)
-  //
-  //    const { data } = response.body
-  //    expect(data.karyawanKeluargaUpdate.keluarga[0].nama).toEqual('Jenny Doe')
-  //    done()
-  //  })
-  //
-  //  test('delete keluarga karyawan', async (done) => {
-  //    const response = await request(uri)
-  //      .post('/graphql')
-  //      .set('Accept', 'application/json')
-  //      .set('Authorization', `Bearer ${token}`)
-  //      .send({ query: `
-  //              mutation {
-  //                karyawanKeluargaDelete(id: "${id}", delete: [{id: "${keluargaId}"}]) {
-  //                  id
-  //                }
-  //              }`
-  //      })
-  //      .expect(200)
-  //
-  //    const { data } = response.body
-  //    expect(data.karyawanKeluargaDelete[0].id).toEqual(keluargaId)
-  //    done()
-  //  })
-  //
-  //  test('should delete karyawan with valid authorization', async (done) => {
-  //    const response = await request(uri)
-  //      .post('/graphql')
-  //      .set('Accept', 'application/json')
-  //      .set('Authorization', `Bearer ${token}`)
-  //      .send({ query: `
-  //                mutation {
-  //                  karyawanDelete(delete: [{id: "${id}"}]) {
-  //                    id
-  //                  }
-  //                }`
-  //      })
-  //      .expect(200)
-  //
-  //    const { data } = response.body
-  //    expect(data.karyawanDelete[0].id).toEqual(id)
-  //    done()
-  //  })
+  test('create keluarga karyawan', async (done) => {
+    const { update } = field
+    const response = await request(uri)
+      .post('/graphql')
+      .set('Accept', 'application/json')
+      .set('Authorization', `Bearer ${token}`)
+      .send({ query: `
+        mutation karyawanKeluargaCreate($id: String!, $keluarga: KaryawanKeluargaInputType) {
+          karyawanKeluargaCreate(id: $id, keluarga: $keluarga) {
+            id
+            keluarga {
+              id
+              nama
+              hubunganKeluarga
+              jenisKelamin
+              tempatLahir
+              tanggalLahir
+              pendidikan
+              pekerjaan
+              alamat
+            }
+          }
+        }`,
+        variables: {
+          id: id,
+          keluarga: {
+            nama: update.keluarga[0].nama,
+            hubunganKeluarga: update.keluarga[0].hubunganKeluarga,
+            jenisKelamin: update.keluarga[0].jenisKelamin,
+            tempatLahir: update.keluarga[0].tempatLahir,
+            tanggalLahir: update.keluarga[0].tanggalLahir,
+            pendidikan: update.keluarga[0].pendidikan,
+            pekerjaan: update.keluarga[0].pekerjaan,
+            alamat: update.keluarga[0].alamat
+          }
+        }
+      })
+      .expect(200)
+
+    const { data } = response.body
+    keluargaId = data.karyawanKeluargaCreate.keluarga[0].id
+    expect(data.karyawanKeluargaCreate.keluarga[0].nama).toEqual(update.keluarga[0].nama)
+    done()
+  })
+
+  test('update keluarga karyawan', async (done) => {
+    const { update } = field
+    const response = await request(uri)
+      .post('/graphql')
+      .set('Accept', 'application/json')
+      .set('Authorization', `Bearer ${token}`)
+      .send({ query: `
+        mutation karyawanKeluargaUpdate($id: String!, $keluarga: KaryawanKeluargaInputType) {
+          karyawanKeluargaUpdate(id: $id, keluarga: $keluarga) {
+            id
+            keluarga {
+              id
+              nama
+              hubunganKeluarga
+              jenisKelamin
+              tempatLahir
+              tanggalLahir
+              pendidikan
+              pekerjaan
+              alamat
+            }
+          }
+        }`,
+        variables: {
+          id: id,
+          keluarga: {
+            id: keluargaId,
+            nama: 'Jenny Doe',
+            hubunganKeluarga: update.keluarga[0].hubunganKeluarga,
+            jenisKelamin: update.keluarga[0].jenisKelamin,
+            tempatLahir: update.keluarga[0].tempatLahir,
+            tanggalLahir: update.keluarga[0].tanggalLahir,
+            pendidikan: update.keluarga[0].pendidikan,
+            pekerjaan: update.keluarga[0].pekerjaan,
+            alamat: update.keluarga[0].alamat
+          }
+        }
+      })
+      .expect(200)
+
+    const { data } = response.body
+    expect(data.karyawanKeluargaUpdate.keluarga[0].nama).toEqual('Jenny Doe')
+    done()
+  })
+
+  test('delete keluarga karyawan', async (done) => {
+    const response = await request(uri)
+      .post('/graphql')
+      .set('Accept', 'application/json')
+      .set('Authorization', `Bearer ${token}`)
+      .send({ query: `
+        mutation karyawanKeluargaDelete($id: String!, $delete: [KaryawanDeleteInputType]!) {
+          karyawanKeluargaDelete(id: $id, delete: $delete) {
+            id
+          }
+        }`,
+        variables: {
+          id: id,
+          delete: [{ id: keluargaId }]
+        }
+      })
+      .expect(200)
+
+    const { data } = response.body
+    expect(data.karyawanKeluargaDelete[0].id).toEqual(keluargaId)
+    done()
+  })
+
+  test('should delete karyawan with valid authorization', async (done) => {
+    const response = await request(uri)
+      .post('/graphql')
+      .set('Accept', 'application/json')
+      .set('Authorization', `Bearer ${token}`)
+      .send({ query: `
+        mutation karyawanDelete($delete: [KaryawanDeleteInputType]!) {
+          karyawanDelete(delete: $delete) {
+            id
+          }
+        }`,
+        variables: {
+          delete: [{id: id}]
+        }
+      })
+      .expect(200)
+
+    const { data } = response.body
+    expect(data.karyawanDelete[0].id).toEqual(id)
+    done()
+  })
 })

@@ -139,8 +139,7 @@ query karyawanDetail($id: String!) {
 
 export const KARYAWAN_CREATE_KELUARGA = gql`
 mutation karyawanKeluargaCreate($id: String!, $keluarga: KaryawanKeluargaInputType) {
-  karyawanKeluargaCreate(id: $id, keluarga: $keluarga)
-  {
+  karyawanKeluargaCreate(id: $id, keluarga: $keluarga) {
     id
     keluarga {
       id
@@ -157,9 +156,8 @@ mutation karyawanKeluargaCreate($id: String!, $keluarga: KaryawanKeluargaInputTy
 }`
 
 export const KARYAWAN_UPDATE_KELUARGA = gql`
-mutation karyawanKeluargaUpdate($id: String!, $keluargaId: String!, $keluarga: KaryawanKeluargaInputType) {
-  karyawanKeluargaUpdate(id: $id, keluargaId: $keluargaId, keluarga: $keluarga)
-  {
+mutation karyawanKeluargaUpdate($id: String!, $keluarga: KaryawanKeluargaInputType) {
+  karyawanKeluargaUpdate(id: $id, keluarga: $keluarga) {
     id
     keluarga {
       id

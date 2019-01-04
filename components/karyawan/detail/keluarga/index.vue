@@ -85,7 +85,7 @@ export default {
                 },
                 { title: 'Pekerjaan', key: 'pekerjaan', width: 180 },
                 { title: 'Alamat', key: 'alamat', width: 300 },
-                { title: 'Aksi', key: 'action', width: 150, align: 'center', fixed: 'right',
+                { title: 'Aksi', key: 'action', width: 100, align: 'center', fixed: 'right',
                     render: (h, params) => {
                         return h('div', [
                             h('Button', {
@@ -310,8 +310,8 @@ export default {
                             mutation: KARYAWAN_UPDATE_KELUARGA,
                             variables: {
                                 id: this.$route.params.id,
-                                keluargaId: this.editRow.id,
                                 keluarga: {
+                                    id: this.editRow.id,
                                     nama: form.model.nama,
                                     hubunganKeluarga: form.model.hubunganKeluarga,
                                     jenisKelamin: form.model.jenisKelamin,
@@ -343,7 +343,6 @@ export default {
                                 karyawanKeluargaUpdate: {
                                     __typename: 'KaryawanType',
                                     id: this.$route.params.id,
-                                    keluargaId: this.editRow.id,
                                     keluarga: [{
                                         __typename: 'KaryawanKeluargaType',
                                         id: this.editRow.id,
