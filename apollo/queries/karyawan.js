@@ -12,7 +12,7 @@ query {
       tanggalBergabung
       jenisKelamin
       agama
-      statusPerkawinan
+      statusPernikahan
       telepon
     }
   }
@@ -39,7 +39,7 @@ mutation karyawanCreate($no: String!, $nama: String!, $personal: KaryawanPersona
       tanggalBergabung
       jenisKelamin
       agama
-      statusPerkawinan
+      statusPernikahan
       telepon
     }
   }
@@ -51,29 +51,33 @@ query karyawanDetail($id: String!) {
     id
     no
     nama
-    tempatLahir
-    tanggalLahir
-    tanggalBergabung
-    jenisKelamin
-    agama
-    statusPerkawinan
-    telepon
+    personal {
+      tempatLahir
+      tanggalLahir
+      tanggalBergabung
+      jenisKelamin
+      agama
+      statusPernikahan
+      telepon
+    }
   }
 }`
 
 export const KARYAWAN_UPDATE_PERSONAL = gql`
-mutation karyawanUpdate($id: String!, $no: String!, $nama: String!, $tempatLahir: String!, $tanggalLahir: Date!, $tanggalBergabung: Date!, $jenisKelamin: JenisKelaminEnumType!, $agama: AgamaEnumType!, $statusPerkawinan: StatusPerkawinanEnumType!, $telepon: String!) {
-  karyawanUpdate(id: $id, no: $no, nama: $nama, tempatLahir: $tempatLahir, tanggalLahir: $tanggalLahir, tanggalBergabung: $tanggalBergabung, jenisKelamin: $jenisKelamin, agama: $agama, statusPerkawinan: $statusPerkawinan, telepon: $telepon) {
+mutation karyawanUpdate($id: String!, $no: String!, $nama: String!, $personal: KaryawanPersonalInputType) {
+  karyawanUpdate(id: $id, no: $no, nama: $nama, personal: $personal) {
     id
     no
     nama
-    tempatLahir
-    tanggalLahir
-    tanggalBergabung
-    jenisKelamin
-    agama
-    statusPerkawinan
-    telepon
+    personal {
+      tempatLahir
+      tanggalLahir
+      tanggalBergabung
+      jenisKelamin
+      agama
+      statusPernikahan
+      telepon
+    }
   }
 }`
 

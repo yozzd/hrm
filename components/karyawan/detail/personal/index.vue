@@ -47,21 +47,33 @@ export default {
             rows: [
                 { prop: 'no', label: 'No Karyawan' },
                 { prop: 'nama', label: 'Nama Karyawan' },
-                { prop: 'tempatLahir', label: 'Tempat Lahir' },
-                { prop: 'tanggalLahir', label: 'Tanggal Lahir',
-                    formatter: row => {
-                        return moment(new Date(row)).format('DD-MM-YYYY')
+                { prop: 'personal', label: 'Tempat Lahir',
+                    render: row => {
+                        return row.tempatLahir
                     }
                 },
-                { prop: 'tanggalBergabung', label: 'Tanggal Bergabung',
-                    formatter: row => {
-                        return moment(new Date(row)).format('DD-MM-YYYY')
+                { prop: 'personal', label: 'Tanggal Lahir',
+                    render: row => {
+                        return moment(new Date(row.tanggalLahir)).format('DD-MM-YYYY')
                     }
                 },
-                { prop: 'jenisKelamin', label: 'Jenis Kelamin' },
-                { prop: 'agama', label: 'Agama' },
-                { prop: 'statusPerkawinan', label: 'Status Perkawinan',
-                    formatter: row => {
+                { prop: 'personal', label: 'Tanggal Bergabung',
+                    render: row => {
+                        return moment(new Date(row.tanggalBergabung)).format('DD-MM-YYYY')
+                    }
+                },
+                { prop: 'personal', label: 'Jenis Kelamin',
+                    render: row => {
+                        return row.jenisKelamin
+                    }
+                },
+                { prop: 'personal', label: 'Agama',
+                    render: row => {
+                        return row.agama
+                    }
+                },
+                { prop: 'personal', label: 'Status Pernikahan',
+                    render: row => {
                         const g = {
                             'BM': 'Belum Menikah',
                             'M0': 'Menikah 0 Anak',
@@ -69,10 +81,14 @@ export default {
                             'M3': 'Menikah 2 Anak',
                             'M3': 'Menikah 3 Anak'
                         }
-                        return g[row]
+                        return g[row.statusPernikahan]
                     }
                 },
-                { prop: 'telepon', label: 'Telepon' }
+                { prop: 'personal', label: 'Telepon',
+                    render: row => {
+                        return row.telepon
+                    }
+                }
             ],
             editForm: {
                 forms: [
@@ -122,7 +138,7 @@ export default {
                             { required: true, message: 'Pilih Agama', trigger: 'change' }
                         ]
                     },
-                    { prop: 'statusPerkawinan', label: 'Status Perkawinan', itemType: 'select',
+                    { prop: 'statusPernikahan', label: 'Status Pernikahan', itemType: 'select',
                         options: [
                             { label: 'Belum Menikah', value: 'BM' },
                             { label: 'Menikah 0 Anak', value: 'M0' },
@@ -131,7 +147,7 @@ export default {
                             { label: 'Menikah 3 Anak', value: 'M3' }
                         ],
                         rules: [
-                            { required: true, message: 'Pilih Status Perkawinan', trigger: 'change' }
+                            { required: true, message: 'Pilih Status Pernikahan', trigger: 'change' }
                         ]
                     },
                     { prop: 'telepon', label: 'Telepon',
@@ -146,8 +162,13 @@ export default {
     methods: {
         show(row) {
             this.isEdit = true
-            row.tanggalLahir = new Date(row.tanggalLahir)
-            row.tanggalBergabung = new Date(row.tanggalBergabung)
+            row.tempatLahir = row.personal.tempatLahir
+            row.tanggalLahir = new Date(row.personal.tanggalLahir)
+            row.tanggalBergabung = new Date(row.personal.tanggalBergabung)
+            row.jenisKelamin = row.personal.jenisKelamin
+            row.agama = row.personal.agama
+            row.statusPernikahan = row.personal.statusPernikahan
+            row.telepon = row.personal.telepon
             this.editRow = row
         },
         handleOnClose() {
@@ -169,13 +190,15 @@ export default {
                                 id: this.editRow.id,
                                 no: form.model.no,
                                 nama: form.model.nama,
-                                tempatLahir: form.model.tempatLahir,
-                                tanggalLahir: moment(new Date(form.model.tanggalLahir)).format('YYYY-MM-DD'),
-                                tanggalBergabung: moment(new Date(form.model.tanggalBergabung)).format('YYYY-MM-DD'),
-                                jenisKelamin: form.model.jenisKelamin,
-                                agama: form.model.agama,
-                                statusPerkawinan: form.model.statusPerkawinan,
-                                telepon: form.model.telepon
+                                personal: {
+                                    tempatLahir: form.model.tempatLahir,
+                                    tanggalLahir: moment(new Date(form.model.tanggalLahir)).format('YYYY-MM-DD'),
+                                    tanggalBergabung: moment(new Date(form.model.tanggalBergabung)).format('YYYY-MM-DD'),
+                                    jenisKelamin: form.model.jenisKelamin,
+                                    agama: form.model.agama,
+                                    statusPernikahan: form.model.statusPernikahan,
+                                    telepon: form.model.telepon
+                                }
                             },
                             update: (store, { data: { karyawanUpdate } }) => {
                                 const data = store.readQuery({
@@ -200,13 +223,16 @@ export default {
                                     id: this.editRow.id,
                                     no: form.model.no,
                                     nama: form.model.nama,
-                                    tempatLahir: form.model.tempatLahir,
-                                    tanggalLahir: moment(new Date(form.model.tanggalLahir)).format('YYYY-MM-DD'),
-                                    tanggalBergabung: moment(new Date(form.model.tanggalBergabung)).format('YYYY-MM-DD'),
-                                    jenisKelamin: form.model.jenisKelamin,
-                                    agama: form.model.agama,
-                                    statusPerkawinan: form.model.statusPerkawinan,
-                                    telepon: form.model.telepon
+                                    personal: {
+                                        __typename: 'KaryawanPersonalType',
+                                        tempatLahir: form.model.tempatLahir,
+                                        tanggalLahir: moment(new Date(form.model.tanggalLahir)).format('YYYY-MM-DD'),
+                                        tanggalBergabung: moment(new Date(form.model.tanggalBergabung)).format('YYYY-MM-DD'),
+                                        jenisKelamin: form.model.jenisKelamin,
+                                        agama: form.model.agama,
+                                        statusPernikahan: form.model.statusPernikahan,
+                                        telepon: form.model.telepon
+                                    }
                                 }
                             }
                         })

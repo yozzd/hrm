@@ -16,7 +16,7 @@ const field = {
     tanggalBergabung: '2018-10-15',
     jenisKelamin: 'L',
     agama: 'Islam',
-    statusPerkawinan: 'M1',
+    statusPernikahan: 'M1',
     telepon: '082157777231',
     perumahan: 'Mekar Sari',
     blok: 'C',
@@ -35,7 +35,7 @@ const field = {
     tanggalBergabung: '2018-10-15',
     jenisKelamin: 'L',
     agama: 'Islam',
-    statusPerkawinan: 'M1',
+    statusPernikahan: 'M1',
     telepon: '082157777231',
     perumahan: 'Mekar Sari',
     blok: 'C',
@@ -103,7 +103,7 @@ describe('karyawan schema test', () => {
               tanggalBergabung
               jenisKelamin
               agama
-              statusPerkawinan
+              statusPernikahan
               telepon
             }
           }
@@ -117,7 +117,7 @@ describe('karyawan schema test', () => {
             tanggalBergabung: create.tanggalBergabung,
             jenisKelamin: create.jenisKelamin,
             agama: create.agama,
-            statusPerkawinan: create.statusPerkawinan,
+            statusPernikahan: create.statusPernikahan,
             telepon: create.telepon
           }
         }
@@ -148,7 +148,7 @@ describe('karyawan schema test', () => {
               tanggalBergabung
               jenisKelamin
               agama
-              statusPerkawinan
+              statusPernikahan
               telepon
             }
           }
@@ -162,7 +162,7 @@ describe('karyawan schema test', () => {
             tanggalBergabung: create.tanggalBergabung,
             jenisKelamin: create.jenisKelamin,
             agama: create.agama,
-            statusPerkawinan: create.statusPerkawinan,
+            statusPernikahan: create.statusPernikahan,
             telepon: create.telepon
           }
         }
@@ -174,36 +174,51 @@ describe('karyawan schema test', () => {
     done()
   })
 
-  //  test('should update karyawan basic with authorization', async (done) => {
-  //    const { update } = field
-  //    const response = await request(uri)
-  //      .post('/graphql')
-  //      .set('Accept', 'application/json')
-  //      .set('Authorization', `Bearer ${token}`)
-  //      .send({ query: `
-  //        mutation {
-  //          karyawanUpdate(id: "${id}", no: "${update.no}", nama: "${update.nama}", tempatLahir: "${update.tempatLahir}", tanggalLahir: "${update.tanggalLahir}", tanggalBergabung: "${update.tanggalBergabung}", jenisKelamin: ${update.jenisKelamin}, agama: ${update.agama}, statusPerkawinan: ${update.statusPerkawinan}, telepon: "${update.telepon}")
-  //          {
-  //            id
-  //            no
-  //            nama
-  //            tempatLahir
-  //            tanggalLahir
-  //            tanggalBergabung
-  //            jenisKelamin
-  //            agama
-  //            statusPerkawinan
-  //            telepon
-  //          }
-  //        }`
-  //      })
-  //      .expect(200)
-  //
-  //    const { data } = response.body
-  //    expect(data.karyawanUpdate.tempatLahir).toEqual(update.tempatLahir)
-  //    done()
-  //  })
-  //
+  test('harusnya berhasil update karyawan', async (done) => {
+    const { update } = field
+    const response = await request(uri)
+      .post('/graphql')
+      .set('Accept', 'application/json')
+      .set('Authorization', `Bearer ${token}`)
+      .send({ query: `
+        mutation karyawanUpdate($id: String!, $no: String!, $nama: String!, $personal: KaryawanPersonalInputType) {
+          karyawanUpdate(id: $id, no: $no, nama: $nama, personal: $personal) {
+            id
+            no
+            nama
+            personal {
+              tempatLahir
+              tanggalLahir
+              tanggalBergabung
+              jenisKelamin
+              agama
+              statusPernikahan
+              telepon
+            }
+          }
+        }`,
+        variables: {
+          id: id,
+          no: update.no,
+          nama: update.nama,
+          personal: {
+            tempatLahir: update.tempatLahir,
+            tanggalLahir: update.tanggalLahir,
+            tanggalBergabung: update.tanggalBergabung,
+            jenisKelamin: update.jenisKelamin,
+            agama: update.agama,
+            statusPernikahan: update.statusPernikahan,
+            telepon: update.telepon
+          }
+        }
+      })
+      .expect(200)
+
+    const { data } = response.body
+    expect(data.karyawanUpdate.personal.tempatLahir).toEqual(update.tempatLahir)
+    done()
+  })
+
   //  test('should update karyawan address with authorization', async (done) => {
   //    const { update } = field
   //    const response = await request(uri)
@@ -294,12 +309,12 @@ describe('karyawan schema test', () => {
   //      .expect(200)
   //
   //    const { data } = response.body
-    //    expect(data.karyawanKeluargaUpdate.keluarga[0].nama).toEqual('Jenny Doe')
+  //    expect(data.karyawanKeluargaUpdate.keluarga[0].nama).toEqual('Jenny Doe')
   //    done()
   //  })
   //
   //  test('delete keluarga karyawan', async (done) => {
-    //    const response = await request(uri)
+  //    const response = await request(uri)
   //      .post('/graphql')
   //      .set('Accept', 'application/json')
   //      .set('Authorization', `Bearer ${token}`)

@@ -30,7 +30,6 @@ export default {
     },
     data() {
         return {
-            karyawanAll: [],
             select: '',
             disabledPrevious: false,
             disabledNext: false,

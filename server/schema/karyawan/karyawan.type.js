@@ -19,8 +19,8 @@ const AgamaEnumType = new GraphQLEnumType({
   }
 })
 
-const StatusPerkawinanEnumType = new GraphQLEnumType({
-  name: 'StatusPerkawinanEnumType',
+const StatusPernikahanEnumType = new GraphQLEnumType({
+  name: 'StatusPernikahanEnumType',
   values: {
     BM: { value: 0 },
     M0: { value: 1 },
@@ -50,7 +50,7 @@ const personal = {
   tanggalBergabung: { type: GraphQLDate },
   jenisKelamin: { type: JenisKelaminEnumType },
   agama: { type: AgamaEnumType },
-  statusPerkawinan: { type: StatusPerkawinanEnumType },
+  statusPernikahan: { type: StatusPernikahanEnumType },
   telepon: { type: GraphQLString }
 }
 
@@ -126,5 +126,5 @@ module.exports = {
   KaryawanDeleteInputType,
   JenisKelaminEnumType,
   AgamaEnumType,
-  StatusPerkawinanEnumType
+  StatusPernikahanEnumType
 }

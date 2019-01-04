@@ -4,12 +4,14 @@
         <h3>Daftar Karyawan</h3>
         </Row>
         <Row>
+
         <data-table :data="karyawanAll" :filter-options="filterOptions" :columns="columns" :loading="$apollo.loading" @on-selection-change="handleSelectionChange">
             <ButtonGroup slot="action">
             <Button type="primary" custom-icon="iconfont icon-plus" @click="show('create')">TAMBAH</Button>
             <Button type="error" custom-icon="iconfont icon-delete" :disabled="!multipleSelection.length" @click="handleDelete">HAPUS</Button>
             </ButtonGroup>
         </data-table>
+
         <drawer title="Tambah Karyawan" width="300" v-if="isCreate" :value="isCreate" :form-options="createForm" :errors="errors" @cancel="handleCancel" @action="handleSave" @on-close="handleOnClose" save-button />
         </Row>
     </div>
@@ -149,7 +151,7 @@ export default {
                             { required: true, message: 'Pilih Agama', trigger: 'change' }
                         ]
                     },
-                    { prop: 'statusPerkawinan', label: 'Status Perkawinan', itemType: 'select',
+                    { prop: 'statusPernikahan', label: 'Status Pernikahan', itemType: 'select',
                         options: [
                             { label: 'Belum Menikah', value: 'BM' },
                             { label: 'Menikah 0 Anak', value: 'M0' },
@@ -158,7 +160,7 @@ export default {
                             { label: 'Menikah 3 Anak', value: 'M3' }
                         ],
                         rules: [
-                            { required: true, message: 'Pilih Status Perkawinan', trigger: 'change' }
+                            { required: true, message: 'Pilih Status Pernikahan', trigger: 'change' }
                         ]
                     },
                     { prop: 'telepon', label: 'Telepon',
@@ -201,7 +203,7 @@ export default {
                                     tanggalBergabung: moment(new Date(form.model.tanggalBergabung)).format('YYYY-MM-DD'),
                                     jenisKelamin: form.model.jenisKelamin,
                                     agama: form.model.agama,
-                                    statusPerkawinan: form.model.statusPerkawinan,
+                                    statusPernikahan: form.model.statusPernikahan,
                                     telepon: form.model.telepon
                                 }
                             },
@@ -224,7 +226,7 @@ export default {
                                         tanggalBergabung: moment(new Date(form.model.tanggalBergabung)).format('YYYY-MM-DD'),
                                         jenisKelamin: form.model.jenisKelamin,
                                         agama: form.model.agama,
-                                        statusPerkawinan: form.model.statusPerkawinan,
+                                        statusPernikahan: form.model.statusPernikahan,
                                         telepon: form.model.telepon
                                     }
                                 }
