@@ -44,6 +44,26 @@ const PendidikanEnumType = new GraphQLEnumType({
   }
 })
 
+const personal = {
+  tempatLahir: { type: GraphQLString },
+  tanggalLahir: { type: GraphQLDate },
+  tanggalBergabung: { type: GraphQLDate },
+  jenisKelamin: { type: JenisKelaminEnumType },
+  agama: { type: AgamaEnumType },
+  statusPerkawinan: { type: StatusPerkawinanEnumType },
+  telepon: { type: GraphQLString }
+}
+
+const KaryawanPersonalType = new GraphQLObjectType({
+  name: 'KaryawanPersonalType',
+  fields: () => (personal)
+})
+
+const KaryawanPersonalInputType = new GraphQLInputObjectType({
+  name: 'KaryawanPersonalInputType',
+  fields: () => (personal)
+})
+
 const KaryawanKeluargaType = new GraphQLObjectType({
   name: 'KaryawanKeluargaType',
   fields: () => ({
@@ -79,13 +99,7 @@ const KaryawanType = new GraphQLObjectType({
     id: { type: GraphQLString },
     no: { type: GraphQLString },
     nama: { type: GraphQLString },
-    tempatLahir: { type: GraphQLString },
-    tanggalLahir: { type: GraphQLDate },
-    tanggalBergabung: { type: GraphQLDate },
-    jenisKelamin: { type: JenisKelaminEnumType },
-    agama: { type: AgamaEnumType },
-    statusPerkawinan: { type: StatusPerkawinanEnumType },
-    telepon: { type: GraphQLString },
+    personal: { type: KaryawanPersonalType },
     perumahan: { type: GraphQLString },
     blok: { type: GraphQLString },
     noP: { type: GraphQLString },
@@ -107,7 +121,7 @@ const KaryawanDeleteInputType = new GraphQLInputObjectType({
 
 module.exports = {
   KaryawanType,
-  KaryawanKeluargaType,
+  KaryawanPersonalInputType,
   KaryawanKeluargaInputType,
   KaryawanDeleteInputType,
   JenisKelaminEnumType,

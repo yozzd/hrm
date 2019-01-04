@@ -1,7 +1,7 @@
 const { GraphQLObjectType, GraphQLList, GraphQLString } = require('graphql')
 const { GraphQLDate } = require('graphql-iso-date')
 const Karyawan = require('./karyawan.model')
-const { KaryawanType, KaryawanKeluargaType, KaryawanKeluargaInputType, KaryawanDeleteInputType, JenisKelaminEnumType, AgamaEnumType, StatusPerkawinanEnumType } = require('./karyawan.type')
+const { KaryawanType, KaryawanPersonalInputType, KaryawanKeluargaInputType, KaryawanDeleteInputType, JenisKelaminEnumType, AgamaEnumType, StatusPerkawinanEnumType } = require('./karyawan.type')
 const { UserError } = require('graphql-errors')
 const auth = require('../auth/auth.service')
 const ld = require('lodash')
@@ -40,13 +40,7 @@ const Mutation = {
     args: {
       no: { type: GraphQLString },
       nama: { type: GraphQLString },
-      tempatLahir: { type: GraphQLString },
-      tanggalLahir: { type: GraphQLDate },
-      tanggalBergabung: { type: GraphQLDate },
-      jenisKelamin: { type: JenisKelaminEnumType },
-      agama: { type: AgamaEnumType },
-      statusPerkawinan: { type: StatusPerkawinanEnumType },
-      telepon: { type: GraphQLString }
+      personal: { type: KaryawanPersonalInputType }
     },
     resolve: auth.hasRole('personalia', async (_, args, ctx) => {
       try {

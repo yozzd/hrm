@@ -6,10 +6,15 @@ query {
     id
     no
     nama
-    tempatLahir
-    tanggalLahir
-    tanggalBergabung
-    jenisKelamin
+    personal {
+      tempatLahir
+      tanggalLahir
+      tanggalBergabung
+      jenisKelamin
+      agama
+      statusPerkawinan
+      telepon
+    }
   }
 }`
 
@@ -23,18 +28,20 @@ query {
 }`
 
 export const KARYAWAN_CREATE = gql`
-mutation karyawanCreate($no: String!, $nama: String!, $tempatLahir: String!, $tanggalLahir: Date!, $tanggalBergabung: Date!, $jenisKelamin: JenisKelaminEnumType!, $agama: AgamaEnumType!, $statusPerkawinan: StatusPerkawinanEnumType!, $telepon: String!) {
-  karyawanCreate(no: $no, nama: $nama, tempatLahir: $tempatLahir, tanggalLahir: $tanggalLahir, tanggalBergabung: $tanggalBergabung, jenisKelamin: $jenisKelamin, agama: $agama, statusPerkawinan: $statusPerkawinan, telepon: $telepon) {
+mutation karyawanCreate($no: String!, $nama: String!, $personal: KaryawanPersonalInputType) {
+  karyawanCreate(no: $no, nama: $nama, personal: $personal) {
     id
     no
     nama
-    tempatLahir
-    tanggalLahir
-    tanggalBergabung
-    jenisKelamin
-    agama
-    statusPerkawinan
-    telepon
+    personal {
+      tempatLahir
+      tanggalLahir
+      tanggalBergabung
+      jenisKelamin
+      agama
+      statusPerkawinan
+      telepon
+    }
   }
 }`
 

@@ -10,7 +10,6 @@
             <Button type="error" custom-icon="iconfont icon-delete" :disabled="!multipleSelection.length" @click="handleDelete">HAPUS</Button>
             </ButtonGroup>
         </data-table>
-
         <drawer title="Tambah Karyawan" width="300" v-if="isCreate" :value="isCreate" :form-options="createForm" :errors="errors" @cancel="handleCancel" @action="handleSave" @on-close="handleOnClose" save-button />
         </Row>
     </div>
@@ -49,9 +48,9 @@ export default {
                 }
             },
             columns: [
-                { type: 'selection', width: 40, align: 'center' },
-                { title: '#', width: 60, align: 'center', slot: 'reIndex' },
-                { title: 'No Karyawan', key: 'no', sortable: true,
+                { type: 'selection', width: 50, align: 'center', fixed: 'left' },
+                { title: '#', width: 60, align: 'center', slot: 'reIndex', fixed: 'left' },
+                { title: 'No Karyawan', width: 180, sortable: true, fixed: 'left',
                     render: (h, params) => {
                         return h('div', [
                             h('nuxt-link', {
@@ -62,7 +61,7 @@ export default {
                         ])
                     }
                 },
-                { title: 'Nama Karyawan', key: 'nama', sortable: true,
+                { title: 'Nama Karyawan', width: 200, sortable: true, fixed: 'left',
                     render: (h, params) => {
                         return h('div', [
                             h('nuxt-link', {
@@ -73,22 +72,34 @@ export default {
                         ])
                     }
                 },
-                { title: 'Tempat Lahir', key: 'tempatLahir', width: 180 },
-                { title: 'Tanggal Lahir', key: 'tanggalLahir', width: 180,
+                { title: 'Tempat Lahir', width: 180,
                     render: (h, params) => {
                         return h('div', [
-                            h('span', moment(new Date(params.row.tanggalLahir)).format('DD-MM-YYYY'))
+                            h('span', params.row.personal.tempatLahir)
                         ])
                     }
                 },
-                { title: 'Tanggal Bergabung', key: 'tanggalBergabung', width: 180,
+                { title: 'Tanggal Lahir', width: 180,
                     render: (h, params) => {
                         return h('div', [
-                            h('span', moment(new Date(params.row.tanggalBergabung)).format('DD-MM-YYYY'))
+                            h('span', moment(new Date(params.row.personal.tanggalLahir)).format('DD-MM-YYYY'))
                         ])
                     }
                 },
-                { title: 'Jenis Kelamin', key: 'jenisKelamin', minWidth: 180 }
+                { title: 'Tanggal Bergabung', width: 180,
+                    render: (h, params) => {
+                        return h('div', [
+                            h('span', moment(new Date(params.row.personal.tanggalBergabung)).format('DD-MM-YYYY'))
+                        ])
+                    }
+                },
+                { title: 'Jenis Kelamin', minWidth: 180,
+                    render: (h, params) => {
+                        return h('div', [
+                            h('span', params.row.personal.jenisKelamin)
+                        ])
+                    }
+                }
             ],
             createForm: {
                 forms: [
@@ -163,9 +174,9 @@ export default {
         handleSelectionChange(arr) {
             this.multipleSelection = arr.map(v => ({ id: v.id }))
         },
-        show(action) {
-            this.isCreate = true
-        },
+            show(action) {
+                this.isCreate = true
+            },
         handleOnClose() {
             this.isCreate = false
         },
@@ -184,13 +195,15 @@ export default {
                             variables: {
                                 no: form.model.no,
                                 nama: form.model.nama,
-                                tempatLahir: form.model.tempatLahir,
-                                tanggalLahir: moment(new Date(form.model.tanggalLahir)).format('YYYY-MM-DD'),
-                                tanggalBergabung: moment(new Date(form.model.tanggalBergabung)).format('YYYY-MM-DD'),
-                                jenisKelamin: form.model.jenisKelamin,
-                                agama: form.model.agama,
-                                statusPerkawinan: form.model.statusPerkawinan,
-                                telepon: form.model.telepon
+                                personal: {
+                                    tempatLahir: form.model.tempatLahir,
+                                    tanggalLahir: moment(new Date(form.model.tanggalLahir)).format('YYYY-MM-DD'),
+                                    tanggalBergabung: moment(new Date(form.model.tanggalBergabung)).format('YYYY-MM-DD'),
+                                    jenisKelamin: form.model.jenisKelamin,
+                                    agama: form.model.agama,
+                                    statusPerkawinan: form.model.statusPerkawinan,
+                                    telepon: form.model.telepon
+                                }
                             },
                             update: (store, { data: { karyawanCreate } }) => {
                                 const data = store.readQuery({ query: KARYAWAN_ALL })
@@ -204,13 +217,16 @@ export default {
                                     id: -1,
                                     no: form.model.no,
                                     nama: form.model.nama,
-                                    tempatLahir: form.model.tempatLahir,
-                                    tanggalLahir: moment(new Date(form.model.tanggalLahir)).format('YYYY-MM-DD'),
-                                    tanggalBergabung: moment(new Date(form.model.tanggalBergabung)).format('YYYY-MM-DD'),
-                                    jenisKelamin: form.model.jenisKelamin,
-                                    agama: form.model.agama,
-                                    statusPerkawinan: form.model.statusPerkawinan,
-                                    telepon: form.model.telepon
+                                    personal: {
+                                        __typename: 'KaryawanPersonalType',
+                                        tempatLahir: form.model.tempatLahir,
+                                        tanggalLahir: moment(new Date(form.model.tanggalLahir)).format('YYYY-MM-DD'),
+                                        tanggalBergabung: moment(new Date(form.model.tanggalBergabung)).format('YYYY-MM-DD'),
+                                        jenisKelamin: form.model.jenisKelamin,
+                                        agama: form.model.agama,
+                                        statusPerkawinan: form.model.statusPerkawinan,
+                                        telepon: form.model.telepon
+                                    }
                                 }
                             }
                         })
@@ -230,43 +246,43 @@ export default {
                 }
             })
         },
-        handleDelete() {
-            try {
-                this.$Modal.confirm({
-                    title: 'PERHATIAN',
-                    content: '<p>Tindakan ini akan menghapus data secara permanen. Lanjutkan?</p>',
-                    okText: 'YA',
-                    cancelText: 'BATAL',
-                    loading: true,
-                    onOk: async () => {
-                        const { data } = await this.$apollo.mutate({
-                            mutation: KARYAWAN_DELETE,
-                            variables: {
-                                delete: this.multipleSelection
-                            },
-                            update: async function (store, { data: { karyawanDelete } }) {
-                                const data = store.readQuery({ query: KARYAWAN_ALL })
-                                _.pullAllBy(data.karyawanAll, karyawanDelete, 'id')
-                                store.writeQuery({ query: KARYAWAN_ALL, data })
-                            },
-                            optimisticResponse: {
-                                __typename: 'Mutation',
-                                karyawanDelete: this.karyawanAll
-                            }
-                        })
-                        if(data.karyawanDelete) {
-                            await this.$Modal.remove()
-                            this.$Notice.success({
-                                title: 'Sukses',
-                                desc: 'Data berhasil dihapus'
+            handleDelete() {
+                try {
+                    this.$Modal.confirm({
+                        title: 'PERHATIAN',
+                        content: '<p>Tindakan ini akan menghapus data secara permanen. Lanjutkan?</p>',
+                        okText: 'YA',
+                        cancelText: 'BATAL',
+                        loading: true,
+                        onOk: async () => {
+                            const { data } = await this.$apollo.mutate({
+                                mutation: KARYAWAN_DELETE,
+                                variables: {
+                                    delete: this.multipleSelection
+                                },
+                                update: async function (store, { data: { karyawanDelete } }) {
+                                    const data = store.readQuery({ query: KARYAWAN_ALL })
+                                    _.pullAllBy(data.karyawanAll, karyawanDelete, 'id')
+                                    store.writeQuery({ query: KARYAWAN_ALL, data })
+                                },
+                                optimisticResponse: {
+                                    __typename: 'Mutation',
+                                    karyawanDelete: this.karyawanAll
+                                }
                             })
+                            if(data.karyawanDelete) {
+                                await this.$Modal.remove()
+                                this.$Notice.success({
+                                    title: 'Sukses',
+                                    desc: 'Data berhasil dihapus'
+                                })
+                            }
                         }
-                    }
-                })
-            } catch(err) {
-                this.errors = errorHandler(err)
+                    })
+                } catch(err) {
+                    this.errors = errorHandler(err)
+                }
             }
-        }
     }
 }
 </script>

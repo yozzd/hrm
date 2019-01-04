@@ -35,22 +35,24 @@ const KaryawanSchema = new Schema({
     unique: 'No Karyawan "{VALUE}" sudah terpakai'
   },
   nama: String,
-  tempatLahir: String,
-  tanggalLahir: Date,
-  tanggalBergabung: Date,
-  jenisKelamin: {
-    type: Number,
-    enum: [0, 1]
+  personal: {
+    tempatLahir: String,
+    tanggalLahir: Date,
+    tanggalBergabung: Date,
+    jenisKelamin: {
+      type: Number,
+      enum: [0, 1]
+    },
+    agama: {
+      type: Number,
+      enum: [0, 1, 2, 3]
+    },
+    statusPerkawinan: {
+      type: Number,
+      enum: [0, 1, 2, 3, 4]
+    },
+    telepon: String,
   },
-  agama: {
-    type: Number,
-    enum: [0, 1, 2, 3]
-  },
-  statusPerkawinan: {
-    type: Number,
-    enum: [0, 1, 2, 3, 4]
-  },
-  telepon: String,
   perumahan: String,
   blok: String,
   noP: String,
