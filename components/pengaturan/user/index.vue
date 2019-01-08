@@ -1,8 +1,9 @@
 <template>
     <div>
         <Row>
-        <h3>Pengaturan User</h3>
+        <crumb :data="breadcrumb"/>
         </Row>
+
         <Row>
         <data-table :data="userAll" :filter-options="filterOptions" :columns="columns" :loading="$apollo.loading" @on-selection-change="handleSelectionChange">
             <ButtonGroup slot="action">
@@ -19,6 +20,7 @@
 
 <script>
 import { USER_ALL, USER_CREATE, USER_DELETE, USER_UPDATE } from '@/apollo/queries/user'
+import Crumb from '@/components/crumb'
 import DataTable from '@/components/data-table'
 import Drawer from '@/components/drawer'
 import _ from 'lodash'
@@ -36,6 +38,7 @@ const roles = _.reduce(_.slice(userRoles, 0, userRoles.length - 1), (r, v, k) =>
 
 export default {
     components: {
+        Crumb,
         DataTable,
         Drawer
     },
@@ -46,6 +49,10 @@ export default {
     },
     data() {
         return {
+            breadcrumb: [
+                { label: 'Dashboard', to: '/dashboard'},
+                { label: 'Pengaturan User' }
+            ],
             userAll: [],
             multipleSelection: [],
             isCreate: false,
