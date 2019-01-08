@@ -18,6 +18,7 @@
                     v-if="form.itemType === 'input' || form.itemType === undefined"
                     v-model="params[form.modelValue]"
                     :type="form.type"
+                    :autosize="form.autosize"
                     :disabled="form.disabled"
                     :placeholder="form.placeholder" />
                 <Input
@@ -79,8 +80,6 @@
 </template>
 
 <script>
-import dotProp from 'dot-prop'
-
 export default {
     props: {
         title: String,

@@ -110,7 +110,7 @@ export default {
                             { min: 6, message: 'Password minimal 6 karakter', trigger: 'blur' }
                         ]
                     },
-                    { prop: 'role', label: 'Role', itemType: 'select', options: roles,
+                    { prop: 'role', label: 'Role', itemType: 'select', options: roles, filterable: true,
                         rules: [
                             { required: true, message: 'Pilih Role', trigger: 'change' }
                         ]
