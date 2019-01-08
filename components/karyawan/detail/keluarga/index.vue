@@ -245,7 +245,7 @@ export default {
                             this.isCreate = false
                             this.$Notice.success({
                                 title: 'Sukses',
-                                desc: `Data karyawan dengan nomor "${this.karyawanDetail.no}" berhasil diperbaharui`
+                                desc: `Data karyawan "${this.karyawanDetail.no}" berhasil diperbaharui`
                             })
                         }
                     } catch(err) {
@@ -364,7 +364,7 @@ export default {
                             this.editRow = ''
                             this.$Notice.success({
                                 title: 'Sukses',
-                                desc: `Data karyawan dengan nomor "${this.karyawanDetail.no}" berhasil diperbaharui`
+                                desc: `Data karyawan "${this.karyawanDetail.no}" berhasil diperbaharui`
                             })
                         }
                     } catch(err) {

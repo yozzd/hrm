@@ -103,22 +103,22 @@ export default {
                             { required: true, message: 'Nama Karyawan tidak boleh kosong', trigger: 'blur' }
                         ]
                     },
-                    { prop: 'tempatLahir', label: 'Tempat Lahir',
+                    { prop: 'tempatLahir', dotProp: 'personal.tempatLahir', label: 'Tempat Lahir',
                         rules: [
                             { required: true, message: 'Tempat Lahir tidak boleh kosong', trigger: 'blur' }
                         ]
                     },
-                    { prop: 'tanggalLahir', label: 'Tanggal Lahir', itemType: 'date', placeholder: '__-__-____',
+                    { prop: 'tanggalLahir', dotProp: 'personal.tanggalLahir', label: 'Tanggal Lahir', itemType: 'date', placeholder: '__-__-____',
                         rules: [
                             { required: true, type: 'date', message: 'Pilih Tanggal Lahir', trigger: 'change' }
                         ]
                     },
-                    { prop: 'tanggalBergabung', label: 'Tanggal Bergabung', itemType: 'date', placeholder: '__-__-____',
+                    { prop: 'tanggalBergabung', dotProp: 'personal.tanggalBergabung', label: 'Tanggal Bergabung', itemType: 'date', placeholder: '__-__-____',
                         rules: [
                             { required: true, type: 'date', message: 'Pilih Tanggal Bergabung', trigger: 'change' }
                         ]
                     },
-                    { prop: 'jenisKelamin', label: 'Jenis Kelamin', itemType: 'radio',
+                    { prop: 'jenisKelamin', dotProp: 'personal.jenisKelamin', label: 'Jenis Kelamin', itemType: 'radio',
                         rules: [
                             { required: true, message: 'Pilih Jenis Kelamin', trigger: 'change' }
                         ],
@@ -127,7 +127,7 @@ export default {
                             { label: 'P' }
                         ]
                     },
-                    { prop: 'agama', label: 'Agama', itemType: 'select',
+                    { prop: 'agama', dotProp: 'personal.agama', label: 'Agama', itemType: 'select',
                         options: [
                             { label: 'Islam', value: 'Islam' },
                             { label: 'Kristen', value: 'Kristen' },
@@ -138,7 +138,7 @@ export default {
                             { required: true, message: 'Pilih Agama', trigger: 'change' }
                         ]
                     },
-                    { prop: 'statusPernikahan', label: 'Status Pernikahan', itemType: 'select',
+                    { prop: 'statusPernikahan', dotProp: 'personal.statusPernikahan', label: 'Status Pernikahan', itemType: 'select',
                         options: [
                             { label: 'Belum Menikah', value: 'BM' },
                             { label: 'Menikah 0 Anak', value: 'M0' },
@@ -150,7 +150,7 @@ export default {
                             { required: true, message: 'Pilih Status Pernikahan', trigger: 'change' }
                         ]
                     },
-                    { prop: 'telepon', label: 'Telepon',
+                    { prop: 'telepon', dotProp: 'personal.telepon', label: 'Telepon',
                         rules: [
                             { required: true, message: 'Nomor Telepon tidak boleh kosong', trigger: 'blur' }
                         ]
@@ -162,13 +162,6 @@ export default {
     methods: {
         show(row) {
             this.isEdit = true
-            row.tempatLahir = row.personal.tempatLahir
-            row.tanggalLahir = new Date(row.personal.tanggalLahir)
-            row.tanggalBergabung = new Date(row.personal.tanggalBergabung)
-            row.jenisKelamin = row.personal.jenisKelamin
-            row.agama = row.personal.agama
-            row.statusPernikahan = row.personal.statusPernikahan
-            row.telepon = row.personal.telepon
             this.editRow = row
         },
         handleOnClose() {
@@ -242,7 +235,7 @@ export default {
                             this.editRow = ''
                             this.$Notice.success({
                                 title: 'Sukses',
-                                desc: `Data karyawan dengan nomor "${data.karyawanUpdate.no}" berhasil diperbaharui`
+                                desc: `Data karyawan "${data.karyawanUpdate.no}" berhasil diperbaharui`
                             })
                         }
                     } catch(err) {
