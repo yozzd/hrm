@@ -1,8 +1,6 @@
 <template>
     <div>
-        <Row>
         <crumb :data="breadcrumb"/>
-        </Row>
 
         <Row>
         <data-table :data="userAll" :filter-options="filterOptions" :columns="columns" :loading="$apollo.loading" @on-selection-change="handleSelectionChange">

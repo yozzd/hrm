@@ -1,8 +1,6 @@
 <template>
     <div>
-        <Row>
         <crumb v-if="breadcrumb" :data="breadcrumb"/>
-        </Row>
 
         <toolbar :id="$route.params.id" />
 

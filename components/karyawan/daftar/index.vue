@@ -1,8 +1,6 @@
 <template>
     <div>
-        <Row>
         <crumb :data="breadcrumb"/>
-        </Row>
 
         <Row>
         <data-table :data="karyawanAll" :filter-options="filterOptions" :columns="columns" :loading="$apollo.loading" @on-selection-change="handleSelectionChange">
@@ -58,7 +56,7 @@ export default {
             columns: [
                 { type: 'selection', width: 50, align: 'center', fixed: 'left' },
                 { title: '#', width: 60, align: 'center', slot: 'reIndex', fixed: 'left' },
-                { title: 'No Karyawan', width: 180, sortable: true, fixed: 'left',
+                { title: 'No Karyawan', width: 140, sortable: true, fixed: 'left',
                     render: (h, params) => {
                         return h('div', [
                             h('nuxt-link', {
