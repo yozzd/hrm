@@ -17,6 +17,7 @@
 
 <script>
 import { KARYAWAN_ALL, KARYAWAN_CREATE, KARYAWAN_DELETE } from '@/apollo/queries/karyawan'
+import { jenisKelamin, agama, statusPernikahan } from '@/apollo/queries/options'
 import * as _ from 'lodash'
 import Crumb from '@/components/crumb'
 import DataTable from '@/components/data-table'
@@ -135,34 +136,17 @@ export default {
                             { required: true, type: 'date', message: 'Pilih Tanggal Bergabung', trigger: 'change' }
                         ]
                     },
-                    { prop: 'jenisKelamin', label: 'Jenis Kelamin', itemType: 'radio',
+                    { prop: 'jenisKelamin', label: 'Jenis Kelamin', itemType: 'radio', options: jenisKelamin.options,
                         rules: [
                             { required: true, message: 'Pilih Jenis Kelamin', trigger: 'change' }
-                        ],
-                        options: [
-                            { label: 'L' },
-                            { label: 'P' }
                         ]
                     },
-                    { prop: 'agama', label: 'Agama', itemType: 'select',
-                        options: [
-                            { label: 'Islam', value: 'Islam' },
-                            { label: 'Kristen', value: 'Kristen' },
-                            { label: 'Budha', value: 'Budha' },
-                            { label: 'Hindu', value: 'Hindu' }
-                        ],
+                    { prop: 'agama', label: 'Agama', itemType: 'select', options: agama.options, filterable: true,
                         rules: [
                             { required: true, message: 'Pilih Agama', trigger: 'change' }
                         ]
                     },
-                    { prop: 'statusPernikahan', label: 'Status Pernikahan', itemType: 'select',
-                        options: [
-                            { label: 'Belum Menikah', value: 'BM' },
-                            { label: 'Menikah 0 Anak', value: 'M0' },
-                            { label: 'Menikah 1 Anak', value: 'M1' },
-                            { label: 'Menikah 2 Anak', value: 'M2' },
-                            { label: 'Menikah 3 Anak', value: 'M3' }
-                        ],
+                    { prop: 'statusPernikahan', label: 'Status Pernikahan', itemType: 'select', options: statusPernikahan.options, filterable: true,
                         rules: [
                             { required: true, message: 'Pilih Status Pernikahan', trigger: 'change' }
                         ]

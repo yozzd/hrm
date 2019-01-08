@@ -31,6 +31,7 @@
                 <Select
                     v-else-if="form.itemType === 'select'"
                     v-model="params[form.modelValue]"
+                    :filterable="form.filterable"
                     :disabled="form.disabled"
                     :placeholder="form.placeholder"
                     style="width: 100%;">
@@ -111,7 +112,7 @@ export default {
             const propType = typeof v.prop
             if (propType === 'string') {
                 v.modelValue = v.prop
-                params[v.prop] = !row ? '' : v.dotProp ? v.itemType === 'date' ? new Date(dotProp.get(row, v.dotProp)) : dotProp.get(row, v.dotProp) : v.itemType === 'date' ? new Date(row[v.prop]) : row[v.prop]
+                params[v.prop] = !row ? '' : v.dotProp ? v.itemType === 'date' ? new Date(_.get(row, v.dotProp)) : _.get(row, v.dotProp) : v.itemType === 'date' ? new Date(row[v.prop]) : row[v.prop]
                 rules[v.prop] = v.rules
             }
         })

@@ -38,9 +38,12 @@ const PendidikanEnumType = new GraphQLEnumType({
     SD: { value: 2 },
     SMP: { value: 3 },
     SMA: { value: 4 },
-    S1: { value: 5 },
-    S2: { value: 6 },
-    S3: { value: 7 }
+    D1: { value: 5 },
+    D2: { value: 6 },
+    D3: { value: 7 },
+    S1: { value: 8 },
+    S2: { value: 9 },
+    S3: { value: 10 }
   }
 })
 

@@ -17,6 +17,7 @@
 
 <script>
 import { KARYAWAN_PERSONAL, KARYAWAN_UPDATE_PERSONAL } from '@/apollo/queries/karyawan'
+import { jenisKelamin, agama, statusPernikahan } from '@/apollo/queries/options'
 import Drawer from '@/components/drawer'
 import InfoTable from '@/components/info-table'
 import ChildHeader from '@/components/karyawan/child-header'
@@ -74,13 +75,10 @@ export default {
                 },
                 { prop: 'personal', label: 'Status Pernikahan',
                     render: row => {
-                        const g = {
-                            'BM': 'Belum Menikah',
-                            'M0': 'Menikah 0 Anak',
-                            'M1': 'Menikah 1 Anak',
-                            'M3': 'Menikah 2 Anak',
-                            'M3': 'Menikah 3 Anak'
-                        }
+                        const g = _.reduce(statusPernikahan.options, (r, v, k) => {
+                            r[v.value] = v.label
+                            return r
+                        }, {})
                         return g[row.statusPernikahan]
                     }
                 },
@@ -118,34 +116,17 @@ export default {
                             { required: true, type: 'date', message: 'Pilih Tanggal Bergabung', trigger: 'change' }
                         ]
                     },
-                    { prop: 'jenisKelamin', dotProp: 'personal.jenisKelamin', label: 'Jenis Kelamin', itemType: 'radio',
+                    { prop: 'jenisKelamin', dotProp: 'personal.jenisKelamin', label: 'Jenis Kelamin', itemType: 'radio', options: jenisKelamin.options,
                         rules: [
                             { required: true, message: 'Pilih Jenis Kelamin', trigger: 'change' }
-                        ],
-                        options: [
-                            { label: 'L' },
-                            { label: 'P' }
                         ]
                     },
-                    { prop: 'agama', dotProp: 'personal.agama', label: 'Agama', itemType: 'select',
-                        options: [
-                            { label: 'Islam', value: 'Islam' },
-                            { label: 'Kristen', value: 'Kristen' },
-                            { label: 'Budha', value: 'Budha' },
-                            { label: 'Hindu', value: 'Hindu' }
-                        ],
+                    { prop: 'agama', dotProp: 'personal.agama', label: 'Agama', itemType: 'select', options: agama.options, filterable: true,
                         rules: [
                             { required: true, message: 'Pilih Agama', trigger: 'change' }
                         ]
                     },
-                    { prop: 'statusPernikahan', dotProp: 'personal.statusPernikahan', label: 'Status Pernikahan', itemType: 'select',
-                        options: [
-                            { label: 'Belum Menikah', value: 'BM' },
-                            { label: 'Menikah 0 Anak', value: 'M0' },
-                            { label: 'Menikah 1 Anak', value: 'M1' },
-                            { label: 'Menikah 2 Anak', value: 'M2' },
-                            { label: 'Menikah 3 Anak', value: 'M3' }
-                        ],
+                    { prop: 'statusPernikahan', dotProp: 'personal.statusPernikahan', label: 'Status Pernikahan', itemType: 'select', options: statusPernikahan.options, filterable: true,
                         rules: [
                             { required: true, message: 'Pilih Status Pernikahan', trigger: 'change' }
                         ]

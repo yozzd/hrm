@@ -15,7 +15,12 @@
 </template>
 
 <script>
-import { KARYAWAN_KELUARGA, KARYAWAN_CREATE_KELUARGA, KARYAWAN_UPDATE_KELUARGA, KARYAWAN_DELETE_KELUARGA } from '@/apollo/queries/karyawan'
+import {
+    KARYAWAN_KELUARGA,
+    KARYAWAN_CREATE_KELUARGA,
+    KARYAWAN_UPDATE_KELUARGA,
+    KARYAWAN_DELETE_KELUARGA } from '@/apollo/queries/karyawan'
+import { pendidikan, jenisKelamin } from '@/apollo/queries/options'
 import Drawer from '@/components/drawer'
 import DataTable from '@/components/data-table'
 import ChildHeader from '@/components/karyawan/child-header'
@@ -70,19 +75,12 @@ export default {
                 },
                 { title: 'Pendidikan', key: 'pendidikan', width: 180,
                     render: (h, params) => {
-                        const pendidikan = {
-                            'BB': 'Belum Bersekolah',
-                            'TK': 'TK',
-                            'SD': 'SD',
-                            'SMP': 'SMP',
-                            'SMP': 'SMP',
-                            'SMA': 'SMA',
-                            'S1': 'S1',
-                            'S2': 'S2',
-                            'S3': 'S3'
-                        }
+                        const p = _.reduce(pendidikan.options, (r, v, k) => {
+                            r[v.value] = v.label
+                            return r
+                        }, {})
                         return h('div', [
-                            h('span', pendidikan[params.row.pendidikan])
+                            h('span', p[params.row.pendidikan])
                         ])
                     }
                 },
@@ -118,14 +116,10 @@ export default {
                             { required: true, message: 'Nama tidak boleh kosong', trigger: 'blur' }
                         ]
                     },
-                    { prop: 'jenisKelamin', label: 'Jenis Kelamin', itemType: 'radio',
+                    { prop: 'jenisKelamin', label: 'Jenis Kelamin', itemType: 'radio', options: jenisKelamin.options,
                         rules: [
                             { required: true, message: 'Pilih Jenis Kelamin', trigger: 'change' }
                         ],
-                        options: [
-                            { label: 'L' },
-                            { label: 'P' }
-                        ]
                     },
                     { prop: 'tempatLahir', label: 'Tempat Lahir',
                         rules: [
@@ -137,17 +131,7 @@ export default {
                             { required: true, type: 'date', message: 'Pilih Tanggal Lahir', trigger: 'change' }
                         ]
                     },
-                    { prop: 'pendidikan', label: 'Pendidikan', itemType: 'select',
-                        options: [
-                            { label: 'Belum Bersekolah', value: 'BB' },
-                            { label: 'TK', value: 'TK' },
-                            { label: 'SD', value: 'SD' },
-                            { label: 'SMP', value: 'SMP' },
-                            { label: 'SMA', value: 'SMA' },
-                            { label: 'S1', value: 'S1' },
-                            { label: 'S2', value: 'S2' },
-                            { label: 'S3', value: 'S3' }
-                        ],
+                    { prop: 'pendidikan', label: 'Pendidikan', itemType: 'select', options: pendidikan.options, filterable: true,
                         rules: [
                             { required: true, message: 'Pilih Pendidikan', trigger: 'change' }
                         ]
