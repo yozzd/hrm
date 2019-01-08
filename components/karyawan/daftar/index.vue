@@ -1,10 +1,10 @@
 <template>
     <div>
         <Row>
-        <h3>Daftar Karyawan</h3>
+        <crumb :data="breadcrumb"/>
         </Row>
-        <Row>
 
+        <Row>
         <data-table :data="karyawanAll" :filter-options="filterOptions" :columns="columns" :loading="$apollo.loading" @on-selection-change="handleSelectionChange">
             <ButtonGroup slot="action">
             <Button type="primary" custom-icon="iconfont icon-plus" @click="show('create')">TAMBAH</Button>
@@ -20,6 +20,7 @@
 <script>
 import { KARYAWAN_ALL, KARYAWAN_CREATE, KARYAWAN_DELETE } from '@/apollo/queries/karyawan'
 import * as _ from 'lodash'
+import Crumb from '@/components/crumb'
 import DataTable from '@/components/data-table'
 import Drawer from '@/components/drawer'
 import errorHandler from '@/apollo/config/errorHandler'
@@ -27,6 +28,7 @@ import moment from 'moment'
 
 export default {
     components: {
+        Crumb,
         DataTable,
         Drawer
     },
@@ -37,6 +39,10 @@ export default {
     },
     data() {
         return {
+            breadcrumb: [
+                { label: 'Dashboard', to: '/dashboard'},
+                { label: 'Daftar Karyawan' }
+            ],
             karyawanAll: [],
             multipleSelection: [],
             isCreate: false,

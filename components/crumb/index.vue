@@ -1,16 +1,12 @@
 <template>
     <Breadcrumb>
-<!--
-    <BreadcrumbItem to="/">Home</BreadcrumbItem>
-    <BreadcrumbItem to="/components/breadcrumb">Components</BreadcrumbItem>
-    <BreadcrumbItem>Breadcrumb</BreadcrumbItem>
--->
+    <BreadcrumbItem v-for="(item, index) in data" :key="index" :to="item.to">{{item.label}}</BreadcrumbItem>
     </Breadcrumb>
 </template>
 <script>
 export default {
     props: {
-        data: Object
+        data: Array
     }
 }
 </script>

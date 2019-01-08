@@ -1,5 +1,9 @@
 <template>
     <div>
+        <Row>
+        <crumb v-if="breadcrumb" :data="breadcrumb"/>
+        </Row>
+
         <toolbar :id="$route.params.id" />
 
         <Row type="flex" :gutter="20" class="main">
@@ -14,16 +18,30 @@
 </template>
 
 <script>
+import { KARYAWAN_ONE_ID } from '@/apollo/queries/karyawan'
+import Crumb from '@/components/crumb'
 import Sidebar from '@/components/sidebar'
 import Toolbar from '@/components/karyawan/toolbar'
 
 export default {
     components: {
+        Crumb,
         Sidebar,
         Toolbar
     },
+    apollo: {
+        karyawanDetail: {
+            query: KARYAWAN_ONE_ID,
+            variables() {
+                return {
+                    id: this.$route.params.id
+                }
+            }
+        }
+    },
     data() {
         return {
+            karyawanDetail: [],
             navs: [
                 { title: 'Detail', icon: 'idcard',
                     items: [
@@ -38,6 +56,15 @@ export default {
                         { title: 'Status', path: 'status' }
                     ]
                 }
+            ]
+        }
+    },
+    computed: {
+        breadcrumb() {
+            return [
+                { label: 'Dashboard', to: '/dashboard'},
+                { label: 'Daftar Karyawan', to: '/karyawan/daftar' },
+                { label: `${this.karyawanDetail.nama}` }
             ]
         }
     }

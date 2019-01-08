@@ -27,6 +27,15 @@ query {
   }
 }`
 
+export const KARYAWAN_ONE_ID = gql`
+query karyawanDetail($id: String!) {
+  karyawanDetail(id: $id) {
+    id
+    no
+    nama
+  }
+}`
+
 export const KARYAWAN_CREATE = gql`
 mutation karyawanCreate($no: String!, $nama: String!, $personal: KaryawanPersonalInputType) {
   karyawanCreate(no: $no, nama: $nama, personal: $personal) {
