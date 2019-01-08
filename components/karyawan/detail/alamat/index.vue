@@ -46,7 +46,7 @@ export default {
             rows: [
                 { prop: 'perumahan', label: 'Perumahan' },
                 { prop: 'blok', label: 'Blok' },
-                { prop: 'noP', label: 'No' },
+                { prop: 'no', label: 'No' },
                 { prop: 'rt', label: 'RT' },
                 { prop: 'rw', label: 'RW' },
                 { prop: 'kelurahan', label: 'Kelurahan' },
@@ -55,14 +55,14 @@ export default {
             ],
             editForm: {
                 forms: [
-                    { prop: 'perumahan', label: 'Perumahan' },
-                    { prop: 'blok', label: 'Blok' },
-                    { prop: 'noP', label: 'No' },
-                    { prop: 'rt', label: 'RT' },
-                    { prop: 'rw', label: 'RW' },
-                    { prop: 'kelurahan', label: 'Kelurahan' },
-                    { prop: 'kecamatan', label: 'Kecamatan' },
-                    { prop: 'kota', label: 'Kota' }
+                    { prop: 'perumahan', dotProp: 'alamat.perumahan', label: 'Perumahan' },
+                    { prop: 'blok', dotProp: 'alamat.blok', label: 'Blok' },
+                    { prop: 'no', dotProp: 'alamat.no', label: 'No' },
+                    { prop: 'rt', dotProp: 'alamat.rt' , label: 'RT' },
+                    { prop: 'rw', dotProp: 'alamat.rw' , label: 'RW' },
+                    { prop: 'kelurahan', dotProp: 'alamat.kelurahan' , label: 'Kelurahan' },
+                    { prop: 'kecamatan', dotProp: 'alamat.kecamatan' , label: 'Kecamatan' },
+                    { prop: 'kota', dotProp: 'alamat.kota' , label: 'Kota' }
                 ]
             }
         }
@@ -70,14 +70,6 @@ export default {
     methods: {
         show(row) {
             this.isEdit = true
-            row.perumahan = row.alamat.perumahan
-            row.blok = row.alamat.blok
-            row.noP = row.alamat.noP
-            row.rt = row.alamat.rt
-            row.rw = row.alamat.rw
-            row.kelurahan = row.alamat.kelurahan
-            row.kecamatan = row.alamat.kecamatan
-            row.kota = row.alamat.kota
             this.editRow = row
         },
         handleOnClose() {
@@ -100,7 +92,7 @@ export default {
                                 alamat: {
                                     perumahan: form.model.perumahan,
                                     blok: form.model.blok,
-                                    noP: form.model.noP,
+                                    no: form.model.no,
                                     rt: form.model.rt,
                                     rw: form.model.rw,
                                     kelurahan: form.model.kelurahan,
@@ -133,7 +125,7 @@ export default {
                                         __typename: 'KaryawanAlamatType',
                                         perumahan: form.model.perumahan,
                                         blok: form.model.blok,
-                                        noP: form.model.noP,
+                                        no: form.model.no,
                                         rt: form.model.rt,
                                         rw: form.model.rw,
                                         kelurahan: form.model.kelurahan,

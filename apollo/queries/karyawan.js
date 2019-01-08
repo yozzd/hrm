@@ -90,7 +90,7 @@ query karyawanDetail($id: String!) {
     alamat {
       perumahan
       blok
-      noP
+      no
       rt
       rw
       kelurahan
@@ -107,7 +107,7 @@ mutation karyawanAlamatUpdate($id: String!, $alamat: KaryawanAlamatInputType) {
     alamat {
       perumahan
       blok
-      noP
+      no
       rt
       rw
       kelurahan

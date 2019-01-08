@@ -78,6 +78,8 @@
 </template>
 
 <script>
+import dotProp from 'dot-prop'
+
 export default {
     props: {
         title: String,
@@ -109,7 +111,8 @@ export default {
             const propType = typeof v.prop
             if (propType === 'string') {
                 v.modelValue = v.prop
-                params[v.prop] = !row ? '' : row[v.prop]
+                //params[v.prop] = !row ? '' : row[v.prop]
+                params[v.prop] = !row ? '' : v.dotProp ? dotProp.get(row, v.dotProp) : row[v.prop]
                 rules[v.prop] = v.rules
             }
         })
