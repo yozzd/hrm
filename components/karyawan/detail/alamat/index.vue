@@ -2,7 +2,7 @@
     <div>
         <child-header v-if="karyawanDetail" :data="karyawanDetail"></child-header>
 
-        <info-table :data="karyawanDetail" :rows="rows">
+        <info-table v-if="karyawanDetail" :data="karyawanDetail.alamat" :rows="rows">
             <tr slot="append">
                 <td></td>
                 <td>
@@ -44,46 +44,14 @@ export default {
             editRow: null,
             isEdit: false,
             rows: [
-                { prop: 'alamat', label: 'Perumahan',
-                    render: row => {
-                        return row.perumahan
-                    }
-                },
-                { prop: 'alamat', label: 'Blok',
-                    render: row => {
-                        return row.blok
-                    }
-                },
-                { prop: 'alamat', label: 'No',
-                    render: row => {
-                        return row.noP
-                    }
-                },
-                { prop: 'alamat', label: 'RT',
-                    render: row => {
-                        return row.rt
-                    }
-                },
-                { prop: 'alamat', label: 'RW',
-                    render: row => {
-                        return row.rw
-                    }
-                },
-                { prop: 'alamat', label: 'Kelurahan',
-                    render: row => {
-                        return row.kelurahan
-                    }
-                },
-                { prop: 'alamat', label: 'Kecamatan',
-                    render: row => {
-                        return row.kecamatan
-                    }
-                },
-                { prop: 'alamat', label: 'Kota',
-                    render: row => {
-                        return row.kota
-                    }
-                }
+                { prop: 'perumahan', label: 'Perumahan' },
+                { prop: 'blok', label: 'Blok' },
+                { prop: 'noP', label: 'No' },
+                { prop: 'rt', label: 'RT' },
+                { prop: 'rw', label: 'RW' },
+                { prop: 'kelurahan', label: 'Kelurahan' },
+                { prop: 'kecamatan', label: 'Kecamatan' },
+                { prop: 'kota', label: 'Kota' }
             ],
             editForm: {
                 forms: [

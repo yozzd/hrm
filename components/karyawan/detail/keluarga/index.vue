@@ -154,7 +154,7 @@ export default {
                             { required: true, message: 'Pekerjaan tidak boleh kosong', trigger: 'blur' }
                         ]
                     },
-                    { prop: 'alamat', label: 'Alamat', itemType: 'autocomplete', data: ['Batam'],
+                    { prop: 'alamat', label: 'Alamat',
                         rules: [
                             { required: true, message: 'Alamat tidak boleh kosong', trigger: 'blur' }
                         ]

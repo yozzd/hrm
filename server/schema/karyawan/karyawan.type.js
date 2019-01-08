@@ -67,7 +67,7 @@ const KaryawanPersonalInputType = new GraphQLInputObjectType({
 const alamat = () => ({
   perumahan: { type: GraphQLString },
   blok: { type: GraphQLString },
-  noP: { type: GraphQLString },
+  no: { type: GraphQLString },
   rt: { type: GraphQLString },
   rw: { type: GraphQLString },
   kelurahan: { type: GraphQLString },

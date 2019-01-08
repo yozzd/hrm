@@ -56,7 +56,7 @@ const KaryawanSchema = new Schema({
   alamat: {
     perumahan: String,
     blok: String,
-    noP: String,
+    no: String,
     rt: String,
     rw: String,
     kelurahan: String,

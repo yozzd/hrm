@@ -18,14 +18,6 @@ const field = {
     agama: 'Islam',
     statusPernikahan: 'M1',
     telepon: '082157777231',
-    perumahan: 'Mekar Sari',
-    blok: 'C',
-    noP: '40',
-    rt: '001',
-    rw: '005',
-    kelurahan: 'Tiban Lama',
-    kecamatan: 'Sekupang',
-    kota: 'Batam'
   },
   update: {
     no: 'B.5555',
@@ -37,14 +29,16 @@ const field = {
     agama: 'Islam',
     statusPernikahan: 'M1',
     telepon: '082157777231',
-    perumahan: 'Mekar Sari',
-    blok: 'C',
-    noP: '40',
-    rt: '001',
-    rw: '005',
-    kelurahan: 'Tiban Lama',
-    kecamatan: 'Sekupang',
-    kota: 'Batam',
+    alamat: {
+      perumahan: 'Mekar Sari',
+      blok: 'C',
+      no: '40',
+      rt: '001',
+      rw: '005',
+      kelurahan: 'Tiban Lama',
+      kecamatan: 'Sekupang',
+      kota: 'Batam'
+    },
     keluarga: [{
       nama: 'Jane Doe',
       hubunganKeluarga: 'Istri',
@@ -232,7 +226,7 @@ describe('karyawan schema test', () => {
             alamat {
               perumahan
               blok
-              noP
+              no
               rt
               rw
               kelurahan
@@ -244,21 +238,21 @@ describe('karyawan schema test', () => {
         variables: {
           id: id,
           alamat: {
-            perumahan: update.perumahan,
-            blok: update.blok,
-            noP: update.noP,
-            rt: update.rt,
-            rw: update.rw,
-            kelurahan: update.kelurahan,
-            kecamatan: update.kecamatan,
-            kota: update.kota
+            perumahan: update.alamat.perumahan,
+            blok: update.alamat.blok,
+            no: update.alamat.no,
+            rt: update.alamat.rt,
+            rw: update.alamat.rw,
+            kelurahan: update.alamat.kelurahan,
+            kecamatan: update.alamat.kecamatan,
+            kota: update.alamat.kota
           }
         }
       })
       .expect(200)
 
     const { data } = response.body
-    expect(data.karyawanAlamatUpdate.alamat.perumahan).toEqual(update.perumahan)
+    expect(data.karyawanAlamatUpdate.alamat.perumahan).toEqual(update.alamat.perumahan)
     done()
   })
 

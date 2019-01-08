@@ -62,19 +62,12 @@
                     :label="option.label">
                 </Radio>
                 </RadioGroup>
-                <AutoComplete
-                    v-else-if="form.itemType === 'autocomplete'"
-                    v-model="params[form.modelValue]"
-                    :data="form.data"
-                    :filter-method="autoCompleteFilterMethod"
-                    :placeholder="form.placeholder">
-                </AutoComplete>
                 </FormItem>
             </Form>
             <Alert type="error" v-if="errors.length" v-for="(error, errorIndex) in errors" :key="errorIndex">
             {{ error }}
             </Alert>
-            <div class="demo-drawer-footer">
+            <div class="drawer-footer">
                 <Button style="margin-right: 8px" @click="() => emitEventHandler('cancel', $refs.form)" custom-icon="iconfont icon-close">BATAL</Button>
                 <Button type="primary" @click="() => emitEventHandler('action', $refs.form)" custom-icon="iconfont icon-save">
                     {{saveButton ? 'SIMPAN' : 'UPDATE'}}
@@ -134,15 +127,12 @@ export default {
     methods: {
         emitEventHandler(event) {
             this.$emit(event, ...Array.from(arguments).slice(1))
-        },
-        autoCompleteFilterMethod (value, option) {
-            return option.toUpperCase().indexOf(value.toUpperCase()) !== -1;
         }
     }
 }
 </script>
 <style>
-.demo-drawer-footer {
+.drawer-footer {
     width: 100%;
     position: absolute;
     bottom: 0;
