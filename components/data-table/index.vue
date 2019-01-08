@@ -83,6 +83,7 @@ export default {
         const _this = this
         return {
             filter: '',
+            columnFilter: [],
             select: _this.filterOptions.select.options[0].value,
             tableData: [],
             cacheLocalData: [],
@@ -168,28 +169,28 @@ export default {
                 this.tableData = this.dataFilter(filterData)
                 this.total = filterData.length
             } else {
-                this.tableData = this.dataFilter(cacheLocalData)
-                this.total = cacheLocalData.length
+                this.handleFilterChange(this.columnFilter)
             }
         },
         handleFilterChange: async function (column) {
+            this.columnFilter = column
             const { cacheLocalData } = this
             if(column._filterChecked.length) {
-                const roles = await Promise.all(_.reduce(column.filters, (r, v, k) => {
+                const reduceData = await Promise.all(_.reduce(column.filters, (r, v, k) => {
                     r.push(v.value)
                     return r
                 }, []))
-                const pullAll = await Promise.all(_.pullAll(roles, column._filterChecked))
-                const reduceRoles = await Promise.all(_.reduce(pullAll, (r, v, k) => {
+                const pullAllData = await Promise.all(_.pullAll(reduceData, column._filterChecked))
+                const reduceDataAgain = await Promise.all(_.reduce(pullAllData, (r, v, k) => {
                     const obj = {
                         role: v
                     }
                     r.push(obj)
                     return r
                 }, []))
-                const pullRoles = await Promise.all(_.differenceBy(cacheLocalData, reduceRoles, 'role'))
-                this.tableData = this.dataFilter(pullRoles)
-                this.total = pullRoles.length
+                const pullData = await Promise.all(_.differenceBy(cacheLocalData, reduceDataAgain, 'role'))
+                this.tableData = this.dataFilter(pullData)
+                this.total = pullData.length
             } else {
                 this.tableData = this.dataFilter(cacheLocalData)
                 this.total = cacheLocalData.length
