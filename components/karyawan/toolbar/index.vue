@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Row type="flex" justify="end">
+        <Row type="flex" justify="end" class="toolbar">
         <Select v-model="select" filterable class="jumpSelect" @on-change="handleOnChange">
             <Option v-for="(item, itemIndex) in karyawanAll" :key="itemIndex" :value="item.id" :label="item.nama">
             <span>{{ item.nama }}</span>
@@ -66,6 +66,9 @@ export default {
 </script>
 
 <style scoped>
+.toolbar.ivu-row-flex {
+    padding: 10px 0;
+}
 .jumpSelect {
     width: 250px;
     margin-right: 10px;

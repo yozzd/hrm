@@ -278,6 +278,7 @@ export default {
                         })
                         if(data.karyawanDelete) {
                             await this.$Modal.remove()
+                            this.multipleSelection = []
                             this.$Notice.success({
                                 title: 'Sukses',
                                 desc: 'Data berhasil dihapus'

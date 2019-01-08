@@ -18,7 +18,7 @@ export default {
 
 <style scoped>
 .breadcrumb.ivu-row-flex {
-    padding: 0 0 5px;
+    padding: 0 0 10px;
     border-bottom: 1px dashed #cccccc;
 }
 </style>

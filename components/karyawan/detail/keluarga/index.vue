@@ -1,8 +1,8 @@
 <template>
     <div>
-        <child-header v-if="karyawanDetail" :data="karyawanDetail"></child-header>
+        <child-header :data="karyawanDetail"></child-header>
 
-        <data-table v-if="karyawanDetail" :data="karyawanDetail.keluarga" :filter-options="filterOptions" :columns="columns" :loading="$apollo.loading" @on-selection-change="handleSelectionChange">
+        <data-table :data="karyawanDetail.keluarga" :filter-options="filterOptions" :columns="columns" :loading="$apollo.loading" @on-selection-change="handleSelectionChange">
             <ButtonGroup slot="action">
             <Button type="primary" custom-icon="iconfont icon-plus" @click="show('create')">TAMBAH</Button>
             <Button type="error" custom-icon="iconfont icon-delete" :disabled="!multipleSelection.length" @click="handleDelete">HAPUS</Button>
@@ -40,6 +40,9 @@ export default {
     },
     data() {
         return {
+            karyawanDetail: {
+                keluarga: []
+            },
             multipleSelection: [],
             isCreate: false,
             isEdit: false,
@@ -285,11 +288,12 @@ export default {
                             },
                             optimisticResponse: {
                                 __typename: 'Mutation',
-                                karyawanKeluargaDelete: this.karyawanDetail
+                                karyawanKeluargaDelete: this.karyawanDetail.keluarga
                             }
                         })
                         if(data.karyawanKeluargaDelete) {
                             await this.$Modal.remove()
+                            this.multipleSelection = []
                             this.$Notice.success({
                                 title: 'Sukses',
                                 desc: 'Data berhasil dihapus'

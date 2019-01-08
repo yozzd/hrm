@@ -224,6 +224,7 @@ export default {
                         })
                         if(data.userDelete) {
                             await this.$Modal.remove()
+                            this.multipleSelection = []
                             this.$Notice.success({
                                 title: 'Deleted',
                                 desc: 'Data succesfully deleted'
