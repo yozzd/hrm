@@ -49,6 +49,7 @@ export default {
                 keluarga: []
             },
             multipleSelection: [],
+            cachedMultipleSelection: [],
             isCreate: false,
             isEdit: false,
             errors: [],
@@ -153,6 +154,7 @@ export default {
     methods: {
         handleSelectionChange(arr) {
             this.multipleSelection = arr.map(v => ({ id: v.id }))
+            this.cachedMultipleSelection = arr
         },
         show(action, row) {
             if(action === 'create') {
@@ -270,7 +272,7 @@ export default {
                             },
                             optimisticResponse: {
                                 __typename: 'Mutation',
-                                karyawanKeluargaDelete: this.multipleSelection.map(v => ({ id: v.id, __typename: 'KaryawanKeluargaType' }))
+                                karyawanKeluargaDelete: this.cachedMultipleSelection
                             }
                         })
                         if(data.karyawanKeluargaDelete) {

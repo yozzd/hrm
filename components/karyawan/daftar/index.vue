@@ -44,6 +44,7 @@ export default {
             ],
             karyawanAll: [],
             multipleSelection: [],
+            cachedMultipleSelection: [],
             isCreate: false,
             errors: [],
             filterOptions: {
@@ -163,6 +164,7 @@ export default {
     methods: {
         handleSelectionChange(arr) {
             this.multipleSelection = arr.map(v => ({ id: v.id }))
+            this.cachedMultipleSelection = arr
         },
         show(action) {
             this.isCreate = true
@@ -257,7 +259,7 @@ export default {
                             },
                             optimisticResponse: {
                                 __typename: 'Mutation',
-                                karyawanDelete: this.multipleSelection.map(v => ({ id: v.id, __typename: 'KaryawanType' }))
+                                karyawanDelete: this.cachedMultipleSelection
                             }
                         })
                         if(data.karyawanDelete) {
