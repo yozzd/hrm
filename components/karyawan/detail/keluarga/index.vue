@@ -20,7 +20,7 @@ import {
     KARYAWAN_CREATE_KELUARGA,
     KARYAWAN_UPDATE_KELUARGA,
     KARYAWAN_DELETE_KELUARGA } from '@/apollo/queries/karyawan'
-import { pendidikan, jenisKelamin } from '@/apollo/queries/options'
+import { pendidikan, jenisKelamin, hubunganKeluarga } from '@/apollo/queries/options'
 import Drawer from '@/components/drawer'
 import DataTable from '@/components/data-table'
 import ChildHeader from '@/components/karyawan/child-header'
@@ -112,7 +112,7 @@ export default {
                             { required: true, message: 'Nama tidak boleh kosong', trigger: 'blur' }
                         ]
                     },
-                    { prop: 'hubunganKeluarga', label: 'Hubungan Keluarga',
+                    { prop: 'hubunganKeluarga', label: 'Hubungan Keluarga', itemType: 'select', options: hubunganKeluarga.options, filterable: true,
                         rules: [
                             { required: true, message: 'Nama tidak boleh kosong', trigger: 'blur' }
                         ]

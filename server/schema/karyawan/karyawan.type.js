@@ -12,10 +12,10 @@ const JenisKelaminEnumType = new GraphQLEnumType({
 const AgamaEnumType = new GraphQLEnumType({
   name: 'AgamaEnumType',
   values: {
-    Islam: { value: 0 },
-    Kristen: { value: 1 },
-    Budha: { value: 2 },
-    Hindu: { value: 3 }
+    Budha: { value: 0 },
+    Hindu: { value: 1 },
+    Islam: { value: 2 },
+    Kristen: { value: 3 }
   }
 })
 
@@ -30,20 +30,35 @@ const StatusPernikahanEnumType = new GraphQLEnumType({
   }
 })
 
+const HubunganKeluargaEnumType = new GraphQLEnumType({
+  name: 'HubunganKeluargaEnumType',
+  values: {
+    Adik: { value: 0 },
+    Anak: { value: 1 },
+    Ayah: { value: 2 },
+    Ibu: { value: 3 },
+    Istri: { value: 4 },
+    Kakak: { value: 5 },
+    Suami: { value: 6 }
+  }
+})
+
 const PendidikanEnumType = new GraphQLEnumType({
   name: 'PendidikanEnumType',
   values: {
     BB: { value: 0 },
-    TK: { value: 1 },
-    SD: { value: 2 },
-    SMP: { value: 3 },
-    SMA: { value: 4 },
-    D1: { value: 5 },
-    D2: { value: 6 },
-    D3: { value: 7 },
-    S1: { value: 8 },
-    S2: { value: 9 },
-    S3: { value: 10 }
+    TB: { value: 1 },
+    TK: { value: 2 },
+    SD: { value: 3 },
+    SMP: { value: 4 },
+    SMA: { value: 5 },
+    D1: { value: 6 },
+    D2: { value: 7 },
+    D3: { value: 8 },
+    D4: { value: 9 },
+    S1: { value: 10 },
+    S2: { value: 11 },
+    S3: { value: 12 }
   }
 })
 
@@ -91,7 +106,7 @@ const KaryawanAlamatInputType = new GraphQLInputObjectType({
 const keluarga = () => ({
   id: { type: GraphQLString },
   nama: { type: GraphQLString },
-  hubunganKeluarga: { type: GraphQLString },
+  hubunganKeluarga: { type: HubunganKeluargaEnumType },
   jenisKelamin: { type: JenisKelaminEnumType },
   tempatLahir: { type: GraphQLString },
   tanggalLahir: { type: GraphQLDate },
@@ -134,8 +149,5 @@ module.exports = {
   KaryawanPersonalInputType,
   KaryawanAlamatInputType,
   KaryawanKeluargaInputType,
-  KaryawanDeleteInputType,
-  JenisKelaminEnumType,
-  AgamaEnumType,
-  StatusPernikahanEnumType
+  KaryawanDeleteInputType
 }
