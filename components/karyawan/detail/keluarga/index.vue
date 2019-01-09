@@ -201,9 +201,7 @@ export default {
                                 const merge = _.merge(data, _.merge(data.karyawanDetail.keluarga, karyawanKeluargaCreate.keluarga))
                                 store.writeQuery({
                                     query: KARYAWAN_KELUARGA,
-                                    variables: {
-                                        id: this.$route.params.id
-                                    },
+                                    variables: { id: this.$route.params.id },
                                     data: merge
                                 })
                             },
@@ -272,7 +270,7 @@ export default {
                             },
                             optimisticResponse: {
                                 __typename: 'Mutation',
-                                karyawanKeluargaDelete: this.karyawanDetail.keluarga
+                                karyawanKeluargaDelete: this.multipleSelection.map(v => ({ id: v.id, __typename: 'KaryawanKeluargaType' }))
                             }
                         })
                         if(data.karyawanKeluargaDelete) {

@@ -219,7 +219,7 @@ export default {
                             },
                             optimisticResponse: {
                                 __typename: 'Mutation',
-                                userDelete: this.userAll
+                                userDelete: this.multipleSelection.map(v => ({ id: v.id, __typename: 'UserType' }))
                             }
                         })
                         if(data.userDelete) {
