@@ -108,9 +108,6 @@ export default {
     },
     computed: {
         formOption() {
-//            const check = ['', '-', null]
-//            const { perumahan } = this.karyawanDetail.alamat
-//            const a1 = _.indexOf(check, perumahan) < 0 ? `Perumahan ${perumahan}` : false
             return {
                 forms: [
                     { prop: 'nama', label: 'Nama',
