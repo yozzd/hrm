@@ -148,7 +148,8 @@ export default {
                             { required: true, message: 'Pekerjaan tidak boleh kosong', trigger: 'blur' }
                         ]
                     },
-                    { prop: 'alamat', label: 'Alamat',
+                    { prop: 'alamat', label: 'Alamat', itemType: 'autocomplete',
+                        data: [this.karyawanDetail.alamat.alamatLengkap],
                         rules: [
                             { required: true, message: 'Alamat tidak boleh kosong', trigger: 'blur' }
                         ]

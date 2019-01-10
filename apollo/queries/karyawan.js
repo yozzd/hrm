@@ -134,6 +134,9 @@ query karyawanDetail($id: String!) {
     id
     no
     nama
+    alamat {
+      alamatLengkap
+    }
     keluarga {
       id
       nama

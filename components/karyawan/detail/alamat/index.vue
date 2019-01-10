@@ -64,7 +64,7 @@ export default {
                     { prop: 'kelurahan', dotProp: 'alamat.kelurahan', label: 'Kelurahan' },
                     { prop: 'kecamatan', dotProp: 'alamat.kecamatan', label: 'Kecamatan' },
                     { prop: 'kota', dotProp: 'alamat.kota', label: 'Kota' },
-                    { prop: 'alamatLengkap', dotProp: 'alamat.alamatLengkap', type: 'textarea', label: 'Alamat Lengkap' }
+                    { prop: 'alamatLengkap', dotProp: 'alamat.alamatLengkap', type: 'textarea', label: 'Alamat Lengkap', autosize: { minRows: 3 } }
                 ]
             }
         }
