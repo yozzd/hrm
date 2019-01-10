@@ -29,7 +29,7 @@ const field = {
     agama: 'Islam',
     statusPernikahan: 'M1',
     telepon: '082157777231',
-    alamat: {
+    alamat1: {
       perumahan: 'Mekar Sari',
       blok: 'C',
       no: '40',
@@ -37,7 +37,19 @@ const field = {
       rw: '005',
       kelurahan: 'Tiban Lama',
       kecamatan: 'Sekupang',
-      kota: 'Batam'
+      kota: 'Batam',
+      alamatLengkap: ''
+    },
+    alamat2: {
+      perumahan: 'Mekar Sari',
+      blok: 'D',
+      no: '40',
+      rt: '001',
+      rw: '005',
+      kelurahan: 'Tiban Lama',
+      kecamatan: 'Sekupang',
+      kota: 'Batam',
+      alamatLengkap: ''
     },
     keluarga: [{
       nama: 'Jane Doe',
@@ -213,7 +225,7 @@ describe('karyawan schema test', () => {
     done()
   })
 
-  test('harusnya berhasil update alamat karyawan', async (done) => {
+  test('harusnya berhasil update alamat1 karyawan', async (done) => {
     const { update } = field
     const response = await request(uri)
       .post('/graphql')
@@ -238,21 +250,66 @@ describe('karyawan schema test', () => {
         variables: {
           id: id,
           alamat: {
-            perumahan: update.alamat.perumahan,
-            blok: update.alamat.blok,
-            no: update.alamat.no,
-            rt: update.alamat.rt,
-            rw: update.alamat.rw,
-            kelurahan: update.alamat.kelurahan,
-            kecamatan: update.alamat.kecamatan,
-            kota: update.alamat.kota
+            perumahan: update.alamat1.perumahan,
+            blok: update.alamat1.blok,
+            no: update.alamat1.no,
+            rt: update.alamat1.rt,
+            rw: update.alamat1.rw,
+            kelurahan: update.alamat1.kelurahan,
+            kecamatan: update.alamat1.kecamatan,
+            kota: update.alamat1.kota,
+            alamatLengkap: update.alamat1.alamatLengkap
           }
         }
       })
       .expect(200)
 
     const { data } = response.body
-    expect(data.karyawanAlamatUpdate.alamat.perumahan).toEqual(update.alamat.perumahan)
+    expect(data.karyawanAlamatUpdate.alamat.perumahan).toEqual(update.alamat1.perumahan)
+    done()
+  })
+
+  test('harusnya berhasil update alamat2 karyawan', async (done) => {
+    const { update } = field
+    const response = await request(uri)
+      .post('/graphql')
+      .set('Accept', 'application/json')
+      .set('Authorization', `Bearer ${token}`)
+      .send({ query: `
+        mutation karyawanAlamatUpdate($id: String!, $alamat: KaryawanAlamatInputType) {
+          karyawanAlamatUpdate(id: $id, alamat: $alamat) {
+            id
+            alamat {
+              perumahan
+              blok
+              no
+              rt
+              rw
+              kelurahan
+              kecamatan
+              kota
+            }
+          }
+        }`,
+        variables: {
+          id: id,
+          alamat: {
+            perumahan: update.alamat2.perumahan,
+            blok: update.alamat2.blok,
+            no: update.alamat2.no,
+            rt: update.alamat2.rt,
+            rw: update.alamat2.rw,
+            kelurahan: update.alamat2.kelurahan,
+            kecamatan: update.alamat2.kecamatan,
+            kota: update.alamat2.kota,
+            alamatLengkap: update.alamat2.alamatLengkap
+          }
+        }
+      })
+      .expect(200)
+
+    const { data } = response.body
+    expect(data.karyawanAlamatUpdate.alamat.perumahan).toEqual(update.alamat2.perumahan)
     done()
   })
 
@@ -352,11 +409,11 @@ describe('karyawan schema test', () => {
       .set('Accept', 'application/json')
       .set('Authorization', `Bearer ${token}`)
       .send({ query: `
-        mutation karyawanKeluargaDelete($id: String!, $delete: [KaryawanDeleteInputType]!) {
-          karyawanKeluargaDelete(id: $id, delete: $delete) {
-            id
-          }
-        }`,
+          mutation karyawanKeluargaDelete($id: String!, $delete: [KaryawanDeleteInputType]!) {
+            karyawanKeluargaDelete(id: $id, delete: $delete) {
+              id
+            }
+          }`,
         variables: {
           id: id,
           delete: [{ id: keluargaId }]
@@ -375,11 +432,11 @@ describe('karyawan schema test', () => {
       .set('Accept', 'application/json')
       .set('Authorization', `Bearer ${token}`)
       .send({ query: `
-        mutation karyawanDelete($delete: [KaryawanDeleteInputType]!) {
-          karyawanDelete(delete: $delete) {
-            id
-          }
-        }`,
+          mutation karyawanDelete($delete: [KaryawanDeleteInputType]!) {
+            karyawanDelete(delete: $delete) {
+              id
+            }
+          }`,
         variables: {
           delete: [{id: id}]
         }

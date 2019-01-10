@@ -1,7 +1,6 @@
 <template>
     <div>
         <child-header :data="karyawanDetail"></child-header>
-
         <data-table :data="karyawanDetail.keluarga" :filter-options="filterOptions" :columns="columns" :loading="$apollo.loading" @on-selection-change="handleSelectionChange">
             <ButtonGroup slot="action">
             <Button type="primary" custom-icon="iconfont icon-plus" @click="show('create')">TAMBAH</Button>
@@ -105,7 +104,14 @@ export default {
                     }
                 }
             ],
-            formOption: {
+        }
+    },
+    computed: {
+        formOption() {
+//            const check = ['', '-', null]
+//            const { perumahan } = this.karyawanDetail.alamat
+//            const a1 = _.indexOf(check, perumahan) < 0 ? `Perumahan ${perumahan}` : false
+            return {
                 forms: [
                     { prop: 'nama', label: 'Nama',
                         rules: [

@@ -91,6 +91,7 @@ const alamat = () => ({
   kelurahan: { type: GraphQLString },
   kecamatan: { type: GraphQLString },
   kota: { type: GraphQLString },
+  alamatLengkap: { type: GraphQLString }
 })
 
 const KaryawanAlamatType = new GraphQLObjectType({

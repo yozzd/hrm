@@ -51,18 +51,20 @@ export default {
                 { prop: 'rw', label: 'RW' },
                 { prop: 'kelurahan', label: 'Kelurahan' },
                 { prop: 'kecamatan', label: 'Kecamatan' },
-                { prop: 'kota', label: 'Kota' }
+                { prop: 'kota', label: 'Kota' },
+                { prop: 'alamatLengkap', label: 'Alamat Lengkap' }
             ],
             editForm: {
                 forms: [
                     { prop: 'perumahan', dotProp: 'alamat.perumahan', label: 'Perumahan' },
                     { prop: 'blok', dotProp: 'alamat.blok', label: 'Blok' },
                     { prop: 'no', dotProp: 'alamat.no', label: 'No' },
-                    { prop: 'rt', dotProp: 'alamat.rt' , label: 'RT' },
-                    { prop: 'rw', dotProp: 'alamat.rw' , label: 'RW' },
-                    { prop: 'kelurahan', dotProp: 'alamat.kelurahan' , label: 'Kelurahan' },
-                    { prop: 'kecamatan', dotProp: 'alamat.kecamatan' , label: 'Kecamatan' },
-                    { prop: 'kota', dotProp: 'alamat.kota' , label: 'Kota' }
+                    { prop: 'rt', dotProp: 'alamat.rt', label: 'RT' },
+                    { prop: 'rw', dotProp: 'alamat.rw', label: 'RW' },
+                    { prop: 'kelurahan', dotProp: 'alamat.kelurahan', label: 'Kelurahan' },
+                    { prop: 'kecamatan', dotProp: 'alamat.kecamatan', label: 'Kecamatan' },
+                    { prop: 'kota', dotProp: 'alamat.kota', label: 'Kota' },
+                    { prop: 'alamatLengkap', dotProp: 'alamat.alamatLengkap', type: 'textarea', label: 'Alamat Lengkap' }
                 ]
             }
         }
@@ -97,7 +99,8 @@ export default {
                                     rw: form.model.rw,
                                     kelurahan: form.model.kelurahan,
                                     kecamatan: form.model.kecamatan,
-                                    kota: form.model.kota
+                                    kota: form.model.kota,
+                                    alamatLengkap: form.model.alamatLengkap
                                 }
                             },
                             update: (store, { data: { karyawanAlamatUpdate } }) => {
@@ -130,7 +133,8 @@ export default {
                                         rw: form.model.rw,
                                         kelurahan: form.model.kelurahan,
                                         kecamatan: form.model.kecamatan,
-                                        kota: form.model.kota
+                                        kota: form.model.kota,
+                                        alamatLengkap: form.model.alamatLengkap
                                     }
                                 }
                             }

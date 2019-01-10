@@ -105,6 +105,7 @@ query karyawanDetail($id: String!) {
       kelurahan
       kecamatan
       kota
+      alamatLengkap
     }
   }
 }`
@@ -122,6 +123,7 @@ mutation karyawanAlamatUpdate($id: String!, $alamat: KaryawanAlamatInputType) {
       kelurahan
       kecamatan
       kota
+      alamatLengkap
     }
   }
 }`

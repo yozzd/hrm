@@ -1,15 +1,16 @@
 const { GraphQLObjectType, GraphQLList, GraphQLString } = require('graphql')
 const { GraphQLDate } = require('graphql-iso-date')
 const Karyawan = require('./karyawan.model')
-const { 
-  KaryawanType, 
-  KaryawanPersonalInputType, 
-  KaryawanAlamatInputType, 
-  KaryawanKeluargaInputType, 
+const {
+  KaryawanType,
+  KaryawanPersonalInputType,
+  KaryawanAlamatInputType,
+  KaryawanKeluargaInputType,
   KaryawanDeleteInputType } = require('./karyawan.type')
 const { UserError } = require('graphql-errors')
 const auth = require('../auth/auth.service')
 const ld = require('lodash')
+const { alamatJoin } = require('./karyawan.methods')
 
 const Query = {
   karyawanAll: {
@@ -86,6 +87,8 @@ const Mutation = {
     resolve: auth.hasRole('personalia', async (_, args, ctx) => {
       try {
         const karyawan = await Karyawan.findById(args.id)
+        //alamatJoin(args.alamat, karyawan.alamat)
+        args.alamat.alamatLengkap = ld.trim(alamatJoin(args.alamat, karyawan.alamat))
         const merge = ld.merge(karyawan, args)
         return await merge.save()
       } catch(err) {

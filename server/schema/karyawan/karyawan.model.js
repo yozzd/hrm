@@ -64,7 +64,8 @@ const KaryawanSchema = new Schema({
     rw: String,
     kelurahan: String,
     kecamatan: String,
-    kota: String
+    kota: String,
+    alamatLengkap: String
   },
   keluarga: [KeluargaSchema]
 })
