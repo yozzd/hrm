@@ -87,8 +87,7 @@ const Mutation = {
     resolve: auth.hasRole('personalia', async (_, args, ctx) => {
       try {
         const karyawan = await Karyawan.findById(args.id)
-        //alamatJoin(args.alamat, karyawan.alamat)
-        args.alamat.alamatLengkap = ld.trim(alamatJoin(args.alamat, karyawan.alamat))
+        args.alamat.alamatLengkap = await alamatJoin(args.alamat, karyawan.alamat)
         const merge = ld.merge(karyawan, args)
         return await merge.save()
       } catch(err) {
