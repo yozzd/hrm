@@ -50,7 +50,8 @@ module.exports = {
 
   apollo: {
     clientConfigs: {
-      default: '@/apollo/config/default.js'
+      default: '@/apollo/config/default.js',
+      upload: '@/apollo/config/upload.js'
     }
   },
 

@@ -33,13 +33,11 @@ const StatusPernikahanEnumType = new GraphQLEnumType({
 const HubunganKeluargaEnumType = new GraphQLEnumType({
   name: 'HubunganKeluargaEnumType',
   values: {
-    Adik: { value: 0 },
-    Anak: { value: 1 },
-    Ayah: { value: 2 },
-    Ibu: { value: 3 },
-    Istri: { value: 4 },
-    Kakak: { value: 5 },
-    Suami: { value: 6 }
+    Anak: { value: 0 },
+    Ayah: { value: 1 },
+    Ibu: { value: 2 },
+    Istri: { value: 3 },
+    Suami: { value: 4 }
   }
 })
 
@@ -126,6 +124,18 @@ const KaryawanKeluargaInputType = new GraphQLInputObjectType({
   fields: keluarga
 })
 
+const image = () => ({
+  path: { type: GraphQLString },
+  filename: { type: GraphQLString },
+  mimetype: { type: GraphQLString },
+  encoding: { type: GraphQLString }
+})
+
+const KaryawanImageType = new GraphQLObjectType({
+  name: 'KaryawanImageType',
+  fields: image
+})
+
 const KaryawanType = new GraphQLObjectType({
   name: 'KaryawanType',
   fields: () => ({
@@ -134,7 +144,8 @@ const KaryawanType = new GraphQLObjectType({
     nama: { type: GraphQLString },
     personal: { type: KaryawanPersonalType },
     alamat: { type: KaryawanAlamatType },
-    keluarga: { type: new GraphQLList(KaryawanKeluargaType) }
+    keluarga: { type: new GraphQLList(KaryawanKeluargaType) },
+    image: { type: KaryawanImageType }
   })
 })
 

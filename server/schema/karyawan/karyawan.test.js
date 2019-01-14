@@ -1,5 +1,6 @@
 const request = require('supertest')
 const uri = 'http://0.0.0.0:3000'
+const config = require('../../config/environment')
 
 let token, id, keluargaId
 
@@ -409,11 +410,11 @@ describe('karyawan schema test', () => {
       .set('Accept', 'application/json')
       .set('Authorization', `Bearer ${token}`)
       .send({ query: `
-          mutation karyawanKeluargaDelete($id: String!, $delete: [KaryawanDeleteInputType]!) {
-            karyawanKeluargaDelete(id: $id, delete: $delete) {
-              id
-            }
-          }`,
+        mutation karyawanKeluargaDelete($id: String!, $delete: [KaryawanDeleteInputType]!) {
+          karyawanKeluargaDelete(id: $id, delete: $delete) {
+            id
+          }
+        }`,
         variables: {
           id: id,
           delete: [{ id: keluargaId }]
@@ -432,11 +433,11 @@ describe('karyawan schema test', () => {
       .set('Accept', 'application/json')
       .set('Authorization', `Bearer ${token}`)
       .send({ query: `
-          mutation karyawanDelete($delete: [KaryawanDeleteInputType]!) {
-            karyawanDelete(delete: $delete) {
-              id
-            }
-          }`,
+        mutation karyawanDelete($delete: [KaryawanDeleteInputType]!) {
+          karyawanDelete(delete: $delete) {
+            id
+          }
+        }`,
         variables: {
           delete: [{id: id}]
         }

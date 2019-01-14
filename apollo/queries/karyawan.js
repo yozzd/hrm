@@ -194,6 +194,31 @@ mutation karyawanKeluargaDelete($id: String!, $delete: [KaryawanDeleteInputType]
   }
 }`
 
+export const KARYAWAN_IMAGE = gql`
+query karyawanDetail($id: String!) {
+  karyawanDetail(id: $id) {
+    id
+    no
+    nama
+    image {
+      path
+      filename
+    }
+  }
+}`
+
+
+export const KARYAWAN_UPDATE_IMAGE = gql`
+mutation karyawanImageUpdate($id: String!, $image: Upload!) {
+  karyawanImageUpdate(id: $id, image: $image) {
+    id
+    image {
+      path
+      filename
+    }
+  }
+}`
+
 export const KARYAWAN_DELETE = gql`
 mutation karyawanDelete($delete: [KaryawanDeleteInputType]!) {
   karyawanDelete(delete: $delete) {

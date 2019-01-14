@@ -9,6 +9,7 @@ const passport = require('passport')
 const authPassport = require('./schema/auth/auth.passport')
 const User = require('./schema/user/user.model')
 const auth = require('./schema/auth/auth.service')
+const { graphqlUploadExpress } = require('graphql-upload')
 maskErrors(schema)
 
 app.set('port', cfg.port)
@@ -18,13 +19,16 @@ config.dev = !(process.env.NODE_ENV === 'production')
 
 authPassport.setup(User)
 
-app.use('/graphql', auth.validateAuthorization, graphqlHTTP((req, res, params) => {
-  return ({
-    schema: schema,
-    context: { req, res, params },
-    graphiql: process.env.NODE_ENV !== 'production'
-  })
-}))
+app.use('/graphql',
+  auth.validateAuthorization,
+  graphqlUploadExpress({ maxFileSize: 10000000, maxFiles: 10 }),
+  graphqlHTTP((req, res, params) => {
+    return ({
+      schema: schema,
+      context: { req, res, params },
+      graphiql: process.env.NODE_ENV !== 'production'
+    })
+  }))
 
 app.use(passport.initialize())
 

@@ -45,7 +45,8 @@ export default {
                     items: [
                         { title: 'Personal', path: 'personal'},
                         { title: 'Alamat', path: 'alamat'},
-                        { title: 'Keluarga', path: 'keluarga'}
+                        { title: 'Keluarga', path: 'keluarga'},
+                        { title: 'Image', path: 'image'}
                     ]
                 },
                 { title: 'Employment', icon: 'solution',

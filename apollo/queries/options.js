@@ -44,12 +44,10 @@ export const statusPernikahan = {
 
 export const hubunganKeluarga = {
   options: [
-    { value: 'Adik', label: 'Adik' },
     { value: 'Anak', label: 'Anak' },
     { value: 'Ayah', label: 'Ayah' },
     { value: 'Ibu', label: 'Ibu' },
     { value: 'Istri', label: 'Istri' },
-    { value: 'Kakak', label: 'Kakak' },
     { value: 'Suami', label: 'Suami' }
   ]
 }

@@ -12,7 +12,7 @@ const KeluargaSchema = new Schema({
   nama: String,
   hubunganKeluarga: {
     type: Number,
-    enum: [0, 1, 2, 3, 4, 5, 6]
+    enum: [0, 1, 2, 3, 4]
   },
   jenisKelamin: {
     type: Number,
@@ -67,7 +67,13 @@ const KaryawanSchema = new Schema({
     kota: String,
     alamatLengkap: String
   },
-  keluarga: [KeluargaSchema]
+  keluarga: [KeluargaSchema],
+  image: {
+    path: String,
+    filename: String,
+    mimetype: String,
+    encoding: String
+  }
 })
 
 KaryawanSchema.plugin(beautifyUnique)

@@ -3,6 +3,7 @@
         <personal v-if="$route.params.index === 'personal'" />
         <alamat v-else-if="$route.params.index === 'alamat'" />
         <keluarga v-else-if="$route.params.index === 'keluarga'" />
+        <karyawan-image v-else-if="$route.params.index === 'image'" />
     </div>
 </template>
 
@@ -10,6 +11,7 @@
 import Personal from '@/components/karyawan/detail/personal'
 import Alamat from '@/components/karyawan/detail/alamat'
 import Keluarga from '@/components/karyawan/detail/keluarga'
+import KaryawanImage from '@/components/karyawan/detail/image'
 
 export default {
     middleware: ['auth'],
@@ -19,7 +21,8 @@ export default {
     components: {
         Personal,
         Alamat,
-        Keluarga
+        Keluarga,
+        KaryawanImage
     }
 }
 </script>

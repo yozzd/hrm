@@ -106,9 +106,7 @@ export default {
                             update: (store, { data: { karyawanAlamatUpdate } }) => {
                                 const data = store.readQuery({
                                     query: KARYAWAN_ALAMAT,
-                                    variables: {
-                                        id: this.$route.params.id
-                                    }
+                                    variables: { id: this.$route.params.id }
                                 })
                                 const merge = _.merge(data, _.merge(data.karyawanDetail, karyawanAlamatUpdate))
                                 store.writeQuery({

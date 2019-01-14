@@ -81,3 +81,5 @@ dist
 .idea
 
 db
+
+static/images

@@ -1,16 +1,21 @@
 const { GraphQLObjectType, GraphQLList, GraphQLString } = require('graphql')
 const { GraphQLDate } = require('graphql-iso-date')
+const { GraphQLUpload } = require('graphql-upload')
 const Karyawan = require('./karyawan.model')
 const {
   KaryawanType,
   KaryawanPersonalInputType,
   KaryawanAlamatInputType,
   KaryawanKeluargaInputType,
-  KaryawanDeleteInputType } = require('./karyawan.type')
+  KaryawanDeleteInputType
+} = require('./karyawan.type')
 const { UserError } = require('graphql-errors')
 const auth = require('../auth/auth.service')
 const ld = require('lodash')
-const { alamatJoin } = require('./karyawan.methods')
+const {
+  alamatJoin,
+  processUpload
+} = require('./karyawan.methods')
 
 const Query = {
   karyawanAll: {
@@ -141,6 +146,23 @@ const Mutation = {
         }))
         await karyawan.save()
         return args.delete
+      } catch(err) {
+        throw err
+      }
+    })
+  },
+  karyawanImageUpdate: {
+    type: KaryawanType,
+    args: {
+      id: { type: GraphQLString },
+      image: { type: GraphQLUpload }
+    },
+    resolve: auth.hasRole('personalia', async (_, args, ctx) => {
+      try {
+        const karyawan = await Karyawan.findById(args.id)
+        const upload = await processUpload(args.id, args.image, karyawan.image.filename)
+        const merge = ld.merge(karyawan, upload)
+        return await merge.save()
       } catch(err) {
         throw err
       }
