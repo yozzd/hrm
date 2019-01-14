@@ -1,20 +1,34 @@
 <template>
     <div>
+        <child-header v-if="karyawanDetail" :data="karyawanDetail"></child-header>
+
+        <Row type="flex" class="uploadImage">
+        <Col :span="18">
         <Upload :before-upload="handleUpload" action="graphql">
-        <Button icon="ios-cloud-upload-outline">Select the file to upload</Button>
+        <Button type="dashed" custom-icon="iconfont icon-search">Pilih file yang akan di-upload</Button>
         </Upload>
-        <div v-if="file !== null">Upload file: {{ file.name }}
-            <Button type="text" @click="upload" :loading="loadingStatus">{{ loadingStatus ? 'Uploading' : 'Click to upload' }}</Button>
+        <div v-if="file !== null">
+            <div>Upload file: {{ file.name }}</div>
+            <Button type="dashed" custom-icon="iconfont icon-upload" @click="upload" :loading="loadingStatus" class="uploadButton">{{ loadingStatus ? 'Uploading' : 'Upload' }}</Button>
         </div>
         {{karyawanDetail}}
+        </Col>
+        <Col :span="6">
+        <img v-if="karyawanDetail" :src="karyawanDetail.image.path" class="img_thumbnail"/>
+        </Col>
+        </Row>
     </div>
 </template>
 
 <script>
 import { KARYAWAN_IMAGE, KARYAWAN_UPDATE_IMAGE } from '@/apollo/queries/karyawan'
+import ChildHeader from '@/components/karyawan/child-header'
 import errorHandler from '@/apollo/config/errorHandler'
 
 export default {
+    components: {
+        ChildHeader
+    },
     data () {
         return {
             file: null,
@@ -87,3 +101,16 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+.uploadImage {
+    margin-top: 20px;
+}
+.uploadButton {
+    margin-top: 80px;
+}
+.img_thumbnail {
+    width: 200px;
+    border-radius: .25rem!important;
+}
+</style>
