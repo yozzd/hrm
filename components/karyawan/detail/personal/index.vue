@@ -82,6 +82,11 @@ export default {
                         return g[row.statusPernikahan]
                     }
                 },
+                { prop: 'personal', label: 'Alamat',
+                    render: row => {
+                        return row.alamat
+                    }
+                },
                 { prop: 'personal', label: 'Telepon',
                     render: row => {
                         return row.telepon
@@ -131,6 +136,11 @@ export default {
                             { required: true, message: 'Pilih Status Pernikahan', trigger: 'change' }
                         ]
                     },
+                    { prop: 'alamat', dotProp: 'personal.alamat', label: 'Alamat', type: 'textarea', autosize: { minRows: 3 },
+                        rules: [
+                            { required: true, message: 'Alamat tidak boleh kosong', trigger: 'blur' }
+                        ]
+                    },
                     { prop: 'telepon', dotProp: 'personal.telepon', label: 'Telepon',
                         rules: [
                             { required: true, message: 'Nomor Telepon tidak boleh kosong', trigger: 'blur' }
@@ -171,6 +181,7 @@ export default {
                                     jenisKelamin: form.model.jenisKelamin,
                                     agama: form.model.agama,
                                     statusPernikahan: form.model.statusPernikahan,
+                                    alamat: form.model.alamat,
                                     telepon: form.model.telepon
                                 }
                             },
@@ -205,6 +216,7 @@ export default {
                                         jenisKelamin: form.model.jenisKelamin,
                                         agama: form.model.agama,
                                         statusPernikahan: form.model.statusPernikahan,
+                                        alamat: form.model.alamat,
                                         telepon: form.model.telepon
                                     }
                                 }

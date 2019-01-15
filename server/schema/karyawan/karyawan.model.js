@@ -54,18 +54,8 @@ const KaryawanSchema = new Schema({
       type: Number,
       enum: [0, 1, 2, 3, 4]
     },
+    alamat: String,
     telepon: String
-  },
-  alamat: {
-    perumahan: String,
-    blok: String,
-    no: String,
-    rt: String,
-    rw: String,
-    kelurahan: String,
-    kecamatan: String,
-    kota: String,
-    alamatLengkap: String
   },
   keluarga: [KeluargaSchema],
   image: {

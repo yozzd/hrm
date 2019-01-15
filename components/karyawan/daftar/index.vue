@@ -152,6 +152,11 @@ export default {
                             { required: true, message: 'Pilih Status Pernikahan', trigger: 'change' }
                         ]
                     },
+                    { prop: 'alamat', dotProp: 'personal.alamat', label: 'Alamat', type: 'textarea', autosize: { minRows: 3 },
+                        rules: [
+                            { required: true, message: 'Alamat tidak boleh kosong', trigger: 'blur' }
+                        ]
+                    },
                     { prop: 'telepon', label: 'Telepon',
                         rules: [
                             { required: true, message: 'Nomor Telepon tidak boleh kosong', trigger: 'blur' }
@@ -194,6 +199,7 @@ export default {
                                     jenisKelamin: form.model.jenisKelamin,
                                     agama: form.model.agama,
                                     statusPernikahan: form.model.statusPernikahan,
+                                    alamat: form.model.alamat,
                                     telepon: form.model.telepon
                                 }
                             },
@@ -217,6 +223,7 @@ export default {
                                         jenisKelamin: form.model.jenisKelamin,
                                         agama: form.model.agama,
                                         statusPernikahan: form.model.statusPernikahan,
+                                        alamat: form.model.alamat,
                                         telepon: form.model.telepon
                                     }
                                 }

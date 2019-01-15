@@ -1,4 +1,10 @@
-const { GraphQLObjectType, GraphQLList, GraphQLInputObjectType, GraphQLString, GraphQLEnumType } = require('graphql')
+const {
+  GraphQLObjectType,
+  GraphQLList,
+  GraphQLInputObjectType,
+  GraphQLString,
+  GraphQLEnumType
+} = require('graphql')
 const { GraphQLDate } = require('graphql-iso-date')
 
 const JenisKelaminEnumType = new GraphQLEnumType({
@@ -67,6 +73,7 @@ const personal = () => ({
   jenisKelamin: { type: JenisKelaminEnumType },
   agama: { type: AgamaEnumType },
   statusPernikahan: { type: StatusPernikahanEnumType },
+  alamat: { type: GraphQLString },
   telepon: { type: GraphQLString }
 })
 
@@ -78,28 +85,6 @@ const KaryawanPersonalType = new GraphQLObjectType({
 const KaryawanPersonalInputType = new GraphQLInputObjectType({
   name: 'KaryawanPersonalInputType',
   fields: personal
-})
-
-const alamat = () => ({
-  perumahan: { type: GraphQLString },
-  blok: { type: GraphQLString },
-  no: { type: GraphQLString },
-  rt: { type: GraphQLString },
-  rw: { type: GraphQLString },
-  kelurahan: { type: GraphQLString },
-  kecamatan: { type: GraphQLString },
-  kota: { type: GraphQLString },
-  alamatLengkap: { type: GraphQLString }
-})
-
-const KaryawanAlamatType = new GraphQLObjectType({
-  name: 'KaryawanAlamatType',
-  fields: alamat
-})
-
-const KaryawanAlamatInputType = new GraphQLInputObjectType({
-  name: 'KaryawanAlamatInputType',
-  fields: alamat
 })
 
 const keluarga = () => ({
@@ -143,7 +128,6 @@ const KaryawanType = new GraphQLObjectType({
     no: { type: GraphQLString },
     nama: { type: GraphQLString },
     personal: { type: KaryawanPersonalType },
-    alamat: { type: KaryawanAlamatType },
     keluarga: { type: new GraphQLList(KaryawanKeluargaType) },
     image: { type: KaryawanImageType }
   })
@@ -159,7 +143,6 @@ const KaryawanDeleteInputType = new GraphQLInputObjectType({
 module.exports = {
   KaryawanType,
   KaryawanPersonalInputType,
-  KaryawanAlamatInputType,
   KaryawanKeluargaInputType,
   KaryawanDeleteInputType
 }

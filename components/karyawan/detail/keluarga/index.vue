@@ -146,7 +146,7 @@ export default {
                         ]
                     },
                     { prop: 'alamat', label: 'Alamat', itemType: 'autocomplete',
-                        data: [this.karyawanDetail.alamat.alamatLengkap],
+                        data: [this.karyawanDetail.personal.alamat],
                         rules: [
                             { required: true, message: 'Alamat tidak boleh kosong', trigger: 'blur' }
                         ]

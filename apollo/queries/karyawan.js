@@ -13,6 +13,7 @@ query {
       jenisKelamin
       agama
       statusPernikahan
+      alamat
       telepon
     }
   }
@@ -49,6 +50,7 @@ mutation karyawanCreate($no: String!, $nama: String!, $personal: KaryawanPersona
       jenisKelamin
       agama
       statusPernikahan
+      alamat
       telepon
     }
   }
@@ -67,6 +69,7 @@ query karyawanDetail($id: String!) {
       jenisKelamin
       agama
       statusPernikahan
+      alamat
       telepon
     }
   }
@@ -85,45 +88,8 @@ mutation karyawanUpdate($id: String!, $no: String!, $nama: String!, $personal: K
       jenisKelamin
       agama
       statusPernikahan
+      alamat
       telepon
-    }
-  }
-}`
-
-export const KARYAWAN_ALAMAT = gql`
-query karyawanDetail($id: String!) {
-  karyawanDetail(id: $id) {
-    id
-    no
-    nama
-    alamat {
-      perumahan
-      blok
-      no
-      rt
-      rw
-      kelurahan
-      kecamatan
-      kota
-      alamatLengkap
-    }
-  }
-}`
-
-export const KARYAWAN_UPDATE_ALAMAT = gql`
-mutation karyawanAlamatUpdate($id: String!, $alamat: KaryawanAlamatInputType) {
-  karyawanAlamatUpdate(id: $id, alamat: $alamat) {
-    id
-    alamat {
-      perumahan
-      blok
-      no
-      rt
-      rw
-      kelurahan
-      kecamatan
-      kota
-      alamatLengkap
     }
   }
 }`
@@ -134,8 +100,8 @@ query karyawanDetail($id: String!) {
     id
     no
     nama
-    alamat {
-      alamatLengkap
+    personal {
+      alamat
     }
     keluarga {
       id

@@ -18,6 +18,7 @@ const field = {
     jenisKelamin: 'L',
     agama: 'Islam',
     statusPernikahan: 'M1',
+    alamat: '',
     telepon: '082157777231',
   },
   update: {
@@ -29,29 +30,8 @@ const field = {
     jenisKelamin: 'L',
     agama: 'Islam',
     statusPernikahan: 'M1',
+    alamat: 'Perumahan Mekar Sari Blok D No. 40 RT 001 RW 005 Kelurahan Tiban Lama Kecamatan Sekupang Batam',
     telepon: '082157777231',
-    alamat1: {
-      perumahan: 'Mekar Sari',
-      blok: 'C',
-      no: '40',
-      rt: '001',
-      rw: '005',
-      kelurahan: 'Tiban Lama',
-      kecamatan: 'Sekupang',
-      kota: 'Batam',
-      alamatLengkap: ''
-    },
-    alamat2: {
-      perumahan: 'Mekar Sari',
-      blok: 'D',
-      no: '40',
-      rt: '001',
-      rw: '005',
-      kelurahan: 'Tiban Lama',
-      kecamatan: 'Sekupang',
-      kota: 'Batam',
-      alamatLengkap: ''
-    },
     keluarga: [{
       nama: 'Jane Doe',
       hubunganKeluarga: 'Istri',
@@ -111,6 +91,7 @@ describe('karyawan schema test', () => {
               jenisKelamin
               agama
               statusPernikahan
+              alamat
               telepon
             }
           }
@@ -125,6 +106,7 @@ describe('karyawan schema test', () => {
             jenisKelamin: create.jenisKelamin,
             agama: create.agama,
             statusPernikahan: create.statusPernikahan,
+            alamat: create.alamat,
             telepon: create.telepon
           }
         }
@@ -156,6 +138,7 @@ describe('karyawan schema test', () => {
               jenisKelamin
               agama
               statusPernikahan
+              alamat
               telepon
             }
           }
@@ -170,6 +153,7 @@ describe('karyawan schema test', () => {
             jenisKelamin: create.jenisKelamin,
             agama: create.agama,
             statusPernikahan: create.statusPernikahan,
+            alamat: create.alamat,
             telepon: create.telepon
           }
         }
@@ -200,6 +184,7 @@ describe('karyawan schema test', () => {
               jenisKelamin
               agama
               statusPernikahan
+              alamat
               telepon
             }
           }
@@ -215,6 +200,7 @@ describe('karyawan schema test', () => {
             jenisKelamin: update.jenisKelamin,
             agama: update.agama,
             statusPernikahan: update.statusPernikahan,
+            alamat: update.alamat,
             telepon: update.telepon
           }
         }
@@ -226,95 +212,7 @@ describe('karyawan schema test', () => {
     done()
   })
 
-  test('harusnya berhasil update alamat1 karyawan', async (done) => {
-    const { update } = field
-    const response = await request(uri)
-      .post('/graphql')
-      .set('Accept', 'application/json')
-      .set('Authorization', `Bearer ${token}`)
-      .send({ query: `
-        mutation karyawanAlamatUpdate($id: String!, $alamat: KaryawanAlamatInputType) {
-          karyawanAlamatUpdate(id: $id, alamat: $alamat) {
-            id
-            alamat {
-              perumahan
-              blok
-              no
-              rt
-              rw
-              kelurahan
-              kecamatan
-              kota
-            }
-          }
-        }`,
-        variables: {
-          id: id,
-          alamat: {
-            perumahan: update.alamat1.perumahan,
-            blok: update.alamat1.blok,
-            no: update.alamat1.no,
-            rt: update.alamat1.rt,
-            rw: update.alamat1.rw,
-            kelurahan: update.alamat1.kelurahan,
-            kecamatan: update.alamat1.kecamatan,
-            kota: update.alamat1.kota,
-            alamatLengkap: update.alamat1.alamatLengkap
-          }
-        }
-      })
-      .expect(200)
-
-    const { data } = response.body
-    expect(data.karyawanAlamatUpdate.alamat.perumahan).toEqual(update.alamat1.perumahan)
-    done()
-  })
-
-  test('harusnya berhasil update alamat2 karyawan', async (done) => {
-    const { update } = field
-    const response = await request(uri)
-      .post('/graphql')
-      .set('Accept', 'application/json')
-      .set('Authorization', `Bearer ${token}`)
-      .send({ query: `
-        mutation karyawanAlamatUpdate($id: String!, $alamat: KaryawanAlamatInputType) {
-          karyawanAlamatUpdate(id: $id, alamat: $alamat) {
-            id
-            alamat {
-              perumahan
-              blok
-              no
-              rt
-              rw
-              kelurahan
-              kecamatan
-              kota
-            }
-          }
-        }`,
-        variables: {
-          id: id,
-          alamat: {
-            perumahan: update.alamat2.perumahan,
-            blok: update.alamat2.blok,
-            no: update.alamat2.no,
-            rt: update.alamat2.rt,
-            rw: update.alamat2.rw,
-            kelurahan: update.alamat2.kelurahan,
-            kecamatan: update.alamat2.kecamatan,
-            kota: update.alamat2.kota,
-            alamatLengkap: update.alamat2.alamatLengkap
-          }
-        }
-      })
-      .expect(200)
-
-    const { data } = response.body
-    expect(data.karyawanAlamatUpdate.alamat.perumahan).toEqual(update.alamat2.perumahan)
-    done()
-  })
-
-  test('create keluarga karyawan', async (done) => {
+  test('harusnya berhasil create keluarga karyawan', async (done) => {
     const { update } = field
     const response = await request(uri)
       .post('/graphql')
@@ -359,7 +257,7 @@ describe('karyawan schema test', () => {
     done()
   })
 
-  test('update keluarga karyawan', async (done) => {
+  test('harusnya berhasil update keluarga karyawan', async (done) => {
     const { update } = field
     const response = await request(uri)
       .post('/graphql')
@@ -404,7 +302,7 @@ describe('karyawan schema test', () => {
     done()
   })
 
-  test('delete keluarga karyawan', async (done) => {
+  test('harusnya berhasil delete keluarga karyawan', async (done) => {
     const response = await request(uri)
       .post('/graphql')
       .set('Accept', 'application/json')
@@ -427,7 +325,7 @@ describe('karyawan schema test', () => {
     done()
   })
 
-  test('should delete karyawan with valid authorization', async (done) => {
+  test('harusnya berhasil delete karyawan', async (done) => {
     const response = await request(uri)
       .post('/graphql')
       .set('Accept', 'application/json')

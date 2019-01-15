@@ -12,10 +12,7 @@ const {
 const { UserError } = require('graphql-errors')
 const auth = require('../auth/auth.service')
 const ld = require('lodash')
-const {
-  alamatJoin,
-  processUpload
-} = require('./karyawan.methods')
+const { processUpload } = require('./karyawan.methods')
 
 const Query = {
   karyawanAll: {
@@ -76,23 +73,6 @@ const Mutation = {
     resolve: auth.hasRole('personalia', async (_, args, ctx) => {
       try {
         const karyawan = await Karyawan.findById(args.id)
-        const merge = ld.merge(karyawan, args)
-        return await merge.save()
-      } catch(err) {
-        throw err
-      }
-    })
-  },
-  karyawanAlamatUpdate: {
-    type: KaryawanType,
-    args: {
-      id: { type: GraphQLString },
-      alamat: { type: KaryawanAlamatInputType }
-    },
-    resolve: auth.hasRole('personalia', async (_, args, ctx) => {
-      try {
-        const karyawan = await Karyawan.findById(args.id)
-        args.alamat.alamatLengkap = await alamatJoin(args.alamat, karyawan.alamat)
         const merge = ld.merge(karyawan, args)
         return await merge.save()
       } catch(err) {
