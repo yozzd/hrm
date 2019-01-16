@@ -4,17 +4,41 @@
 
         <Row type="flex" class="uploadImage">
         <Col :span="18">
-        <Upload :before-upload="handleUpload" action="graphql">
+        <Upload
+            ref="upload"
+            :before-upload="handleBeforeUpload"
+            :show-upload-list="false"
+            :format="['jpg','jpeg','png']"
+            :max-size="2048"
+            :on-format-error="handleFormatError"
+            :on-exceeded-size="handleMaxSize"
+            action="graphql">
         <Button type="dashed" custom-icon="iconfont icon-search">Pilih file yang akan di-upload</Button>
         </Upload>
         <div v-if="file !== null">
             <div>Upload file: {{ file.name }}</div>
-            <Button type="dashed" custom-icon="iconfont icon-upload" @click="upload" :loading="loadingStatus" class="uploadButton">{{ loadingStatus ? 'Uploading' : 'Upload' }}</Button>
+            <Button type="dashed" custom-icon="iconfont icon-upload" @click="handleUpload" :loading="loadingStatus" class="uploadButton">{{ loadingStatus ? 'Uploading' : 'Upload' }}</Button>
         </div>
-        {{karyawanDetail}}
+        <Alert type="error" v-if="errors.length" v-for="(error, errorIndex) in errors" :key="errorIndex" class="errorAlert">
+        {{ error }}
+        </Alert>
+        <Modal :title="karyawanDetail.image.filename" v-model="visible">
+        <img :src="karyawanDetail.image.path" v-if="visible" style="width: 100%">
+        <div slot="footer">
+            <Button type="text" @click="handleClose">Close</Button>
+        </div>
+        </Modal>
         </Col>
         <Col :span="6">
-        <img v-if="karyawanDetail" :src="karyawanDetail.image.path" class="img_thumbnail"/>
+        <Row type="flex" justify="end">
+        <a v-if="karyawanDetail.image.path" @click="handleView">
+            <img :src="karyawanDetail.image.path" class="imgThumbnail"/>
+        </a>
+        <div v-else class="noImageContainer">
+            <img class="imgThumbnail" />
+            <div class="centered">No Image</div>
+        </div>
+        </Row>
         </Col>
         </Row>
     </div>
@@ -31,7 +55,14 @@ export default {
     },
     data () {
         return {
+            karyawanDetail: {
+                image: {
+                    path: null
+                }
+            },
+            errors: [],
             file: null,
+            visible: false,
             loadingStatus: false
         }
     },
@@ -47,11 +78,25 @@ export default {
         }
     },
     methods: {
-        handleUpload(file) {
-            this.file = file
-            return false
+        handleView() {
+            this.visible = true
         },
-        upload: async function() {
+        handleBeforeUpload(file) {
+            this.errors = []
+            this.file = file
+        },
+        handleFormatError(file) {
+            this.file = null
+            this.errors = [`Format file '${file.name}' salah, silahkan pilih format jpg atau png`]
+        },
+        handleMaxSize(file) {
+            this.file = null
+            this.errors = [`File '${file.name}' melebihi batas maksimum 2Mb`]
+        },
+        handleClose() {
+            this.visible = false
+        },
+        handleUpload: async function() {
             const client = this.$apolloProvider.clients.upload
             this.loadingStatus = true
             try {
@@ -95,7 +140,7 @@ export default {
                     })
                 }
             } catch(err) {
-                console.log(errorHandler(err))
+                this.errors = errorHandler(err)
             }
         }
     }
@@ -103,14 +148,27 @@ export default {
 </script>
 
 <style scoped>
-.uploadImage {
+.uploadImage,
+.errorAlert {
     margin-top: 20px;
 }
 .uploadButton {
     margin-top: 80px;
 }
-.img_thumbnail {
-    width: 200px;
+.imgThumbnail {
+    width: 150px;
+    height: 200px;
     border-radius: .25rem!important;
+}
+.noImageContainer {
+    position: relative;
+    text-align: center;
+    color: #777777;
+}
+.centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 </style>
