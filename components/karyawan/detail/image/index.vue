@@ -25,7 +25,7 @@
         <Modal :title="karyawanDetail.image.filename" v-model="visible">
         <img :src="karyawanDetail.image.path" v-if="visible" style="width: 100%">
         <div slot="footer">
-            <Button type="text" @click="handleClose">Close</Button>
+            <Button type="text" @click="handleClose">Tutup</Button>
         </div>
         </Modal>
         </Col>
