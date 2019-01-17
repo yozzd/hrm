@@ -13,7 +13,8 @@ query {
       jenisKelamin
       agama
       statusPernikahan
-      alamat
+      alamatSekarang
+      alamatKTP
       telepon
     }
   }
@@ -50,7 +51,8 @@ mutation karyawanCreate($no: String!, $nama: String!, $personal: KaryawanPersona
       jenisKelamin
       agama
       statusPernikahan
-      alamat
+      alamatSekarang
+      alamatKTP
       telepon
     }
   }
@@ -69,7 +71,8 @@ query karyawanDetail($id: String!) {
       jenisKelamin
       agama
       statusPernikahan
-      alamat
+      alamatSekarang
+      alamatKTP
       telepon
     }
   }
@@ -88,7 +91,8 @@ mutation karyawanUpdate($id: String!, $no: String!, $nama: String!, $personal: K
       jenisKelamin
       agama
       statusPernikahan
-      alamat
+      alamatSekarang
+      alamatKTP
       telepon
     }
   }
@@ -101,7 +105,8 @@ query karyawanDetail($id: String!) {
     no
     nama
     personal {
-      alamat
+      alamatSekarang
+      alamatKTP
     }
     keluarga {
       id

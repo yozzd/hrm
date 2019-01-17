@@ -108,6 +108,7 @@ export default {
     },
     computed: {
         formOption() {
+            const alamat = _.uniq([this.karyawanDetail.personal.alamatSekarang, this.karyawanDetail.personal.alamatKTP])
             return {
                 forms: [
                     { prop: 'nama', label: 'Nama',
@@ -146,7 +147,7 @@ export default {
                         ]
                     },
                     { prop: 'alamat', label: 'Alamat', itemType: 'autocomplete',
-                        data: [this.karyawanDetail.personal.alamat],
+                        data: alamat,
                         rules: [
                             { required: true, message: 'Alamat tidak boleh kosong', trigger: 'blur' }
                         ]

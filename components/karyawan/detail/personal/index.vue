@@ -82,9 +82,14 @@ export default {
                         return g[row.statusPernikahan]
                     }
                 },
-                { prop: 'personal', label: 'Alamat',
+                { prop: 'personal', label: 'Alamat Sekarang',
                     render: row => {
-                        return row.alamat
+                        return row.alamatSekarang
+                    }
+                },
+                { prop: 'personal', label: 'Alamat Kartu Tanda Penduduk',
+                    render: row => {
+                        return row.alamatKTP
                     }
                 },
                 { prop: 'personal', label: 'Telepon',
@@ -136,9 +141,14 @@ export default {
                             { required: true, message: 'Pilih Status Pernikahan', trigger: 'change' }
                         ]
                     },
-                    { prop: 'alamat', dotProp: 'personal.alamat', label: 'Alamat', type: 'textarea', autosize: { minRows: 3 },
+                    { prop: 'alamatSekarang', dotProp: 'personal.alamatSekarang', label: 'Alamat Sekarang', type: 'textarea', autosize: { minRows: 3 },
                         rules: [
-                            { required: true, message: 'Alamat tidak boleh kosong', trigger: 'blur' }
+                            { required: true, message: 'Alamat Sekarang tidak boleh kosong', trigger: 'blur' }
+                        ]
+                    },
+                    { prop: 'alamatKTP', dotProp: 'personal.alamatKTP', label: 'Alamat Kartu Tanda Penduduk', type: 'textarea', autosize: { minRows: 3 },
+                        rules: [
+                            { required: true, message: 'Alamat Kartu Tanda Penduduk tidak boleh kosong', trigger: 'blur' }
                         ]
                     },
                     { prop: 'telepon', dotProp: 'personal.telepon', label: 'Telepon',
@@ -181,7 +191,8 @@ export default {
                                     jenisKelamin: form.model.jenisKelamin,
                                     agama: form.model.agama,
                                     statusPernikahan: form.model.statusPernikahan,
-                                    alamat: form.model.alamat,
+                                    alamatSekarang: form.model.alamatSekarang,
+                                    alamatKTP: form.model.alamatKTP,
                                     telepon: form.model.telepon
                                 }
                             },
@@ -216,7 +227,8 @@ export default {
                                         jenisKelamin: form.model.jenisKelamin,
                                         agama: form.model.agama,
                                         statusPernikahan: form.model.statusPernikahan,
-                                        alamat: form.model.alamat,
+                                        alamatSekarang: form.model.alamatSekarang,
+                                        alamatKTP: form.model.alamatKTP,
                                         telepon: form.model.telepon
                                     }
                                 }

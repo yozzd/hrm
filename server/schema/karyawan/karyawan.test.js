@@ -18,7 +18,8 @@ const field = {
     jenisKelamin: 'L',
     agama: 'Islam',
     statusPernikahan: 'M1',
-    alamat: '',
+    alamatSekarang: '',
+    alamatKTP: '',
     telepon: '082157777231',
   },
   update: {
@@ -30,7 +31,8 @@ const field = {
     jenisKelamin: 'L',
     agama: 'Islam',
     statusPernikahan: 'M1',
-    alamat: 'Perumahan Mekar Sari Blok D No. 40 RT 001 RW 005 Kelurahan Tiban Lama Kecamatan Sekupang Batam',
+    alamatSekarang: 'perumahan mekar sari blok d no 40 rt 001 rw 005 kelurahan tiban lama kecamatan sekupang batam',
+    alamatKTP: 'perumahan mekar sari blok d no 40 rt 001 rw 005 kelurahan tiban lama kecamatan sekupang batam',
     telepon: '082157777231',
     keluarga: [{
       nama: 'Jane Doe',
@@ -91,7 +93,8 @@ describe('karyawan schema test', () => {
               jenisKelamin
               agama
               statusPernikahan
-              alamat
+              alamatSekarang
+              alamatKTP
               telepon
             }
           }
@@ -106,7 +109,8 @@ describe('karyawan schema test', () => {
             jenisKelamin: create.jenisKelamin,
             agama: create.agama,
             statusPernikahan: create.statusPernikahan,
-            alamat: create.alamat,
+            alamatSekarang: create.alamatSekarang,
+            alamatKTP: create.alamatKTP,
             telepon: create.telepon
           }
         }
@@ -138,7 +142,8 @@ describe('karyawan schema test', () => {
               jenisKelamin
               agama
               statusPernikahan
-              alamat
+              alamatSekarang
+              alamatKTP
               telepon
             }
           }
@@ -153,7 +158,8 @@ describe('karyawan schema test', () => {
             jenisKelamin: create.jenisKelamin,
             agama: create.agama,
             statusPernikahan: create.statusPernikahan,
-            alamat: create.alamat,
+            alamatSekarang: create.alamatSekarang,
+            alamatKTP: create.alamatKTP,
             telepon: create.telepon
           }
         }
@@ -184,7 +190,8 @@ describe('karyawan schema test', () => {
               jenisKelamin
               agama
               statusPernikahan
-              alamat
+              alamatSekarang
+              alamatKTP
               telepon
             }
           }
@@ -200,7 +207,8 @@ describe('karyawan schema test', () => {
             jenisKelamin: update.jenisKelamin,
             agama: update.agama,
             statusPernikahan: update.statusPernikahan,
-            alamat: update.alamat,
+            alamatSekarang: update.alamatSekarang,
+            alamatKTP: update.alamatKTP,
             telepon: update.telepon
           }
         }

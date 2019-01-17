@@ -73,7 +73,8 @@ const personal = () => ({
   jenisKelamin: { type: JenisKelaminEnumType },
   agama: { type: AgamaEnumType },
   statusPernikahan: { type: StatusPernikahanEnumType },
-  alamat: { type: GraphQLString },
+  alamatSekarang: { type: GraphQLString },
+  alamatKTP: { type: GraphQLString },
   telepon: { type: GraphQLString }
 })
 

@@ -4,6 +4,14 @@ const slugify = require('slugify')
 const jimp = require('jimp')
 const config = require('../../config/environment')
 
+const capitalizeWords = (str) => {
+  return new Promise((resolve, reject) => {
+    return resolve(str.replace(/\w\S*/g, (txt) => {
+      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
+    }))
+  })
+}
+
 const processUpload = async (id, image, oldImage) => {
   let { filename, mimetype, encoding, createReadStream } = await image
   let stream = createReadStream()
@@ -45,5 +53,6 @@ const processImage = async (file, path) => {
 }
 
 module.exports = {
+  capitalizeWords,
   processUpload
 }
