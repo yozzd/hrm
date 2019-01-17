@@ -1,18 +1,20 @@
-import { ApolloLink } from 'apollo-link'
-import { InMemoryCache } from 'apollo-cache-inmemory'
 import { createUploadLink } from 'apollo-upload-client'
+import { setContext } from 'apollo-link-context'
+import { InMemoryCache } from 'apollo-cache-inmemory'
 
 export default (ctx) => {
-  const middlewareLink = new ApolloLink((operation, forward) => {
+  const authLink = setContext((_, { headers }) => {
     const token = ctx.app.$auth.token
-    if(token) {
-      operation.setContext({
-        headers: { authorization: `Bearer ${token}` }
-      })
+    return {
+      headers: {
+        ...headers,
+        authorization: token ? `Bearer ${token}` : ''
+      }
     }
-    return forward(operation)
   })
-  const link = middlewareLink.concat(createUploadLink())
+
+  const link = authLink.concat(createUploadLink())
+
   return {
     link,
     cache: new InMemoryCache(),
