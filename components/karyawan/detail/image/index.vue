@@ -31,7 +31,7 @@
         </Col>
         <Col :span="6">
         <Row type="flex" justify="end">
-        <a v-if="karyawanDetail.image.path" @click="handleView">
+        <a v-if="karyawanDetail.image.path" @click="handleView" class="handleView">
             <img :src="karyawanDetail.image.path" class="imgThumbnail"/>
         </a>
         <div v-else class="noImageContainer">
@@ -170,5 +170,8 @@ export default {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+a.handleView:hover {
+    opacity: .9;
 }
 </style>

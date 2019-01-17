@@ -86,3 +86,7 @@ textarea.ivu-input {
 .ivu-menu-vertical .ivu-menu-submenu-title {
     padding: 10px 24px;
 }
+.ivu-modal {
+    margin: 50px auto;
+    top: 0;
+}
