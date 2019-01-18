@@ -24,7 +24,7 @@
         "graphql": "^14.1.1",
         "graphql-errors": "^2.1.0",
         "graphql-iso-date": "^3.6.1",
-        "graphql-tag": "^2.10.0",
+        "graphql-tag": "^2.10.1",
         "graphql-upload": "^8.0.4",
         "iview": "^3.2.2",
         "jimp": "^0.6.0",
