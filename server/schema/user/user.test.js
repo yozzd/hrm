@@ -100,6 +100,33 @@ describe('user schema test', () => {
     done()
   })
 
+  test('harusnya sukes mendapatkan detail user', async (done) => {
+    const { update } = action
+    const response = await request(uri)
+      .post('/graphql')
+      .set('Accept', 'application/json')
+      .set('Authorization', `Bearer ${token}`)
+      .send({ query: `
+        query userDetail($id: String!) {
+          userDetail(id: $id) {
+            id
+            username
+            role
+            createdAt
+            updatedAt
+          }
+        }`,
+        variables: {
+          id: user.id
+        }
+      })
+      .expect(200)
+
+    const { data } = response.body
+    expect(data.userDetail.username).toEqual(user.username)
+    done()
+  })
+
   test('harusnya sukes update user', async (done) => {
     const { update } = action
     const response = await request(uri)

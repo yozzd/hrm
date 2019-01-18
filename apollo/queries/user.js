@@ -18,6 +18,17 @@ query {
   }
 }`
 
+export const USER_DETAIL = gql`
+query userDetail($id: String!) {
+  userDetail(id: $id) {
+    id
+    username
+    role
+    createdAt
+    updatedAt
+  }
+}`
+
 export const USER_CREATE = gql`
 mutation userCreate($username: String!, $password: String!, $role: String!) {
   userCreate(username: $username, password: $password, role: $role) {

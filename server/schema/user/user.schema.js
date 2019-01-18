@@ -28,6 +28,20 @@ const Query = {
         throw err
       }
     })
+  },
+  userDetail: {
+    type: UserType,
+    args: {
+      id: { type: GraphQLString }
+    },
+    resolve: async (_, args, ctx) => {
+      try {
+        const user = await User.findById(args.id)
+        return user
+      } catch(err) {
+        throw err
+      }
+    }
   }
 }
 
