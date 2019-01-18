@@ -7,6 +7,7 @@ const {
   KaryawanPersonalInputType,
   KaryawanAlamatInputType,
   KaryawanKeluargaInputType,
+  KaryawanKontakInputType,
   KaryawanDeleteInputType
 } = require('./karyawan.type')
 const { UserError } = require('graphql-errors')
@@ -110,6 +111,22 @@ const Mutation = {
       try {
         const karyawan = await Karyawan.findById(args.id)
         ld.merge(karyawan.keluarga.id(args.keluarga.id), args.keluarga)
+        return await karyawan.save()
+      } catch(err) {
+        throw err
+      }
+    })
+  },
+  karyawanKontakCreate: {
+    type: KaryawanType,
+    args: {
+      id: { type: GraphQLString },
+      kontak: { type: KaryawanKontakInputType }
+    },
+    resolve: auth.hasRole('personalia', async (_, args, ctx) => {
+      try {
+        const karyawan = await Karyawan.findById(args.id)
+        karyawan.kontak.push(args.kontak)
         return await karyawan.save()
       } catch(err) {
         throw err

@@ -2,7 +2,7 @@ const request = require('supertest')
 const uri = 'http://0.0.0.0:3000'
 const config = require('../../config/environment')
 
-let token, id, keluargaId
+let token, id, keluargaId, kontakId
 
 const field = {
   auth: {
@@ -42,6 +42,12 @@ const field = {
       tanggalLahir: '1994-01-22',
       pendidikan: 'S1',
       pekerjaan: 'Karyawan Swasta',
+      alamat: 'Tes'
+    }],
+    kontak: [{
+      nama: 'Jane Doe',
+      hubunganKeluarga: 'Istri',
+      telepon: '082143776432',
       alamat: 'Tes'
     }]
   }
@@ -330,6 +336,43 @@ describe('karyawan schema test', () => {
 
     const { data } = response.body
     expect(data.karyawanKeluargaDelete[0].id).toEqual(keluargaId)
+    done()
+  })
+
+  test('harusnya sukses create kontak karyawan', async (done) => {
+    const { update } = field
+    const response = await request(uri)
+      .post('/graphql')
+      .set('Accept', 'application/json')
+      .set('Authorization', `Bearer ${token}`)
+      .send({ query: `
+        mutation karyawanKontakCreate($id: String!, $kontak: KaryawanKontakInputType) {
+          karyawanKontakCreate(id: $id, kontak: $kontak) {
+            id
+            kontak {
+              id
+              nama
+              hubunganKeluarga
+              telepon
+              alamat
+            }
+          }
+        }`,
+        variables: {
+          id: id,
+          kontak: {
+            nama: update.kontak[0].nama,
+            hubunganKeluarga: update.kontak[0].hubunganKeluarga,
+            telepon: update.kontak[0].telepon,
+            alamat: update.kontak[0].alamat
+          }
+        }
+      })
+      .expect(200)
+
+    const { data } = response.body
+    kontakId = data.karyawanKontakCreate.kontak[0].id
+    expect(data.karyawanKontakCreate.kontak[0].nama).toEqual(update.kontak[0].nama)
     done()
   })
 

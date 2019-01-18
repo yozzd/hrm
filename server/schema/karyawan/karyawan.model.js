@@ -28,6 +28,20 @@ const KeluargaSchema = new Schema({
   alamat: String
 })
 
+const KontakSchema = new Schema({
+  _id: {
+    type: String,
+    default: uuidv1
+  },
+  nama: String,
+  hubunganKeluarga: {
+    type: Number,
+    enum: [0, 1, 2, 3, 4]
+  },
+  telepon: String,
+  alamat: String
+})
+
 const KaryawanSchema = new Schema({
   _id: {
     type: String,
@@ -59,6 +73,7 @@ const KaryawanSchema = new Schema({
     telepon: String
   },
   keluarga: [KeluargaSchema],
+  kontak: [KontakSchema],
   image: {
     path: String,
     filename: String,

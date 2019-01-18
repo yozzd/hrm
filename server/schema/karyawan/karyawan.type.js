@@ -100,7 +100,7 @@ const keluarga = () => ({
   tanggalLahir: { type: GraphQLDate },
   pendidikan: { type: PendidikanEnumType },
   pekerjaan: { type: GraphQLString },
-  alamat: { type: GraphQLString}
+  alamat: { type: GraphQLString }
 })
 
 const KaryawanKeluargaType = new GraphQLObjectType({
@@ -111,6 +111,24 @@ const KaryawanKeluargaType = new GraphQLObjectType({
 const KaryawanKeluargaInputType = new GraphQLInputObjectType({
   name: 'KaryawanKeluargaInputType',
   fields: keluarga
+})
+
+const kontak = () => ({
+  id: { type: GraphQLString },
+  nama: { type: GraphQLString },
+  hubunganKeluarga: { type: HubunganKeluargaEnumType },
+  telepon: { type: GraphQLString },
+  alamat: { type: GraphQLString}
+})
+
+const KaryawanKontakType = new GraphQLObjectType({
+  name: 'KaryawanKontakType',
+  fields: kontak
+})
+
+const KaryawanKontakInputType = new GraphQLInputObjectType({
+  name: 'KaryawanKontakInputType',
+  fields: kontak
 })
 
 const image = () => ({
@@ -125,6 +143,13 @@ const KaryawanImageType = new GraphQLObjectType({
   fields: image
 })
 
+const KaryawanDeleteInputType = new GraphQLInputObjectType({
+  name: 'KaryawanDeleteInputType',
+  fields: () => ({
+    id: { type: GraphQLString }
+  })
+})
+
 const KaryawanType = new GraphQLObjectType({
   name: 'KaryawanType',
   fields: () => ({
@@ -133,16 +158,10 @@ const KaryawanType = new GraphQLObjectType({
     nama: { type: GraphQLString },
     personal: { type: KaryawanPersonalType },
     keluarga: { type: new GraphQLList(KaryawanKeluargaType) },
+    kontak: { type: new GraphQLList(KaryawanKontakType) },
     image: { type: KaryawanImageType },
     createdAt: { type: GraphQLDateTime },
     updatedAt: { type: GraphQLDateTime }
-  })
-})
-
-const KaryawanDeleteInputType = new GraphQLInputObjectType({
-  name: 'KaryawanDeleteInputType',
-  fields: () => ({
-    id: { type: GraphQLString }
   })
 })
 
@@ -150,5 +169,6 @@ module.exports = {
   KaryawanType,
   KaryawanPersonalInputType,
   KaryawanKeluargaInputType,
+  KaryawanKontakInputType,
   KaryawanDeleteInputType
 }
