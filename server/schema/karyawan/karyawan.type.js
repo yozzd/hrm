@@ -5,7 +5,10 @@ const {
   GraphQLString,
   GraphQLEnumType
 } = require('graphql')
-const { GraphQLDate } = require('graphql-iso-date')
+const { 
+  GraphQLDate,
+  GraphQLDateTime
+} = require('graphql-iso-date')
 
 const JenisKelaminEnumType = new GraphQLEnumType({
   name: 'JenisKelaminEnumType',
@@ -130,7 +133,9 @@ const KaryawanType = new GraphQLObjectType({
     nama: { type: GraphQLString },
     personal: { type: KaryawanPersonalType },
     keluarga: { type: new GraphQLList(KaryawanKeluargaType) },
-    image: { type: KaryawanImageType }
+    image: { type: KaryawanImageType },
+    createdAt: { type: GraphQLDateTime },
+    updatedAt: { type: GraphQLDateTime }
   })
 })
 
