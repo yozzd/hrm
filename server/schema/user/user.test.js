@@ -28,13 +28,16 @@ describe('user schema test', () => {
       .post('/graphql')
       .set('Accept', 'application/json')
       .send({ query: `
-        query {
-          auth(username: "${auth.username}", password: "${auth.password}")
-          {
+        query auth($username: String!, $password: String!) {
+          auth(username: $username, password: $password) {
             id
             token
           }
-        }`
+        }`,
+        variables: {
+          username: auth.username,
+          password: auth.password
+        }
       })
       .expect(200)
 
@@ -50,14 +53,18 @@ describe('user schema test', () => {
       .post('/graphql')
       .set('Accept', 'application/json')
       .send({ query: `
-        mutation {
-          userCreate(username: "${create.username}", password: "${create.password}", role: "${create.role}")
-          {
+        mutation userCreate($username: String!, $password: String!, $role: String!) {
+          userCreate(username: $username, password: $password, role: $role) {
             id
             username
             role
           }
-        }`
+        }`,
+        variables: {
+          username: create.username,
+          password: create.password,
+          role: create.role
+        }
       })
       .expect(200)
 
@@ -68,23 +75,28 @@ describe('user schema test', () => {
   })
 
   test('harusnya gagal create user dengan username yg sama', async (done) => {
+    const { create } = action
     const response = await request(uri)
       .post('/graphql')
       .set('Accept', 'application/json')
       .send({ query: `
-        mutation {
-          userCreate(username: "${user.username}", password: "${user.password}", role: "${user.role}")
-          {
+        mutation userCreate($username: String!, $password: String!, $role: String!) {
+          userCreate(username: $username, password: $password, role: $role) {
             id
             username
             role
           }
-        }`
+        }`,
+        variables: {
+          username: create.username,
+          password: create.password,
+          role: create.role
+        }
       })
       .expect(200)
 
     const { errors } = response.body
-    expect(errors[0].message).toEqual(`Username "${user.username}" sudah terpakai`)
+    expect(errors[0].message).toEqual(`Username "${create.username}" sudah terpakai`)
     done()
   })
 
@@ -95,14 +107,18 @@ describe('user schema test', () => {
       .set('Accept', 'application/json')
       .set('Authorization', `Bearer ${token}`)
       .send({ query: `
-        mutation {
-          userUpdate(id: "${user.id}", username: "${update.username}", role: "${update.role}")
-          {
+        mutation userUpdate($id: String!, $username: String!, $role: String!) {
+          userUpdate(id: $id, username: $username, role: $role) {
             id
             username
             role
           }
-        }`
+        }`,
+        variables: {
+          id: user.id,
+          username: update.username,
+          role: update.role
+        }
       })
       .expect(200)
 
@@ -117,14 +133,18 @@ describe('user schema test', () => {
       .post('/graphql')
       .set('Accept', 'application/json')
       .send({ query: `
-        mutation {
-          userUpdate(id: "${user.id}", username: "${update.username}", role: "${update.role}")
-          {
+        mutation userUpdate($id: String!, $username: String!, $role: String!) {
+          userUpdate(id: $id, username: $username, role: $role) {
             id
             username
             role
           }
-        }`
+        }`,
+        variables: {
+          id: user.id,
+          username: update.username,
+          role: update.role
+        }
       })
       .expect(200)
 
@@ -193,11 +213,14 @@ describe('user schema test', () => {
       .set('Accept', 'application/json')
       .set('Authorization', `Bearer ${token}`)
       .send({ query: `
-        mutation {
-          userDelete(delete: [{id: "${user.id}"}]) {
+        mutation userDelete($delete: [UserDeleteInputType]!) {
+          userDelete(delete: $delete) {
             id
           }
-        }`
+        }`,
+        variables: {
+          delete: [{id: user.id}]
+        }
       })
       .expect(200)
 

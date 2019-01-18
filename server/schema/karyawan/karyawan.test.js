@@ -49,7 +49,7 @@ const field = {
 
 describe('karyawan schema test', () => {
 
-  test('harusnya berhasil mendapatkan token', async (done) => {
+  test('harusnya sukses mendapatkan token', async (done) => {
     const { auth } = field
     const response = await request(uri)
       .post('/graphql')
@@ -74,7 +74,7 @@ describe('karyawan schema test', () => {
     done()
   })
 
-  test('harusnya berhasil create karyawan', async (done) => {
+  test('harusnya sukses create karyawan', async (done) => {
     const { create } = field
     const response = await request(uri)
       .post('/graphql')
@@ -171,7 +171,7 @@ describe('karyawan schema test', () => {
     done()
   })
 
-  test('harusnya berhasil update karyawan', async (done) => {
+  test('harusnya sukses update karyawan', async (done) => {
     const { update } = field
     const response = await request(uri)
       .post('/graphql')
@@ -220,7 +220,7 @@ describe('karyawan schema test', () => {
     done()
   })
 
-  test('harusnya berhasil create keluarga karyawan', async (done) => {
+  test('harusnya sukses create keluarga karyawan', async (done) => {
     const { update } = field
     const response = await request(uri)
       .post('/graphql')
@@ -265,7 +265,7 @@ describe('karyawan schema test', () => {
     done()
   })
 
-  test('harusnya berhasil update keluarga karyawan', async (done) => {
+  test('harusnya sukses update keluarga karyawan', async (done) => {
     const { update } = field
     const response = await request(uri)
       .post('/graphql')
@@ -310,7 +310,7 @@ describe('karyawan schema test', () => {
     done()
   })
 
-  test('harusnya berhasil delete keluarga karyawan', async (done) => {
+  test('harusnya sukses delete keluarga karyawan', async (done) => {
     const response = await request(uri)
       .post('/graphql')
       .set('Accept', 'application/json')
@@ -333,7 +333,7 @@ describe('karyawan schema test', () => {
     done()
   })
 
-  test('harusnya berhasil delete karyawan', async (done) => {
+  test('harusnya sukses delete karyawan', async (done) => {
     const response = await request(uri)
       .post('/graphql')
       .set('Accept', 'application/json')
