@@ -4,7 +4,7 @@
         <Col span="8">
         <Card class="profil">
         <p slot="title">{{$auth.state.user.username}}</p>
-        <a href="#" slot="extra" @click="show">Ubah Password</a>
+        <a slot="extra" @click="show">Ubah Password</a>
         <table>
             <tr>
                 <td>Role</td>
