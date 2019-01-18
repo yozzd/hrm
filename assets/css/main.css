@@ -33,7 +33,8 @@ body, input, textarea, select, button {
 .ivu-layout-footer,
 .ivu-menu-submenu-title,
 .ivu-breadcrumb,
-textarea.ivu-input {
+textarea.ivu-input,
+.ivu-card {
     font-size: 12px;
 }
 .ivu-menu-horizontal .ivu-menu-submenu .ivu-select-dropdown .ivu-menu-item {

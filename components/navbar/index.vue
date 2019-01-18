@@ -23,7 +23,7 @@
                     <Icon custom="iconfont icon-user" size="18" />
                     {{ $auth.state.user.username }}
                 </template>
-                <MenuItem name="3-1"><Icon custom="iconfont icon-setting" size="18" />Profile</MenuItem>
+                <MenuItem name="/profil" to="/profil"><Icon custom="iconfont icon-setting" size="18" />Profil</MenuItem>
                 <MenuItem name="logout"><Icon custom="iconfont icon-logout" size="18" />Logout</MenuItem>
                 </Submenu>
             </div>

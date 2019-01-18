@@ -22,7 +22,7 @@ const action = {
 
 describe('user schema test', () => {
 
-  test('should return token if username and password correct', async (done) => {
+  test('harusnya sukses mendapatkan token', async (done) => {
     const { auth } = action
     const response = await request(uri)
       .post('/graphql')
@@ -44,7 +44,7 @@ describe('user schema test', () => {
     done()
   })
 
-  test('should create user with no authorization', async (done) => {
+  test('harusnya sukes create user', async (done) => {
     const { create } = action
     const response = await request(uri)
       .post('/graphql')
@@ -67,7 +67,7 @@ describe('user schema test', () => {
     done()
   })
 
-  test('should fail when saving a duplicate user', async (done) => {
+  test('harusnya gagal create user dengan username yg sama', async (done) => {
     const response = await request(uri)
       .post('/graphql')
       .set('Accept', 'application/json')
@@ -88,7 +88,7 @@ describe('user schema test', () => {
     done()
   })
 
-  test('should update user with valid authorization', async (done) => {
+  test('harusnya sukes update user', async (done) => {
     const { update } = action
     const response = await request(uri)
       .post('/graphql')
@@ -111,7 +111,7 @@ describe('user schema test', () => {
     done()
   })
 
-  test('should fail when update without authorization', async (done) => {
+  test('harusnya gagal update user tanpa autentikasi', async (done) => {
     const { update } = action
     const response = await request(uri)
       .post('/graphql')
@@ -133,7 +133,61 @@ describe('user schema test', () => {
     done()
   })
 
-  test('should delete user with valid authorization', async (done) => {
+  test('harusnya gagal ubah password user', async (done) => {
+    const { update } = action
+    const response = await request(uri)
+      .post('/graphql')
+      .set('Accept', 'application/json')
+      .set('Authorization', `Bearer ${token}`)
+      .send({ query: `
+        mutation userChangePassword($id: String!, $oldPassword: String!, $newPassword: String!) {
+          userChangePassword(id: $id, oldPassword: $oldPassword, newPassword: $newPassword) {
+            id
+            username
+            role
+          }
+        }`,
+        variables: {
+          id: user.id,
+          oldPassword: 'mywrongoldpassword',
+          newPassword: 'supersecretpassword'
+        }
+      })
+      .expect(200)
+
+    const { errors } = response.body
+    expect(errors[0].message).toEqual('Password anda tidak sama')
+    done()
+  })
+
+  test('harusnya sukes ubah password user', async (done) => {
+    const { update } = action
+    const response = await request(uri)
+      .post('/graphql')
+      .set('Accept', 'application/json')
+      .set('Authorization', `Bearer ${token}`)
+      .send({ query: `
+        mutation userChangePassword($id: String!, $oldPassword: String!, $newPassword: String!) {
+          userChangePassword(id: $id, oldPassword: $oldPassword, newPassword: $newPassword) {
+            id
+            username
+            role
+          }
+        }`,
+        variables: {
+          id: user.id,
+          oldPassword: 'mysecretpassword',
+          newPassword: 'supersecretpassword'
+        }
+      })
+      .expect(200)
+
+    const { data } = response.body
+    expect(data.userChangePassword.username).toEqual(update.username)
+    done()
+  })
+
+  test('harusnya sukses delete user', async (done) => {
     const response = await request(uri)
       .post('/graphql')
       .set('Accept', 'application/json')

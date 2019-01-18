@@ -69,6 +69,28 @@ const Mutation = {
       }
     })
   },
+  userChangePassword: {
+    type: UserType,
+    args: {
+      id: { type: GraphQLString },
+      oldPassword: { type: GraphQLString },
+      newPassword: { type: GraphQLString }
+    },
+    resolve: auth.isAuthenticated(async (_, args, ctx) => {
+      try {
+        const user = await User.findById(args.id)
+        const auth = await user.authenticate(args.oldPassword)
+        if(auth) {
+          user.password = args.newPassword
+          return await user.save()
+        } else {
+          throw new UserError('Password anda tidak sama')
+        }
+      } catch(err) {
+        throw err
+      }
+    })
+  },
   userDelete: {
     type: new GraphQLList(UserType),
     args: {
