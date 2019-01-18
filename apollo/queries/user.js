@@ -43,7 +43,7 @@ mutation userUpdate($id: String!, $username: String!, $role: String!) {
   }
 }`
 
-export const CHANGE_PASSWORD = gql`
+export const USER_CHANGE_PASSWORD = gql`
 mutation userChangePassword($id: String!, $oldPassword: String!, $newPassword: String!) {
   userChangePassword(id: $id, oldPassword: $oldPassword, newPassword: $newPassword) {
     id

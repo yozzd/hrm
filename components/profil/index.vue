@@ -15,7 +15,9 @@
 </template>
 
 <script>
+import { USER_CHANGE_PASSWORD } from '@/apollo/queries/user'
 import Drawer from '@/components/drawer'
+import errorHandler from '@/apollo/config/errorHandler'
 
 export default {
     components: {
@@ -56,6 +58,33 @@ export default {
             form.resetFields()
         },
         handleSave(form) {
+            this.error = []
+            form.validate(async (valid) => {
+                if(valid) {
+                    try {
+                        const { data } = await this.$apollo.mutate({
+                            mutation: USER_CHANGE_PASSWORD,
+                            variables: {
+                                id: this.$auth.state.user.id,
+                                oldPassword: form.model.oldPassword,
+                                newPassword: form.model.newPassword
+                            }
+                        })
+                        if(data.userChangePassword) {
+                            form.resetFields();
+                            this.isVisible = false
+                            this.$Notice.success({
+                                title: 'Success',
+                                desc: `Password anda berhasil diperbaharui, silahkan logout dan login kembali dengan password yang baru`
+                            })
+                        }
+                    } catch(err) {
+                        this.errors = errorHandler(err)
+                    }
+                } else {
+                    return false
+                }
+            })
         }
     }
 }

@@ -273,7 +273,7 @@ export default {
                             this.editRow = ''
                             this.$Notice.success({
                                 title: 'Success',
-                                desc: `Data denganUsername "${data.userUpdate.username}" berhasil diperbaharui`
+                                desc: `Data dengan Username "${data.userUpdate.username}" berhasil diperbaharui`
                             })
                         }
                     } catch(err) {
