@@ -1,12 +1,20 @@
 <template>
     <div>
-        <Menu :active-name="$route.params.index" :open-names="['0']" :accordion="true" width="100%">
+        <Menu
+            :active-name="$route.params.index"
+            :open-names="['0']"
+            :accordion="true"
+            width="100%">
             <Submenu v-for="(nav, i) in navs" :key="i" :name="`${i}`">
             <template slot="title">
                 <Icon :custom="`iconfont icon-${nav.icon}`" size="18" />
                 <span>{{ nav.title }}</span>
             </template>
-            <MenuItem v-for="(item, k) in nav.items" :key="k" :name="item.path" :to="item.path">{{ item.title }}</MenuItem>
+            <MenuItem
+                v-for="(item, k) in nav.items"
+                :key="k"
+                :name="item.path"
+                :to="item.path">{{ item.title }}</MenuItem>
             </Submenu>
         </Menu>
     </div>

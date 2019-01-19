@@ -5,7 +5,9 @@
             <tr v-for="(row, rowIndex) in rows" :key="rowIndex">
                 <td>{{ row.label }}</td>
                 <template v-if="data[row.prop]">
-                    <td v-if="row.render"><strong>{{ row.render(data[row.prop]) }}</strong></td>
+                    <td v-if="row.render">
+                        <strong>{{ row.render(data[row.prop]) }}</strong>
+                    </td>
                     <td v-else><strong>{{ data[row.prop] }}</strong></td>
                 </template>
                 <template v-else>

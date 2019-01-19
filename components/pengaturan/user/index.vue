@@ -3,15 +3,48 @@
         <crumb :data="breadcrumb"/>
 
         <Row>
-        <data-table :data="userAll" :filter-options="filterOptions" :columns="columns" :loading="$apollo.loading" @on-selection-change="handleSelectionChange">
+        <data-table
+            :data="userAll"
+            :filter-options="filterOptions"
+            :columns="columns"
+            :loading="$apollo.loading"
+            @on-selection-change="handleSelectionChange">
             <ButtonGroup slot="action">
-            <Button type="primary" custom-icon="iconfont icon-plus" @click="show('create')">TAMBAH</Button>
-            <Button type="error" custom-icon="iconfont icon-delete" :disabled="!multipleSelection.length" @click="handleDelete">HAPUS</Button>
+            <Button
+                type="primary"
+                custom-icon="iconfont icon-plus"
+                @click="show('create')">TAMBAH</Button>
+            <Button
+                type="error"
+                custom-icon="iconfont icon-delete"
+                :disabled="!multipleSelection.length"
+                @click="handleDelete">HAPUS</Button>
             </ButtonGroup>
         </data-table>
 
-        <drawer title="Tambah User" width="300" v-if="isCreate" :value="isCreate" :form-options="createForm" :errors="errors" @cancel="handleCancel" @action="handleSave" @on-close="handleOnClose" save-button />
-        <drawer title="Edit User" width="300" v-if="isEdit" :value="isEdit" :form-options="editForm" :edit-row="editRow" :errors="errors" @cancel="handleCancel" @action="handleEdit" @on-close="handleOnClose" />
+        <drawer
+            title="Tambah User"
+            width="300"
+            v-if="isCreate"
+            :value="isCreate"
+            :form-options="createForm"
+            :errors="errors"
+            @cancel="handleCancel"
+            @action="handleSave"
+            @on-close="handleOnClose"
+            save-button />
+
+        <drawer
+            title="Edit User"
+            width="300"
+            v-if="isEdit"
+            :value="isEdit"
+            :form-options="editForm"
+            :edit-row="editRow"
+            :errors="errors"
+            @cancel="handleCancel"
+            @action="handleEdit"
+            @on-close="handleOnClose" />
         </Row>
     </div>
 </template>
@@ -101,17 +134,20 @@ export default {
                 forms: [
                     { prop: 'username', label: 'Username',
                         rules: [
-                            { required: true, message: 'Username tidak boleh kosong', trigger: 'blur' },
+                            { required: true, message: 'Username tidak boleh kosong',
+                                trigger: 'blur' },
                             { min: 4, message: 'Username minimal 4 karakter', trigger: 'blur' }
                         ]
                     },
                     { prop: 'password', label: 'Password', type: 'password',
                         rules: [
-                            { required: true, message: 'Password tidak boleh kosong', trigger: 'blur' },
+                            { required: true, message: 'Password tidak boleh kosong',
+                                trigger: 'blur' },
                             { min: 6, message: 'Password minimal 6 karakter', trigger: 'blur' }
                         ]
                     },
-                    { prop: 'role', label: 'Role', itemType: 'select', options: roles, filterable: true,
+                    { prop: 'role', label: 'Role', itemType: 'select', options: roles,
+                        filterable: true,
                         rules: [
                             { required: true, message: 'Pilih Role', trigger: 'change' }
                         ]
@@ -122,12 +158,14 @@ export default {
                 forms: [
                     { prop: 'username', label: 'Username',
                         rules: [
-                            { required: true, message: 'Username tidak boleh kosong', trigger: 'blur' },
+                            { required: true, message: 'Username tidak boleh kosong',
+                                trigger: 'blur' },
                         ]
                     },
                     { prop: 'role', label: 'Role', itemType: 'select', options: roles,
                         rules: [
-                            { required: true, message: 'Password tidak boleh kosong', trigger: 'blur' },
+                            { required: true, message: 'Password tidak boleh kosong',
+                                trigger: 'blur' },
                         ]
                     }
                 ]

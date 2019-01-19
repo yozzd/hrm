@@ -83,3 +83,5 @@ dist
 db
 
 static/images
+
+package-lock.json

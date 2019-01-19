@@ -2,14 +2,26 @@
     <div>
         <Row type="flex" justify="end" class="toolbar">
         <Select v-model="select" filterable class="jumpSelect" @on-change="handleOnChange">
-            <Option v-for="(item, itemIndex) in karyawanAll" :key="itemIndex" :value="item.id" :label="item.nama">
+            <Option
+                v-for="(item, itemIndex) in karyawanAll"
+                :key="itemIndex"
+                :value="item.id"
+                :label="item.nama">
             <span>{{ item.nama }}</span>
             <span style="float: right;">{{ item.no }}</span>
             </Option>
         </Select>
         <ButtonGroup>
-        <Button type="dashed" custom-icon="iconfont icon-left" :to="toPrevious" :disabled="!toPrevious"></Button>
-        <Button type="dashed" custom-icon="iconfont icon-right" :to="toNext" :disabled="!toNext"></Button>
+        <Button
+            type="dashed"
+            custom-icon="iconfont icon-left"
+            :to="toPrevious"
+            :disabled="!toPrevious"></Button>
+        <Button
+            type="dashed"
+            custom-icon="iconfont icon-right"
+            :to="toNext"
+            :disabled="!toNext"></Button>
         </ButtonGroup>
         </Row>
     </div>

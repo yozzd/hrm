@@ -10,8 +10,16 @@
         <div class="header">
             <h2>Log In</h2>
         </div>
-        <Alert type="error" v-if="error" @on-close="handleErrorClose" closable>{{error}}</Alert>
-        <Form ref="form" :model="form" :rules="rules" @submit.native.prevent="handleSubmit('form')">
+        <Alert
+            type="error"
+            v-if="error"
+            @on-close="handleErrorClose"
+            closable>{{error}}</Alert>
+        <Form
+            ref="form"
+            :model="form"
+            :rules="rules"
+            @submit.native.prevent="handleSubmit('form')">
             <FormItem prop="username">
             <Input type="text" v-model="form.username" placeholder="Username">
             <Icon custom="iconfont icon-user" slot="prepend" size="16" />
@@ -23,7 +31,11 @@
             </Input>
             </FormItem>
             <FormItem>
-            <Button custom-icon="iconfont icon-login" type="primary" html-type="submit" class="login-btn">Login</Button>
+            <Button
+                custom-icon="iconfont icon-login"
+                type="primary"
+                html-type="submit"
+                class="login-btn">Login</Button>
             </FormItem>
         </Form>
         </Col>
@@ -41,10 +53,12 @@ export default {
             },
             rules: {
                 username: [
-                    { required: true, message: 'Username tidak boleh kosong', trigger: 'blur' }
+                    { required: true, message: 'Username tidak boleh kosong',
+                        trigger: 'blur' }
                 ],
                 password: [
-                    { required: true, message: 'Password tidak boleh kosong', trigger: 'blur' }
+                    { required: true, message: 'Password tidak boleh kosong',
+                        trigger: 'blur' }
                 ]
             },
             error: ''

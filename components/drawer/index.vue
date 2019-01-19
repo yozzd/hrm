@@ -74,13 +74,20 @@
                 </AutoComplete>
                 </FormItem>
             </Form>
-            <Alert type="error" v-if="errors.length" v-for="(error, errorIndex) in errors" :key="errorIndex">
-            {{ error }}
-            </Alert>
+            <Alert
+                type="error"
+                v-if="errors.length"
+                v-for="(error, errorIndex) in errors"
+                :key="errorIndex">{{ error }}</Alert>
             <div class="drawer-footer">
-                <Button style="margin-right: 8px" @click="() => emitEventHandler('cancel', $refs.form)" custom-icon="iconfont icon-close">BATAL</Button>
-                <Button type="primary" @click="() => emitEventHandler('action', $refs.form)" custom-icon="iconfont icon-save">
-                    {{saveButton ? 'SIMPAN' : 'UPDATE'}}
+                <Button
+                    style="margin-right: 8px"
+                    @click="() => emitEventHandler('cancel', $refs.form)"
+                    custom-icon="iconfont icon-close">BATAL</Button>
+                <Button
+                    type="primary"
+                    @click="() => emitEventHandler('action', $refs.form)"
+                    custom-icon="iconfont icon-save">{{saveButton ? 'SIMPAN' : 'UPDATE'}}
                 </Button>
             </div>
         </Drawer>

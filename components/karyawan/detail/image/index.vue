@@ -13,15 +13,25 @@
             :on-format-error="handleFormatError"
             :on-exceeded-size="handleMaxSize"
             action="graphql">
-        <Button type="dashed" custom-icon="iconfont icon-search">Pilih file yang akan di-upload</Button>
+        <Button
+            type="dashed"
+            custom-icon="iconfont icon-search">Pilih file yang akan di-upload</Button>
         </Upload>
         <div v-if="file !== null">
             <div>Upload file: {{ file.name }}</div>
-            <Button type="dashed" custom-icon="iconfont icon-upload" @click="handleUpload" :loading="loadingStatus" class="uploadButton">{{ loadingStatus ? 'Uploading' : 'Upload' }}</Button>
+            <Button
+                type="dashed"
+                custom-icon="iconfont icon-upload"
+                @click="handleUpload"
+                :loading="loadingStatus"
+                class="uploadButton">{{ loadingStatus ? 'Uploading' : 'Upload' }}</Button>
         </div>
-        <Alert type="error" v-if="errors.length" v-for="(error, errorIndex) in errors" :key="errorIndex" class="errorAlert">
-        {{ error }}
-        </Alert>
+        <Alert
+            type="error"
+            v-if="errors.length"
+            v-for="(error, errorIndex) in errors"
+            :key="errorIndex"
+            class="errorAlert">{{ error }}</Alert>
         <Modal :title="karyawanDetail.image.filename" v-model="visible">
         <img :src="karyawanDetail.image.path" v-if="visible" style="width: 100%">
         <div slot="footer">

@@ -6,12 +6,25 @@
             <tr slot="append">
                 <td></td>
                 <td>
-                    <Button type="dashed" size="small" @click="show(karyawanDetail)">Edit</Button>
+                    <Button
+                        type="dashed"
+                        size="small"
+                        @click="show(karyawanDetail)">Edit</Button>
                 </td>
             </tr>
         </info-table>
 
-        <drawer title="Edit Karyawan" width="300" v-if="isEdit" :value="isEdit" :form-options="editForm" :edit-row="editRow" :errors="errors" @cancel="handleCancel" @action="handleEdit" @on-close="handleOnClose" />
+        <drawer
+            title="Edit Karyawan"
+            width="300"
+            v-if="isEdit"
+            :value="isEdit"
+            :form-options="editForm"
+            :edit-row="editRow"
+            :errors="errors"
+            @cancel="handleCancel"
+            @action="handleEdit"
+            @on-close="handleOnClose" />
     </div>
 </template>
 
@@ -29,16 +42,6 @@ export default {
         Drawer,
         InfoTable,
         ChildHeader
-    },
-    apollo: {
-        karyawanDetail: {
-            query: KARYAWAN_PERSONAL,
-            variables() {
-                return {
-                    id: this.$route.params.id
-                }
-            }
-        }
     },
     data() {
         return {
@@ -102,61 +105,91 @@ export default {
                 forms: [
                     { prop: 'no', label: 'No Karyawan', itemType: 'mask', mask: 'A.####', placeholder: '_.____',
                         rules: [
-                            { required: true, message: 'No Karyawan tidak boleh kosong', trigger: 'blur' },
-                            { min: 6, message: 'No Karyawan minimal 6 karakter', trigger: 'blur' }
+                            { required: true, message: 'No Karyawan tidak boleh kosong',
+                                trigger: 'blur' },
+                            { min: 6, message: 'No Karyawan minimal 6 karakter',
+                                trigger: 'blur' }
                         ]
                     },
                     { prop: 'nama', label: 'Nama Karyawan',
                         rules: [
-                            { required: true, message: 'Nama Karyawan tidak boleh kosong', trigger: 'blur' }
+                            { required: true, message: 'Nama Karyawan tidak boleh kosong',
+                                trigger: 'blur' }
                         ]
                     },
-                    { prop: 'tempatLahir', dotProp: 'personal.tempatLahir', label: 'Tempat Lahir',
+                    { prop: 'tempatLahir', dotProp: 'personal.tempatLahir',
+                        label: 'Tempat Lahir',
                         rules: [
-                            { required: true, message: 'Tempat Lahir tidak boleh kosong', trigger: 'blur' }
+                            { required: true, message: 'Tempat Lahir tidak boleh kosong',
+                                trigger: 'blur' }
                         ]
                     },
-                    { prop: 'tanggalLahir', dotProp: 'personal.tanggalLahir', label: 'Tanggal Lahir', itemType: 'date', placeholder: '__-__-____',
+                    { prop: 'tanggalLahir', dotProp: 'personal.tanggalLahir',
+                        label: 'Tanggal Lahir', itemType: 'date', placeholder: '__-__-____',
                         rules: [
-                            { required: true, type: 'date', message: 'Pilih Tanggal Lahir', trigger: 'change' }
+                            { required: true, type: 'date', message: 'Pilih Tanggal Lahir',
+                                trigger: 'change' }
                         ]
                     },
-                    { prop: 'tanggalBergabung', dotProp: 'personal.tanggalBergabung', label: 'Tanggal Bergabung', itemType: 'date', placeholder: '__-__-____',
+                    { prop: 'tanggalBergabung', dotProp: 'personal.tanggalBergabung',
+                        label: 'Tanggal Bergabung', itemType: 'date', placeholder: '__-__-____',
                         rules: [
-                            { required: true, type: 'date', message: 'Pilih Tanggal Bergabung', trigger: 'change' }
+                            { required: true, type: 'date', message: 'Pilih Tanggal Bergabung',
+                                trigger: 'change' }
                         ]
                     },
-                    { prop: 'jenisKelamin', dotProp: 'personal.jenisKelamin', label: 'Jenis Kelamin', itemType: 'radio', options: jenisKelamin.options,
+                    { prop: 'jenisKelamin', dotProp: 'personal.jenisKelamin',
+                        label: 'Jenis Kelamin', itemType: 'radio',
+                        options: jenisKelamin.options,
                         rules: [
-                            { required: true, message: 'Pilih Jenis Kelamin', trigger: 'change' }
+                            { required: true, message: 'Pilih Jenis Kelamin',
+                                trigger: 'change' }
                         ]
                     },
-                    { prop: 'agama', dotProp: 'personal.agama', label: 'Agama', itemType: 'select', options: agama.options, filterable: true,
+                    { prop: 'agama', dotProp: 'personal.agama', label: 'Agama',
+                        itemType: 'select', options: agama.options, filterable: true,
                         rules: [
                             { required: true, message: 'Pilih Agama', trigger: 'change' }
                         ]
                     },
-                    { prop: 'statusPernikahan', dotProp: 'personal.statusPernikahan', label: 'Status Pernikahan', itemType: 'select', options: statusPernikahan.options, filterable: true,
+                    { prop: 'statusPernikahan', dotProp: 'personal.statusPernikahan',
+                        label: 'Status Pernikahan', itemType: 'select', options: statusPernikahan.options, filterable: true,
                         rules: [
-                            { required: true, message: 'Pilih Status Pernikahan', trigger: 'change' }
+                            { required: true, message: 'Pilih Status Pernikahan',
+                                trigger: 'change' }
                         ]
                     },
-                    { prop: 'alamatSekarang', dotProp: 'personal.alamatSekarang', label: 'Alamat Sekarang', type: 'textarea', autosize: { minRows: 3 },
+                    { prop: 'alamatSekarang', dotProp: 'personal.alamatSekarang',
+                        label: 'Alamat Sekarang', type: 'textarea', autosize: { minRows: 3 },
                         rules: [
-                            { required: true, message: 'Alamat Sekarang tidak boleh kosong', trigger: 'blur' }
+                            { required: true, message: 'Alamat Sekarang tidak boleh kosong',
+                                trigger: 'blur' }
                         ]
                     },
-                    { prop: 'alamatKTP', dotProp: 'personal.alamatKTP', label: 'Alamat Kartu Tanda Penduduk', type: 'textarea', autosize: { minRows: 3 },
+                    { prop: 'alamatKTP', dotProp: 'personal.alamatKTP',
+                        label: 'Alamat Kartu Tanda Penduduk', type: 'textarea', autosize: { minRows: 3 },
                         rules: [
-                            { required: true, message: 'Alamat Kartu Tanda Penduduk tidak boleh kosong', trigger: 'blur' }
+                            { required: true, message: 'Alamat Kartu Tanda Penduduk tidak boleh kosong',
+                                trigger: 'blur' }
                         ]
                     },
                     { prop: 'telepon', dotProp: 'personal.telepon', label: 'Telepon',
                         rules: [
-                            { required: true, message: 'Nomor Telepon tidak boleh kosong', trigger: 'blur' }
+                            { required: true, message: 'Nomor Telepon tidak boleh kosong',
+                                trigger: 'blur' }
                         ]
                     }
                 ]
+            }
+        }
+    },
+    apollo: {
+        karyawanDetail: {
+            query: KARYAWAN_PERSONAL,
+            variables() {
+                return {
+                    id: this.$route.params.id
+                }
             }
         }
     },

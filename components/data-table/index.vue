@@ -2,7 +2,12 @@
     <div>
         <Row type="flex" justify="space-between" class="toolbar">
         <Col :md="14" :lg="11">
-        <Input v-model="filter" @on-enter="handleFilter" :placeholder="`Filter By ${cap(select)}`" class="filter" v-if="showFilter">
+        <Input
+            v-model="filter"
+            @on-enter="handleFilter"
+            :placeholder="`Filter By ${cap(select)}`"
+            class="filter"
+            v-if="showFilter">
         <Select v-model="select" slot="prepend" placeholder="Select">
             <Option
                 v-for="item in filterOptions.select.options"
@@ -11,7 +16,10 @@
                 :key="item.value">
             </Option>
         </Select>
-        <Button slot="append" custom-icon="iconfont icon-search" @click="handleFilter"></Button>
+        <Button
+            slot="append"
+            custom-icon="iconfont icon-search"
+            @click="handleFilter"></Button>
         </Input>
         </Col>
         <Col :md="6" :lg="5" style="text-align: right;">

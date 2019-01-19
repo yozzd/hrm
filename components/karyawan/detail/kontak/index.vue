@@ -31,6 +31,7 @@
             @action="handleSave"
             @on-close="handleOnClose"
             save-button />
+
         <drawer
             title="Edit Kontak"
             width="300"
@@ -124,23 +125,29 @@ export default {
                 forms: [
                     { prop: 'nama', label: 'Nama',
                         rules: [
-                            { required: true, message: 'Nama tidak boleh kosong', trigger: 'blur' }
+                            { required: true, message: 'Nama tidak boleh kosong',
+                                trigger: 'blur' }
                         ]
                     },
-                    { prop: 'hubunganKeluarga', label: 'Hubungan Keluarga', itemType: 'select', options: hubunganKeluarga.options, filterable: true,
+                    { prop: 'hubunganKeluarga', label: 'Hubungan Keluarga',
+                        itemType: 'select', options: hubunganKeluarga.options,
+                        filterable: true,
                         rules: [
-                            { required: true, message: 'Pilih Hubungan Keluarga', trigger: 'blur' }
+                            { required: true, message: 'Pilih Hubungan Keluarga',
+                                trigger: 'blur' }
                         ]
                     },
                     { prop: 'telepon', label: 'Telepon',
                         rules: [
-                            { required: true, message: 'Telepon tidak boleh kosong', trigger: 'blur' }
+                            { required: true, message: 'Telepon tidak boleh kosong',
+                                trigger: 'blur' }
                         ]
                     },
                     { prop: 'alamat', label: 'Alamat', itemType: 'autocomplete',
                         data: alamat,
                         rules: [
-                            { required: true, message: 'Alamat tidak boleh kosong', trigger: 'blur' }
+                            { required: true, message: 'Alamat tidak boleh kosong',
+                                trigger: 'blur' }
                         ]
                     }
                 ]

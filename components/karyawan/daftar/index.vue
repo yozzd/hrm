@@ -3,14 +3,36 @@
         <crumb :data="breadcrumb"/>
 
         <Row>
-        <data-table :data="karyawanAll" :filter-options="filterOptions" :columns="columns" :loading="$apollo.loading" @on-selection-change="handleSelectionChange">
+        <data-table
+            :data="karyawanAll"
+            :filter-options="filterOptions"
+            :columns="columns"
+            :loading="$apollo.loading"
+            @on-selection-change="handleSelectionChange">
             <ButtonGroup slot="action">
-            <Button type="primary" custom-icon="iconfont icon-plus" @click="show('create')">TAMBAH</Button>
-            <Button type="error" custom-icon="iconfont icon-delete" :disabled="!multipleSelection.length" @click="handleDelete">HAPUS</Button>
+            <Button
+                type="primary"
+                custom-icon="iconfont icon-plus"
+                @click="show('create')">TAMBAH</Button>
+            <Button
+                type="error"
+                custom-icon="iconfont icon-delete"
+                :disabled="!multipleSelection.length"
+                @click="handleDelete">HAPUS</Button>
             </ButtonGroup>
         </data-table>
 
-        <drawer title="Tambah Karyawan" width="300" v-if="isCreate" :value="isCreate" :form-options="createForm" :errors="errors" @cancel="handleCancel" @action="handleSave" @on-close="handleOnClose" save-button />
+        <drawer
+            title="Tambah Karyawan"
+            width="300"
+            v-if="isCreate"
+            :value="isCreate"
+            :form-options="createForm"
+            :errors="errors"
+            @cancel="handleCancel"
+            @action="handleSave"
+            @on-close="handleOnClose"
+            save-button />
         </Row>
     </div>
 </template>
@@ -111,60 +133,80 @@ export default {
             ],
             createForm: {
                 forms: [
-                    { prop: 'no', label: 'No Karyawan', itemType: 'mask', mask: 'A.####', placeholder: '_.____',
+                    { prop: 'no', label: 'No Karyawan', itemType: 'mask', mask: 'A.####',
+                        placeholder: '_.____',
                         rules: [
-                            { required: true, message: 'No Karyawan tidak boleh kosong', trigger: 'blur' },
-                            { min: 6, message: 'No Karyawan minimal 6 karakter', trigger: 'blur' }
+                            { required: true, message: 'No Karyawan tidak boleh kosong',
+                                trigger: 'blur' },
+                            { min: 6, message: 'No Karyawan minimal 6 karakter',
+                                trigger: 'blur' }
                         ]
                     },
                     { prop: 'nama', label: 'Nama Karyawan',
                         rules: [
-                            { required: true, message: 'Nama Karyawan tidak boleh kosong', trigger: 'blur' }
+                            { required: true, message: 'Nama Karyawan tidak boleh kosong',
+                                trigger: 'blur' }
                         ]
                     },
                     { prop: 'tempatLahir', label: 'Tempat Lahir',
                         rules: [
-                            { required: true, message: 'Tempat Lahir tidak boleh kosong', trigger: 'blur' }
+                            { required: true, message: 'Tempat Lahir tidak boleh kosong',
+                                trigger: 'blur' }
                         ]
                     },
-                    { prop: 'tanggalLahir', label: 'Tanggal Lahir', itemType: 'date', placeholder: '__-__-____',
+                    { prop: 'tanggalLahir', label: 'Tanggal Lahir', itemType: 'date',
+                        placeholder: '__-__-____',
                         rules: [
-                            { required: true, type: 'date', message: 'Pilih Tanggal Lahir', trigger: 'change' }
+                            { required: true, type: 'date', message: 'Pilih Tanggal Lahir',
+                                trigger: 'change' }
                         ]
                     },
-                    { prop: 'tanggalBergabung', label: 'Tanggal Bergabung', itemType: 'date', placeholder: '__-__-____',
+                    { prop: 'tanggalBergabung', label: 'Tanggal Bergabung',
+                        itemType: 'date', placeholder: '__-__-____',
                         rules: [
-                            { required: true, type: 'date', message: 'Pilih Tanggal Bergabung', trigger: 'change' }
+                            { required: true, type: 'date', message: 'Pilih Tanggal Bergabung',
+                                trigger: 'change' }
                         ]
                     },
-                    { prop: 'jenisKelamin', label: 'Jenis Kelamin', itemType: 'radio', options: jenisKelamin.options,
+                    { prop: 'jenisKelamin', label: 'Jenis Kelamin', itemType: 'radio',
+                        options: jenisKelamin.options,
                         rules: [
-                            { required: true, message: 'Pilih Jenis Kelamin', trigger: 'change' }
+                            { required: true, message: 'Pilih Jenis Kelamin',
+                                trigger: 'change' }
                         ]
                     },
-                    { prop: 'agama', label: 'Agama', itemType: 'select', options: agama.options, filterable: true,
+                    { prop: 'agama', label: 'Agama', itemType: 'select',
+                        options: agama.options, filterable: true,
                         rules: [
                             { required: true, message: 'Pilih Agama', trigger: 'change' }
                         ]
                     },
-                    { prop: 'statusPernikahan', label: 'Status Pernikahan', itemType: 'select', options: statusPernikahan.options, filterable: true,
+                    { prop: 'statusPernikahan', label: 'Status Pernikahan',
+                        itemType: 'select', options: statusPernikahan.options,
+                        filterable: true,
                         rules: [
-                            { required: true, message: 'Pilih Status Pernikahan', trigger: 'change' }
+                            { required: true, message: 'Pilih Status Pernikahan',
+                                trigger: 'change' }
                         ]
                     },
-                    { prop: 'alamatSekarang', dotProp: 'personal.alamatSekarang', label: 'Alamat Sekarang', type: 'textarea', autosize: { minRows: 3 },
+                    { prop: 'alamatSekarang', dotProp: 'personal.alamatSekarang',
+                        label: 'Alamat Sekarang', type: 'textarea', autosize: { minRows: 3 },
                         rules: [
-                            { required: true, message: 'Alamat Sekarang tidak boleh kosong', trigger: 'blur' }
+                            { required: true, message: 'Alamat Sekarang tidak boleh kosong',
+                                trigger: 'blur' }
                         ]
                     },
-                    { prop: 'alamatKTP', dotProp: 'personal.alamatKTP', label: 'Alamat Kartu Tanda Penduduk', type: 'textarea', autosize: { minRows: 3 },
+                    { prop: 'alamatKTP', dotProp: 'personal.alamatKTP',
+                        label: 'Alamat Kartu Tanda Penduduk', type: 'textarea', autosize: { minRows: 3 },
                         rules: [
-                            { required: true, message: 'Alamat Kartu Tanda Penduduk tidak boleh kosong', trigger: 'blur' }
+                            { required: true, message: 'Alamat Kartu Tanda Penduduk tidak boleh kosong',
+                                trigger: 'blur' }
                         ]
                     },
                     { prop: 'telepon', label: 'Telepon',
                         rules: [
-                            { required: true, message: 'Nomor Telepon tidak boleh kosong', trigger: 'blur' }
+                            { required: true, message: 'Nomor Telepon tidak boleh kosong',
+                                trigger: 'blur' }
                         ]
                     }
                 ]

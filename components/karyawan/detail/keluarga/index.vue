@@ -2,15 +2,47 @@
     <div>
         <child-header :data="karyawanDetail"></child-header>
 
-        <data-table :data="karyawanDetail.keluarga" :filter-options="filterOptions" :columns="columns" :loading="$apollo.loading" @on-selection-change="handleSelectionChange">
+        <data-table
+            :data="karyawanDetail.keluarga"
+            :filter-options="filterOptions"
+            :columns="columns"
+            :loading="$apollo.loading"
+            @on-selection-change="handleSelectionChange">
             <ButtonGroup slot="action">
-            <Button type="primary" custom-icon="iconfont icon-plus" @click="show('create')">TAMBAH</Button>
-            <Button type="error" custom-icon="iconfont icon-delete" :disabled="!multipleSelection.length" @click="handleDelete">HAPUS</Button>
+            <Button
+                type="primary"
+                custom-icon="iconfont icon-plus"
+                @click="show('create')">TAMBAH</Button>
+            <Button
+                type="error"
+                custom-icon="iconfont icon-delete"
+                :disabled="!multipleSelection.length" @click="handleDelete">HAPUS</Button>
             </ButtonGroup>
         </data-table>
 
-        <drawer title="Tambah Keluarga" width="300" v-if="isCreate" :value="isCreate" :form-options="formOption" :errors="errors" @cancel="handleCancel" @action="handleSave" @on-close="handleOnClose" save-button />
-        <drawer title="Edit Keluarga" width="300" v-if="isEdit" :value="isEdit" :form-options="formOption" :edit-row="editRow" :errors="errors" @cancel="handleCancel" @action="handleEdit" @on-close="handleOnClose" />
+        <drawer
+            title="Tambah Keluarga"
+            width="300"
+            v-if="isCreate"
+            :value="isCreate"
+            :form-options="formOption"
+            :errors="errors"
+            @cancel="handleCancel"
+            @action="handleSave"
+            @on-close="handleOnClose"
+            save-button />
+
+        <drawer
+            title="Edit Keluarga"
+            width="300"
+            v-if="isEdit"
+            :value="isEdit"
+            :form-options="formOption"
+            :edit-row="editRow"
+            :errors="errors"
+            @cancel="handleCancel"
+            @action="handleEdit"
+            @on-close="handleOnClose" />
     </div>
 </template>
 
@@ -32,16 +64,6 @@ export default {
         Drawer,
         DataTable,
         ChildHeader
-    },
-    apollo: {
-        karyawanDetail: {
-            query: KARYAWAN_KELUARGA,
-            variables() {
-                return {
-                    id: this.$route.params.id
-                }
-            }
-        }
     },
     data() {
         return {
@@ -107,6 +129,16 @@ export default {
             ],
         }
     },
+    apollo: {
+        karyawanDetail: {
+            query: KARYAWAN_KELUARGA,
+            variables() {
+                return {
+                    id: this.$route.params.id
+                }
+            }
+        }
+    },
     computed: {
         formOption() {
             const alamat = _.uniq([this.karyawanDetail.personal.alamatSekarang, this.karyawanDetail.personal.alamatKTP])
@@ -114,43 +146,55 @@ export default {
                 forms: [
                     { prop: 'nama', label: 'Nama',
                         rules: [
-                            { required: true, message: 'Nama tidak boleh kosong', trigger: 'blur' }
+                            { required: true, message: 'Nama tidak boleh kosong',
+                                trigger: 'blur' }
                         ]
                     },
-                    { prop: 'hubunganKeluarga', label: 'Hubungan Keluarga', itemType: 'select', options: hubunganKeluarga.options, filterable: true,
+                    { prop: 'hubunganKeluarga', label: 'Hubungan Keluarga',
+                        itemType: 'select', options: hubunganKeluarga.options,
+                        filterable: true,
                         rules: [
-                            { required: true, message: 'Pilih Hubungan Keluarga', trigger: 'blur' }
+                            { required: true, message: 'Pilih Hubungan Keluarga',
+                                trigger: 'blur' }
                         ]
                     },
-                    { prop: 'jenisKelamin', label: 'Jenis Kelamin', itemType: 'radio', options: jenisKelamin.options,
+                    { prop: 'jenisKelamin', label: 'Jenis Kelamin', itemType: 'radio',
+                        options: jenisKelamin.options,
                         rules: [
-                            { required: true, message: 'Pilih Jenis Kelamin', trigger: 'change' }
+                            { required: true, message: 'Pilih Jenis Kelamin',
+                                trigger: 'change' }
                         ],
                     },
                     { prop: 'tempatLahir', label: 'Tempat Lahir',
                         rules: [
-                            { required: true, message: 'Tempat Lahir tidak boleh kosong', trigger: 'blur' }
+                            { required: true, message: 'Tempat Lahir tidak boleh kosong',
+                                trigger: 'blur' }
                         ]
                     },
-                    { prop: 'tanggalLahir', label: 'Tanggal Lahir', itemType: 'date', placeholder: '__-__-____',
+                    { prop: 'tanggalLahir', label: 'Tanggal Lahir', itemType: 'date',
+                        placeholder: '__-__-____',
                         rules: [
-                            { required: true, type: 'date', message: 'Pilih Tanggal Lahir', trigger: 'change' }
+                            { required: true, type: 'date', message: 'Pilih Tanggal Lahir',
+                                trigger: 'change' }
                         ]
                     },
-                    { prop: 'pendidikan', label: 'Pendidikan', itemType: 'select', options: pendidikan.options, filterable: true,
+                    { prop: 'pendidikan', label: 'Pendidikan', itemType: 'select',
+                        options: pendidikan.options, filterable: true,
                         rules: [
                             { required: true, message: 'Pilih Pendidikan', trigger: 'change' }
                         ]
                     },
                     { prop: 'pekerjaan', label: 'Pekerjaan',
                         rules: [
-                            { required: true, message: 'Pekerjaan tidak boleh kosong', trigger: 'blur' }
+                            { required: true, message: 'Pekerjaan tidak boleh kosong',
+                                trigger: 'blur' }
                         ]
                     },
                     { prop: 'alamat', label: 'Alamat', itemType: 'autocomplete',
                         data: alamat,
                         rules: [
-                            { required: true, message: 'Alamat tidak boleh kosong', trigger: 'blur' }
+                            { required: true, message: 'Alamat tidak boleh kosong',
+                                trigger: 'blur' }
                         ]
                     }
                 ]
