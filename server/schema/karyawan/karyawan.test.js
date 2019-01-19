@@ -413,6 +413,29 @@ describe('karyawan schema test', () => {
     done()
   })
 
+  test('harusnya sukses delete kontak karyawan', async (done) => {
+    const response = await request(uri)
+      .post('/graphql')
+      .set('Accept', 'application/json')
+      .set('Authorization', `Bearer ${token}`)
+      .send({ query: `
+        mutation karyawanKontakDelete($id: String!, $delete: [KaryawanDeleteInputType]!) {
+          karyawanKontakDelete(id: $id, delete: $delete) {
+            id
+          }
+        }`,
+        variables: {
+          id: id,
+          delete: [{ id: kontakId }]
+        }
+      })
+      .expect(200)
+
+    const { data } = response.body
+    expect(data.karyawanKontakDelete[0].id).toEqual(kontakId)
+    done()
+  })
+
   test('harusnya sukses delete karyawan', async (done) => {
     const response = await request(uri)
       .post('/graphql')

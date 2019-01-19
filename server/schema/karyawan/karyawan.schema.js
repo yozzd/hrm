@@ -117,6 +117,25 @@ const Mutation = {
       }
     })
   },
+  karyawanKeluargaDelete: {
+    type: new GraphQLList(KaryawanType),
+    args: {
+      id: { type: GraphQLString },
+      delete: { type: new GraphQLList(KaryawanDeleteInputType) }
+    },
+    resolve: auth.hasRole('personal', async (_, args, ctx) => {
+      try {
+        const karyawan = await Karyawan.findById(args.id)
+        await Promise.all(args.delete.map(async (val) => {
+          karyawan.keluarga.id(val.id).remove()
+        }))
+        await karyawan.save()
+        return args.delete
+      } catch(err) {
+        throw err
+      }
+    })
+  },
   karyawanKontakCreate: {
     type: KaryawanType,
     args: {
@@ -149,7 +168,7 @@ const Mutation = {
       }
     })
   },
-  karyawanKeluargaDelete: {
+  karyawanKontakDelete: {
     type: new GraphQLList(KaryawanType),
     args: {
       id: { type: GraphQLString },
@@ -159,7 +178,7 @@ const Mutation = {
       try {
         const karyawan = await Karyawan.findById(args.id)
         await Promise.all(args.delete.map(async (val) => {
-          karyawan.keluarga.id(val.id).remove()
+          karyawan.kontak.id(val.id).remove()
         }))
         await karyawan.save()
         return args.delete
