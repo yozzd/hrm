@@ -1,6 +1,7 @@
 <template>
     <div>
         <child-header :data="karyawanDetail"></child-header>
+
         <data-table :data="karyawanDetail.keluarga" :filter-options="filterOptions" :columns="columns" :loading="$apollo.loading" @on-selection-change="handleSelectionChange">
             <ButtonGroup slot="action">
             <Button type="primary" custom-icon="iconfont icon-plus" @click="show('create')">TAMBAH</Button>
@@ -118,7 +119,7 @@ export default {
                     },
                     { prop: 'hubunganKeluarga', label: 'Hubungan Keluarga', itemType: 'select', options: hubunganKeluarga.options, filterable: true,
                         rules: [
-                            { required: true, message: 'Nama tidak boleh kosong', trigger: 'blur' }
+                            { required: true, message: 'Pilih Hubungan Keluarga', trigger: 'blur' }
                         ]
                     },
                     { prop: 'jenisKelamin', label: 'Jenis Kelamin', itemType: 'radio', options: jenisKelamin.options,
