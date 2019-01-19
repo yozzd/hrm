@@ -48,7 +48,8 @@
 <script>
 import {
     KARYAWAN_KONTAK,
-    KARYAWAN_CREATE_KONTAK } from '@/apollo/queries/karyawan'
+    KARYAWAN_CREATE_KONTAK,
+    KARYAWAN_UPDATE_KONTAK } from '@/apollo/queries/karyawan'
 import DataTable from '@/components/data-table'
 import Drawer from '@/components/drawer'
 import ChildHeader from '@/components/karyawan/child-header'
@@ -229,7 +230,72 @@ export default {
                 }
             })
         },
-        handleEdit(form) {},
+        handleEdit(form) {
+            this.errors = []
+            form.validate(async (valid) => {
+                if(valid) {
+                    try {
+                        const { data } = await this.$apollo.mutate({
+                            mutation: KARYAWAN_UPDATE_KONTAK,
+                            variables: {
+                                id: this.$route.params.id,
+                                kontak: {
+                                    id: this.editRow.id,
+                                    nama: form.model.nama,
+                                    hubunganKeluarga: form.model.hubunganKeluarga,
+                                    telepon: form.model.telepon,
+                                    alamat: form.model.alamat
+                                }
+                            },
+                            update: (store, { data: { karyawanKontakUpdate } }) => {
+                                const data = store.readQuery({
+                                    query: KARYAWAN_KONTAK,
+                                    variables: {
+                                        id: this.$route.params.id
+                                    }
+                                })
+                                const merge = _.merge(data, _.merge(data.karyawanDetail.kontak, karyawanKontakUpdate.kontak))
+                                store.writeQuery({
+                                    query: KARYAWAN_KONTAK,
+                                    variables: {
+                                        id: this.$route.params.id
+                                    },
+                                    data: merge
+                                })
+                            },
+                            optimisticResponse: {
+                                __typename: 'Mutation',
+                                karyawanKontakUpdate: {
+                                    __typename: 'KaryawanType',
+                                    id: this.$route.params.id,
+                                    kontak: [{
+                                        __typename: 'KaryawanKontakType',
+                                        id: this.editRow.id,
+                                        nama: form.model.nama,
+                                        hubunganKeluarga: form.model.hubunganKeluarga,
+                                        telepon: form.model.telepon,
+                                        alamat: form.model.alamat
+                                    }]
+                                }
+                            }
+                        })
+                        if(data.karyawanKontakUpdate) {
+                            form.resetFields()
+                            this.isEdit = false
+                            this.editRow = ''
+                            this.$Notice.success({
+                                title: 'Sukses',
+                                desc: `Data karyawan "${this.karyawanDetail.no}" berhasil diperbaharui`
+                            })
+                        }
+                    } catch(err) {
+                        this.errors = errorHandler(err)
+                    }
+                } else {
+                    return false
+                }
+            })
+        },
         handleDelete() {}
     }
 }

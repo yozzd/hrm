@@ -199,6 +199,20 @@ mutation karyawanKontakCreate($id: String!, $kontak: KaryawanKontakInputType) {
   }
 }`
 
+export const KARYAWAN_UPDATE_KONTAK = gql`
+mutation karyawanKontakUpdate($id: String!, $kontak: KaryawanKontakInputType) {
+  karyawanKontakUpdate(id: $id, kontak: $kontak) {
+    id
+    kontak {
+      id
+      nama
+      hubunganKeluarga
+      telepon
+      alamat
+    }
+  }
+}`
+
 export const KARYAWAN_IMAGE = gql`
 query karyawanDetail($id: String!) {
   karyawanDetail(id: $id) {
