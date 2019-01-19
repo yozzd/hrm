@@ -49,7 +49,8 @@
 import {
     KARYAWAN_KONTAK,
     KARYAWAN_CREATE_KONTAK,
-    KARYAWAN_UPDATE_KONTAK } from '@/apollo/queries/karyawan'
+    KARYAWAN_UPDATE_KONTAK,
+    KARYAWAN_DELETE_KONTAK } from '@/apollo/queries/karyawan'
 import DataTable from '@/components/data-table'
 import Drawer from '@/components/drawer'
 import ChildHeader from '@/components/karyawan/child-header'
@@ -296,7 +297,52 @@ export default {
                 }
             })
         },
-        handleDelete() {}
+        handleDelete() {
+            try {
+                this.$Modal.confirm({
+                    title: 'PERHATIAN',
+                    content: '<p>Tindakan ini akan menghapus data secara permanen. Lanjutkan?</p>',
+                    okText: 'YA',
+                    cancelText: 'BATAL',
+                    loading: true,
+                    onOk: async () => {
+                        const { data } = await this.$apollo.mutate({
+                            mutation: KARYAWAN_DELETE_KONTAK,
+                            variables: {
+                                id: this.$route.params.id,
+                                delete: this.multipleSelection
+                            },
+                            update: async function (store, { data: { karyawanKontakDelete } }) {
+                                const data = store.readQuery({
+                                    query: KARYAWAN_KONTAK,
+                                    variables: { id: this.$nuxt.$route.params.id }
+                                })
+                                _.pullAllBy(data.karyawanDetail.kontak, karyawanKontakDelete, 'id')
+                                store.writeQuery({
+                                    query: KARYAWAN_KONTAK,
+                                    variables: { id: this.$nuxt.$route.params.id },
+                                    data
+                                })
+                            },
+                            optimisticResponse: {
+                                __typename: 'Mutation',
+                                karyawanKontakDelete: this.cachedMultipleSelection
+                            }
+                        })
+                        if(data.karyawanKontakDelete) {
+                            await this.$Modal.remove()
+                            this.multipleSelection = []
+                            this.$Notice.success({
+                                title: 'Sukses',
+                                desc: 'Data berhasil dihapus'
+                            })
+                        }
+                    }
+                })
+            } catch(err) {
+                this.errors = errorHandler(err)
+            }
+        }
     }
 }
 </script>

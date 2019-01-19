@@ -213,6 +213,13 @@ mutation karyawanKontakUpdate($id: String!, $kontak: KaryawanKontakInputType) {
   }
 }`
 
+export const KARYAWAN_DELETE_KONTAK = gql`
+mutation karyawanKontakDelete($id: String!, $delete: [KaryawanDeleteInputType]!) {
+  karyawanKontakDelete(id: $id, delete: $delete) {
+    id
+  }
+}`
+
 export const KARYAWAN_IMAGE = gql`
 query karyawanDetail($id: String!) {
   karyawanDetail(id: $id) {
