@@ -1,6 +1,6 @@
-const { GraphQLObjectType, GraphQLString } = require('graphql')
-const User = require('../user/user.model')
-const { UserType } = require('../user/user.type')
+const { GraphQLObjectType, GraphQLString } = require('graphql');
+const User = require('../user/user.model');
+const { UserType } = require('../user/user.type');
 
 const Auth = new GraphQLObjectType({
   name: 'Auth',
@@ -10,10 +10,10 @@ const Auth = new GraphQLObjectType({
     user: {
       type: UserType,
       resolve: async function(_, args) {
-        return await User.findById(_.id)
-      }
-    }
-  })
-})
+        return await User.findById(_.id);
+      },
+    },
+  }),
+});
 
-module.exports = Auth
+module.exports = Auth;

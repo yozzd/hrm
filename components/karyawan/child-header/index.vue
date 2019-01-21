@@ -9,18 +9,18 @@
 
 <script>
 export default {
-    props: {
-        data: Object
-    }
-}
+  props: {
+    data: Object,
+  },
+};
 </script>
 
 <style scoped>
 .header.ivu-row-flex {
-    padding: 10px 0;
-    border-bottom: 1px dashed #cccccc;
+  padding: 10px 0;
+  border-bottom: 1px dashed #cccccc;
 }
 .header.ivu-row-flex > h3 {
-    margin-left: 10px;
+  margin-left: 10px;
 }
 </style>

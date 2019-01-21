@@ -22,13 +22,13 @@
 
 <style scoped>
 a {
-    color: #606266;
+  color: #606266;
 }
 a:hover {
-    color: #303133;
+  color: #303133;
 }
 .ivu-icon.iconfont.icon-copyright {
-    margin-top: -2px;
-    margin-right: 4px;
+  margin-top: -2px;
+  margin-right: 4px;
 }
 </style>

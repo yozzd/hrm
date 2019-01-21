@@ -96,71 +96,79 @@
 
 <script>
 export default {
-    props: {
-        title: String,
-        width: String,
-        saveButton: {
-            type: Boolean,
-            default: false
-        },
-        value: {
-            type: Boolean,
-            default: false
-        },
-        formOptions: {
-            type: Object
-        },
-        errors: {
-            type: Array
-        },
-        editRow: {
-            type: Object
-        }
+  props: {
+    title: String,
+    width: String,
+    saveButton: {
+      type: Boolean,
+      default: false,
     },
-    data () {
-        const { forms } = this.$props.formOptions
-        const row = this.$props.editRow
-        const params = {}
-        const rules = {}
-        forms.forEach((v, i) => {
-            const propType = typeof v.prop
-            if (propType === 'string') {
-                v.modelValue = v.prop
-                params[v.prop] = !row ? '' : v.dotProp ? v.itemType === 'date' ? new Date(_.get(row, v.dotProp)) : _.get(row, v.dotProp) : v.itemType === 'date' ? new Date(row[v.prop]) : row[v.prop]
-                rules[v.prop] = v.rules
-            }
-        })
-        return {
-            params,
-            rules,
-            styles: {
-                height: 'calc(100% - 55px)',
-                overflow: 'auto',
-                paddingBottom: '53px',
-                position: 'static'
-            }
-        }
+    value: {
+      type: Boolean,
+      default: false,
     },
-    methods: {
-        emitEventHandler(event) {
-            this.$emit(event, ...Array.from(arguments).slice(1))
-        },
-        autoCompleteFilterMethod (value, option) {
-            return option.toUpperCase().indexOf(value.toUpperCase()) !== -1;
-        }
-    }
-}
+    formOptions: {
+      type: Object,
+    },
+    errors: {
+      type: Array,
+    },
+    editRow: {
+      type: Object,
+    },
+  },
+  data() {
+    const { forms } = this.$props.formOptions;
+    const row = this.$props.editRow;
+    const params = {};
+    const rules = {};
+    forms.forEach((v, i) => {
+      const propType = typeof v.prop;
+      if (propType === 'string') {
+        v.modelValue = v.prop;
+        params[v.prop] = !row
+          ? ''
+          : v.dotProp
+            ? v.itemType === 'date'
+              ? new Date(_.get(row, v.dotProp))
+              : _.get(row, v.dotProp)
+            : v.itemType === 'date'
+              ? new Date(row[v.prop])
+              : row[v.prop];
+        rules[v.prop] = v.rules;
+      }
+    });
+    return {
+      params,
+      rules,
+      styles: {
+        height: 'calc(100% - 55px)',
+        overflow: 'auto',
+        paddingBottom: '53px',
+        position: 'static',
+      },
+    };
+  },
+  methods: {
+    emitEventHandler(event) {
+      this.$emit(event, ...Array.from(arguments).slice(1));
+    },
+    autoCompleteFilterMethod(value, option) {
+      return option.toUpperCase().indexOf(value.toUpperCase()) !== -1;
+    },
+  },
+};
 </script>
 <style>
 .drawer-footer {
-    width: 100%;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    border-top: 1px solid #e8e8e8;
-    padding: 10px 16px;
-    text-align: right;
-    background: #fff;
-    z-index: 4;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  border-top: 1px solid #e8e8e8;
+  padding: 10px 16px;
+  text-align: right;
+  background: #fff;
+  z-index: 4;
 }
 </style>

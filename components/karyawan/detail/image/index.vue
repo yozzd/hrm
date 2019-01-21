@@ -55,133 +55,143 @@
 </template>
 
 <script>
-import { KARYAWAN_IMAGE, KARYAWAN_UPDATE_IMAGE } from '@/apollo/queries/karyawan'
-import ChildHeader from '@/components/karyawan/child-header'
-import errorHandler from '@/apollo/config/errorHandler'
+import {
+  KARYAWAN_IMAGE,
+  KARYAWAN_UPDATE_IMAGE,
+} from '@/apollo/queries/karyawan';
+import ChildHeader from '@/components/karyawan/child-header';
+import errorHandler from '@/apollo/config/errorHandler';
 
 export default {
-    components: {
-        ChildHeader
-    },
-    data () {
+  components: {
+    ChildHeader,
+  },
+  data() {
+    return {
+      karyawanDetail: {
+        image: {
+          path: null,
+        },
+      },
+      errors: [],
+      file: null,
+      visible: false,
+      loadingStatus: false,
+    };
+  },
+  apollo: {
+    $client: 'upload',
+    karyawanDetail: {
+      query: KARYAWAN_IMAGE,
+      variables() {
         return {
-            karyawanDetail: {
-                image: {
-                    path: null
-                }
+          id: this.$route.params.id,
+        };
+      },
+    },
+  },
+  methods: {
+    handleView() {
+      this.visible = true;
+    },
+    handleBeforeUpload(file) {
+      this.errors = [];
+      this.file = file;
+    },
+    handleFormatError(file) {
+      this.file = null;
+      this.errors = [
+        `Format file '${file.name}' salah, silahkan pilih format jpg atau png`,
+      ];
+    },
+    handleMaxSize(file) {
+      this.file = null;
+      this.errors = [`File '${file.name}' melebihi batas maksimum 2Mb`];
+    },
+    handleClose() {
+      this.visible = false;
+    },
+    handleUpload: async function() {
+      const client = this.$apolloProvider.clients.upload;
+      this.loadingStatus = true;
+      try {
+        const { data } = await client.mutate({
+          mutation: KARYAWAN_UPDATE_IMAGE,
+          variables: {
+            id: this.$route.params.id,
+            image: this.file,
+          },
+          update: (store, { data: { karyawanImageUpdate } }) => {
+            const data = store.readQuery({
+              query: KARYAWAN_IMAGE,
+              variables: { id: this.$route.params.id },
+            });
+            const merge = _.merge(
+              data,
+              _.merge(data.karyawanDetail, karyawanImageUpdate),
+            );
+            store.writeQuery({
+              query: KARYAWAN_IMAGE,
+              variables: { id: this.$route.params.id },
+              data: merge,
+            });
+          },
+          optimisticResponse: {
+            __typename: 'Mutation',
+            karyawanImageUpdate: {
+              __typename: 'KaryawanType',
+              id: this.$route.params.id,
+              image: {
+                __typename: 'KaryawanImageType',
+                path: '',
+                filename: '',
+              },
             },
-            errors: [],
-            file: null,
-            visible: false,
-            loadingStatus: false
+          },
+        });
+        if (data.karyawanImageUpdate) {
+          this.file = null;
+          this.loadingStatus = false;
+          this.$Notice.success({
+            title: 'Sukses',
+            desc: `Data karyawan "${
+              this.karyawanDetail.no
+            }" berhasil diperbaharui`,
+          });
         }
+      } catch (err) {
+        this.errors = errorHandler(err);
+      }
     },
-    apollo: {
-        $client: 'upload',
-        karyawanDetail: {
-            query: KARYAWAN_IMAGE,
-            variables() {
-                return {
-                    id: this.$route.params.id
-                }
-            }
-        }
-    },
-    methods: {
-        handleView() {
-            this.visible = true
-        },
-        handleBeforeUpload(file) {
-            this.errors = []
-            this.file = file
-        },
-        handleFormatError(file) {
-            this.file = null
-            this.errors = [`Format file '${file.name}' salah, silahkan pilih format jpg atau png`]
-        },
-        handleMaxSize(file) {
-            this.file = null
-            this.errors = [`File '${file.name}' melebihi batas maksimum 2Mb`]
-        },
-        handleClose() {
-            this.visible = false
-        },
-        handleUpload: async function() {
-            const client = this.$apolloProvider.clients.upload
-            this.loadingStatus = true
-            try {
-                const { data } = await client.mutate({
-                    mutation: KARYAWAN_UPDATE_IMAGE,
-                    variables: {
-                        id: this.$route.params.id,
-                        image: this.file
-                    },
-                    update: (store, { data: { karyawanImageUpdate } }) => {
-                        const data = store.readQuery({
-                            query: KARYAWAN_IMAGE,
-                            variables: { id: this.$route.params.id }
-                        })
-                        const merge = _.merge(data, _.merge(data.karyawanDetail, karyawanImageUpdate))
-                        store.writeQuery({
-                            query: KARYAWAN_IMAGE,
-                            variables: { id: this.$route.params.id },
-                            data: merge
-                        })
-                    },
-                    optimisticResponse: {
-                        __typename: 'Mutation',
-                        karyawanImageUpdate: {
-                            __typename: 'KaryawanType',
-                            id: this.$route.params.id,
-                            image: {
-                                __typename: 'KaryawanImageType',
-                                path: '',
-                                filename: ''
-                            }
-                        }
-                    }
-                })
-                if(data.karyawanImageUpdate) {
-                    this.file = null
-                    this.loadingStatus = false
-                    this.$Notice.success({
-                        title: 'Sukses',
-                        desc: `Data karyawan "${this.karyawanDetail.no}" berhasil diperbaharui`
-                    })
-                }
-            } catch(err) {
-                this.errors = errorHandler(err)
-            }
-        }
-    }
-}
+  },
+};
 </script>
 
 <style scoped>
 .uploadImage,
 .errorAlert {
-    margin-top: 20px;
+  margin-top: 20px;
 }
 .uploadButton {
-    margin-top: 80px;
+  margin-top: 80px;
 }
 .imgThumbnail {
-    width: 150px;
-    height: 200px;
-    border-radius: .25rem!important;
+  width: 150px;
+  height: 200px;
+  border-radius: 0.25rem !important;
 }
 .noImageContainer {
-    position: relative;
-    text-align: center;
-    color: #777777;
+  position: relative;
+  text-align: center;
+  color: #777777;
 }
 .centered {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 a.handleView:hover {
-    opacity: .9;
+  opacity: 0.9;
 }
 </style>

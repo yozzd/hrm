@@ -12,25 +12,22 @@ export const pendidikan = {
     { value: 'D4', label: 'D4' },
     { value: 'S1', label: 'S1' },
     { value: 'S2', label: 'S2' },
-    { value: 'S3', label: 'S3' }
-  ]
-}
+    { value: 'S3', label: 'S3' },
+  ],
+};
 
 export const jenisKelamin = {
-  options: [
-    { label: 'L' },
-    { label: 'P' }
-  ]
-}
+  options: [{ label: 'L' }, { label: 'P' }],
+};
 
 export const agama = {
   options: [
     { value: 'Budha', label: 'Budha' },
     { value: 'Hindu', label: 'Hindu' },
     { value: 'Islam', label: 'Islam' },
-    { value: 'Kristen', label: 'Kristen' }
-  ]
-}
+    { value: 'Kristen', label: 'Kristen' },
+  ],
+};
 
 export const statusPernikahan = {
   options: [
@@ -38,9 +35,9 @@ export const statusPernikahan = {
     { value: 'M0', label: 'Menikah 0 Anak' },
     { value: 'M1', label: 'Menikah 1 Anak' },
     { value: 'M2', label: 'Menikah 2 Anak' },
-    { value: 'M3', label: 'Menikah 3 Anak' }
-  ]
-}
+    { value: 'M3', label: 'Menikah 3 Anak' },
+  ],
+};
 
 export const hubunganKeluarga = {
   options: [
@@ -48,6 +45,6 @@ export const hubunganKeluarga = {
     { value: 'Ayah', label: 'Ayah' },
     { value: 'Ibu', label: 'Ibu' },
     { value: 'Istri', label: 'Istri' },
-    { value: 'Suami', label: 'Suami' }
-  ]
-}
+    { value: 'Suami', label: 'Suami' },
+  ],
+};

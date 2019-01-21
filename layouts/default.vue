@@ -15,13 +15,12 @@
 </template>
 
 <script>
-import Navbar from '@/components/navbar'
-import IFooter from '@/components/footer'
+import Navbar from '@/components/navbar';
+import IFooter from '@/components/footer';
 export default {
-    components: {
-        Navbar,
-        IFooter
-    }
-}
+  components: {
+    Navbar,
+    IFooter,
+  },
+};
 </script>
-

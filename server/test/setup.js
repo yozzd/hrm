@@ -1,40 +1,45 @@
-const express = require('express')
-const app = new express()
-const config = require('../config/environment')
-const graphqlHTTP = require('express-graphql')
-const schema = require('../schema')
-const auth = require('../schema/auth/auth.service')
-const authPassport = require('../schema/auth/auth.passport')
-const User = require('../schema/user/user.model')
-const Karyawan = require('../schema/karyawan/karyawan.model')
+const express = require('express');
+const app = new express();
+const config = require('../config/environment');
+const graphqlHTTP = require('express-graphql');
+const schema = require('../schema');
+const auth = require('../schema/auth/auth.service');
+const authPassport = require('../schema/auth/auth.passport');
+const User = require('../schema/user/user.model');
+const Agama = require('../schema/agama/agama.model');
+const Karyawan = require('../schema/karyawan/karyawan.model');
 
 const start = async () => {
-  await config.mongo.connect()
+  await config.mongo.connect();
 
-  await User.deleteMany()
-  await Karyawan.deleteMany()
+  await User.deleteMany();
+  await Agama.deleteMany();
+  await Karyawan.deleteMany();
 
   const newUser = new User({
     username: 'gableh',
     password: 's3cr3tp4ssw0rd',
-    role: 'admin'
-  })
-  await newUser.save()
+    role: 'admin',
+  });
+  await newUser.save();
 
-  authPassport.setup(User)
+  authPassport.setup(User);
 
-  app.use('/graphql', auth.validateAuthorization, graphqlHTTP((req, res, params) => {
-    return ({
-      schema: schema,
-      context: { req, res, params }
-    })
-  }))
+  app.use(
+    '/graphql',
+    auth.validateAuthorization,
+    graphqlHTTP((req, res, params) => {
+      return {
+        schema: schema,
+        context: { req, res, params },
+      };
+    }),
+  );
 
-
-  await app.listen(config.port, config.host)
-  console.log(`Server listening on http://${config.host}:${config.port}`)
-}
+  await app.listen(config.port, config.host);
+  console.log(`Server listening on http://${config.host}:${config.port}`);
+};
 
 module.exports = async () => {
-  await start()
-}
+  await start();
+};

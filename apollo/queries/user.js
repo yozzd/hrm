@@ -1,64 +1,79 @@
-import gql from 'graphql-tag'
+import gql from 'graphql-tag';
 
 export const ME = gql`
-query {
-  userMe {
-    id
-    username
-    role
+  query {
+    userMe {
+      id
+      username
+      role
+    }
   }
-}`
+`;
 
 export const USER_ALL = gql`
-query {
-  userAll {
-    id
-    username
-    role
+  query {
+    userAll {
+      id
+      username
+      role
+    }
   }
-}`
+`;
 
 export const USER_DETAIL = gql`
-query userDetail($id: String!) {
-  userDetail(id: $id) {
-    id
-    username
-    role
-    createdAt
-    updatedAt
+  query userDetail($id: String!) {
+    userDetail(id: $id) {
+      id
+      username
+      role
+      createdAt
+      updatedAt
+    }
   }
-}`
+`;
 
 export const USER_CREATE = gql`
-mutation userCreate($username: String!, $password: String!, $role: String!) {
-  userCreate(username: $username, password: $password, role: $role) {
-    id
-    username
-    role
+  mutation userCreate($username: String!, $password: String!, $role: String!) {
+    userCreate(username: $username, password: $password, role: $role) {
+      id
+      username
+      role
+    }
   }
-}`
+`;
 
 export const USER_DELETE = gql`
-mutation userDelete($delete: [UserDeleteInputType]!) {
-  userDelete(delete: $delete) {
-    id
+  mutation userDelete($delete: [UserDeleteInputType]!) {
+    userDelete(delete: $delete) {
+      id
+    }
   }
-}`
+`;
 
 export const USER_UPDATE = gql`
-mutation userUpdate($id: String!, $username: String!, $role: String!) {
-  userUpdate(id: $id, username: $username, role: $role) {
-    id
-    username
-    role
+  mutation userUpdate($id: String!, $username: String!, $role: String!) {
+    userUpdate(id: $id, username: $username, role: $role) {
+      id
+      username
+      role
+    }
   }
-}`
+`;
 
 export const USER_CHANGE_PASSWORD = gql`
-mutation userChangePassword($id: String!, $oldPassword: String!, $newPassword: String!) {
-  userChangePassword(id: $id, oldPassword: $oldPassword, newPassword: $newPassword) {
-    id
-    username
-    role
+  mutation userChangePassword(
+    $id: String!
+    $oldPassword: String!
+    $newPassword: String!
+  ) {
+    userChangePassword(
+      id: $id
+      oldPassword: $oldPassword
+      newPassword: $newPassword
+    ) {
+      id
+      username
+      role
+    }
   }
-}`
+`;

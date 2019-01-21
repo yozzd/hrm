@@ -13,15 +13,15 @@
 
 <script>
 export default {
-    props: {
-        data: Array
-    }
-}
+  props: {
+    data: Array,
+  },
+};
 </script>
 
 <style scoped>
 .breadcrumb.ivu-row-flex {
-    padding: 0 0 10px;
-    border-bottom: 1px dashed #cccccc;
+  padding: 0 0 10px;
+  border-bottom: 1px dashed #cccccc;
 }
 </style>

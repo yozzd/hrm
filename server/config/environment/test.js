@@ -1,5 +1,5 @@
 module.exports = {
   mongo: {
-    uri: 'mongodb://mongo/hrm-test'
-  }
-}
+    uri: 'mongodb://mongo/hrm-test',
+  },
+};

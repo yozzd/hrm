@@ -21,33 +21,32 @@
 </template>
 
 <script>
-
 export default {
-    props: {
-        data: {
-            type: Object
-        },
-        rows: {
-            type: Array
-        }
-    }
-}
+  props: {
+    data: {
+      type: Object,
+    },
+    rows: {
+      type: Array,
+    },
+  },
+};
 </script>
 
 <style scoped>
 .info-table {
-    margin-top: 10px;
+  margin-top: 10px;
 }
 .info-table > table > tr > td {
-    padding: 5px 0;
+  padding: 5px 0;
 }
 .info-table > table > tr > td:first-child {
-    text-align: right;
+  text-align: right;
 }
 .info-table > table > tr > td:last-child {
-    padding-left: 20px;
+  padding-left: 20px;
 }
 /deep/ .ivu-btn-small {
-    margin-left: 20px;
+  margin-left: 20px;
 }
 </style>

@@ -28,61 +28,61 @@
 </template>
 
 <script>
-import { KARYAWAN_ALL_ID } from '@/apollo/queries/karyawan'
-import _ from 'lodash'
+import { KARYAWAN_ALL_ID } from '@/apollo/queries/karyawan';
+import _ from 'lodash';
 
 export default {
-    props: {
-        id: String
+  props: {
+    id: String,
+  },
+  apollo: {
+    karyawanAll: {
+      query: KARYAWAN_ALL_ID,
     },
-    apollo: {
-        karyawanAll: {
-            query: KARYAWAN_ALL_ID
-        }
+  },
+  data() {
+    return {
+      karyawanAll: [],
+      select: '',
+      disabledPrevious: false,
+      disabledNext: false,
+    };
+  },
+  computed: {
+    toPrevious() {
+      const idx = this.findIndex(this.id);
+      if (this.karyawanAll[idx - 1]) {
+        this.select = this.karyawanAll[idx].id;
+        return `/karyawan/detail/${this.karyawanAll[idx - 1].id}/personal`;
+      }
     },
-    data() {
-        return {
-            karyawanAll: [],
-            select: '',
-            disabledPrevious: false,
-            disabledNext: false,
-        }
+    toNext() {
+      const idx = this.findIndex(this.id);
+      if (this.karyawanAll[idx + 1]) {
+        this.select = this.karyawanAll[idx].id;
+        return `/karyawan/detail/${this.karyawanAll[idx + 1].id}/personal`;
+      }
     },
-    computed: {
-        toPrevious() {
-            const idx = this.findIndex(this.id)
-            if(this.karyawanAll[idx-1]) {
-                this.select = this.karyawanAll[idx].id
-                return `/karyawan/detail/${this.karyawanAll[idx-1].id}/personal`
-            }
-        },
-        toNext() {
-            const idx = this.findIndex(this.id)
-            if(this.karyawanAll[idx+1]) {
-                this.select = this.karyawanAll[idx].id
-                return `/karyawan/detail/${this.karyawanAll[idx+1].id}/personal`
-            }
-        }
+  },
+  methods: {
+    findIndex(id) {
+      return _.findIndex(this.karyawanAll, o => {
+        return o.id === id;
+      });
     },
-    methods: {
-        findIndex(id) {
-            return _.findIndex(this.karyawanAll, o => {
-                return o.id === id
-            })
-        },
-        handleOnChange(id) {
-            this.$router.push(`/karyawan/detail/${id}/personal`)
-        }
-    }
-}
+    handleOnChange(id) {
+      this.$router.push(`/karyawan/detail/${id}/personal`);
+    },
+  },
+};
 </script>
 
 <style scoped>
 .toolbar.ivu-row-flex {
-    padding: 10px 0;
+  padding: 10px 0;
 }
 .jumpSelect {
-    width: 250px;
-    margin-right: 10px;
+  width: 250px;
+  margin-right: 10px;
 }
 </style>

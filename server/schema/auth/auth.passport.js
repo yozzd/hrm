@@ -1,33 +1,38 @@
-const passport = require('passport')
-const { Strategy } = require('passport-local')
+const passport = require('passport');
+const { Strategy } = require('passport-local');
 
 const localAuthenticate = async (User, username, password, done) => {
   try {
-    const user = await User.findOne({username: username})
-    if(!user) {
+    const user = await User.findOne({ username: username });
+    if (!user) {
       return done(null, false, {
-        message: 'Username atau Password anda salah'
-      })
+        message: 'Username atau Password anda salah',
+      });
     }
 
-    const authPassword = await user.authenticate(password)
-    if(!authPassword) {
+    const authPassword = await user.authenticate(password);
+    if (!authPassword) {
       return done(null, false, {
-        message: 'Username atau Password anda salah'
-      })
+        message: 'Username atau Password anda salah',
+      });
     } else {
-      return done(null, user)
+      return done(null, user);
     }
-  } catch(err) {
-    throw err
+  } catch (err) {
+    throw err;
   }
-}
+};
 
-exports.setup = (User) => {
-  passport.use(new Strategy({
-    usernameField: 'username',
-    passwordField: 'password'
-  }, function(username, password, done) {
-    return localAuthenticate(User, username, password, done)
-  }))
-}
+exports.setup = User => {
+  passport.use(
+    new Strategy(
+      {
+        usernameField: 'username',
+        passwordField: 'password',
+      },
+      function(username, password, done) {
+        return localAuthenticate(User, username, password, done);
+      },
+    ),
+  );
+};

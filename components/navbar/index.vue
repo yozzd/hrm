@@ -55,24 +55,24 @@
 
 <script>
 export default {
-    methods: {
-        handleSelect(name) {
-            if(name === 'logout') {
-                this.$auth.logout()
-            }
-        }
-    }
-}
+  methods: {
+    handleSelect(name) {
+      if (name === 'logout') {
+        this.$auth.logout();
+      }
+    },
+  },
+};
 </script>
 
 <style scoped>
 .navbar-nav {
-    float: right;
+  float: right;
 }
-.navbar-logo{
-    font-size: 18px;
-    font-weight: bold;
-    color: #ffffff;
-    float: left;
+.navbar-logo {
+  font-size: 18px;
+  font-weight: bold;
+  color: #ffffff;
+  float: left;
 }
 </style>

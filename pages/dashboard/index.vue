@@ -5,14 +5,14 @@
 </template>
 
 <script>
-import Dashboard from '@/components/dashboard'
+import Dashboard from '@/components/dashboard';
 export default {
-    middleware: ['auth'],
-    meta: {
-        guard: 'user'
-    },
-    components: {
-        Dashboard
-    }
-}
+  middleware: ['auth'],
+  meta: {
+    guard: 'user',
+  },
+  components: {
+    Dashboard,
+  },
+};
 </script>

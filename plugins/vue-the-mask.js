@@ -1,6 +1,6 @@
-import Vue from 'vue'
-import VueTheMask from 'vue-the-mask'
+import Vue from 'vue';
+import VueTheMask from 'vue-the-mask';
 
 export default () => {
-  Vue.use(VueTheMask)
-}
+  Vue.use(VueTheMask);
+};

@@ -1,16 +1,16 @@
-import Vue from 'vue'
-import Cookies from 'js-cookie'
-import { routeOption } from './auth.utilities'
-import { AUTH } from '../apollo/queries/login'
-import { ME } from '../apollo/queries/user'
+import Vue from 'vue';
+import Cookies from 'js-cookie';
+import { routeOption } from './auth.utilities';
+import { AUTH } from '../apollo/queries/login';
+import { ME } from '../apollo/queries/user';
 
-const RELATIVE_URL_REGEX = /^\/[a-zA-Z0-9@\-%_~][\/a-zA-Z0-9@\-%_~]{1,200}$/
-import { userRoles } from './auth.roles'
+const RELATIVE_URL_REGEX = /^\/[a-zA-Z0-9@\-%_~][\/a-zA-Z0-9@\-%_~]{1,200}$/;
+import { userRoles } from './auth.roles';
 
 export default class Auth {
-  constructor (ctx) {
-    this.ctx = ctx
-    this.apolloClient = this.ctx.app.apolloProvider.defaultClient
+  constructor(ctx) {
+    this.ctx = ctx;
+    this.apolloClient = this.ctx.app.apolloProvider.defaultClient;
 
     this.options = {
       namespace: 'auth',
@@ -19,20 +19,20 @@ export default class Auth {
         home: '/',
         dashboard: '/dashboard',
         logout: '/',
-        guard: '/guard'
-      }
-    }
+        guard: '/guard',
+      },
+    };
   }
 
   init() {
-    Vue.set(this, 'token', null)
+    Vue.set(this, 'token', null);
 
-    this._registerVuexStore()
+    this._registerVuexStore();
 
-    this._watchLoggedIn()
+    this._watchLoggedIn();
 
-    this.syncToken()
-    return this.state.user ? Promise.resolve() : this.fetchUser()
+    this.syncToken();
+    return this.state.user ? Promise.resolve() : this.fetchUser();
   }
 
   _registerVuexStore() {
@@ -40,186 +40,193 @@ export default class Auth {
       namespaced: true,
       state: () => ({
         user: null,
-        loggedIn: false
+        loggedIn: false,
       }),
       mutations: {
         SET(state, payload) {
-          Vue.set(state, payload.key, payload.value)
-        }
-      }
-    }
+          Vue.set(state, payload.key, payload.value);
+        },
+      },
+    };
 
     this.$store.registerModule(this.options.namespace, authModule, {
-      preserveState: Boolean(this.$store.state[this.options.namespace])
-    })
+      preserveState: Boolean(this.$store.state[this.options.namespace]),
+    });
   }
 
   _watchLoggedIn() {
-    this._loggedInWatcher = this.loggedInWatcher || this.watchState('loggedIn', () => {
-      if(routeOption(this.$route, 'auth', false)) {
-        return
-      }
-      this.redirect('dashboard')
-    })
+    this._loggedInWatcher =
+      this.loggedInWatcher ||
+      this.watchState('loggedIn', () => {
+        if (routeOption(this.$route, 'auth', false)) {
+          return;
+        }
+        this.redirect('dashboard');
+      });
   }
 
   watchState(key, fn) {
-    return this.$store.watch(state => [state[this.options.namespace]].map(v => v[key]), fn)
+    return this.$store.watch(
+      state => [state[this.options.namespace]].map(v => v[key]),
+      fn,
+    );
   }
 
   get $store() {
-    return this.ctx.store
+    return this.ctx.store;
   }
 
   get $route() {
-    return this.ctx.route
+    return this.ctx.route;
   }
 
   get state() {
-    return this.$store.state[this.options.namespace]
+    return this.$store.state[this.options.namespace];
   }
 
   setState(key, value) {
-    if(key === 'token') {
-      this.token = value
-      return
+    if (key === 'token') {
+      this.token = value;
+      return;
     }
 
-    this.$store.commit(this.options.namespace + '/SET', { key, value })
+    this.$store.commit(this.options.namespace + '/SET', { key, value });
   }
 
   setToken(token) {
-    this.setState('token', token)
+    this.setState('token', token);
 
-    this.setCookie(token)
+    this.setCookie(token);
   }
 
   setCookie(token) {
-    if(token) {
-      Cookies.set('token', token)
+    if (token) {
+      Cookies.set('token', token);
     } else {
-      Cookies.remove('token')
+      Cookies.remove('token');
     }
   }
 
   reset() {
-    this.setState('loggedIn', false)
-    this.setState('token', null)
-    this.setState('user', null)
+    this.setState('loggedIn', false);
+    this.setState('token', null);
+    this.setState('user', null);
 
-    this.setCookie(null)
+    this.setCookie(null);
   }
 
   async fetchUser() {
     try {
       const { data } = await this.apolloClient.query({
-        query: ME
-      })
+        query: ME,
+      });
 
-      if(!data.userMe) {
-        return
+      if (!data.userMe) {
+        return;
       }
 
-      this.setState('user', data.userMe)
-      this.setState('loggedIn', true)
-    } catch(err) {
-      this.logout()
+      this.setState('user', data.userMe);
+      this.setState('loggedIn', true);
+    } catch (err) {
+      this.logout();
     }
   }
 
   async login(user) {
     try {
-      this.reset()
+      this.reset();
 
       const { data } = await this.apolloClient.query({
         query: AUTH,
         variables: {
           username: user.username,
-          password: user.password
-        }
-      })
+          password: user.password,
+        },
+      });
 
-      if(!data.auth) {
-        return
+      if (!data.auth) {
+        return;
       }
 
-      this.setToken(data.auth.token)
+      this.setToken(data.auth.token);
 
-      this.setState('user', data.auth.user)
-      this.setState('loggedIn', true)
-    } catch(err) {
-      throw err
+      this.setState('user', data.auth.user);
+      this.setState('loggedIn', true);
+    } catch (err) {
+      throw err;
     }
   }
 
   async logout() {
-    this.reset()
-    this.redirect('logout')
+    this.reset();
+    this.redirect('logout');
   }
 
   syncToken() {
-    let token = this.getState('token')
+    let token = this.getState('token');
 
-    if(!token) {
-      token = this.getCookie('token')
+    if (!token) {
+      token = this.getCookie('token');
     }
 
-    this.setToken(token)
+    this.setToken(token);
   }
 
   getState(key) {
-    if(key === 'token') {
-      return this.token
+    if (key === 'token') {
+      return this.token;
     }
 
-    return this.state[key]
+    return this.state[key];
   }
 
   getCookie(name) {
-    return Cookies.get(name)
+    return Cookies.get(name);
   }
 
   redirect(name) {
-    let to = this.options.redirect[name]
-    const from = this.$route.path
+    let to = this.options.redirect[name];
+    const from = this.$route.path;
 
-    if(!to) {
-      return
+    if (!to) {
+      return;
     }
 
-    if(name === 'login') {
-      to = to + '?redirect=' + encodeURIComponent(from)
+    if (name === 'login') {
+      to = to + '?redirect=' + encodeURIComponent(from);
     }
 
-    if(name === 'home' && this.$route.query.redirect) {
-      const redirect = decodeURIComponent(this.$route.query.redirect)
+    if (name === 'home' && this.$route.query.redirect) {
+      const redirect = decodeURIComponent(this.$route.query.redirect);
 
-      if(RELATIVE_URL_REGEX.test(redirect)) {
-        to = redirect
+      if (RELATIVE_URL_REGEX.test(redirect)) {
+        to = redirect;
       }
     }
 
-    if(to.split('?')[0] === from) {
-      return
+    if (to.split('?')[0] === from) {
+      return;
     }
 
-    this.ctx.redirect(to)
+    this.ctx.redirect(to);
   }
 
   hasRole(role) {
-    if(!this.state.user) {
-      return
+    if (!this.state.user) {
+      return;
     }
 
-    return Boolean(userRoles.indexOf(this.state.user.role) >= userRoles.indexOf(role))
+    return Boolean(
+      userRoles.indexOf(this.state.user.role) >= userRoles.indexOf(role),
+    );
   }
 
   isAdmin() {
-    if(!this.state.user) {
-      return
+    if (!this.state.user) {
+      return;
     }
 
-    const is = this.state.user.role === 'admin'
-    return is
+    const is = this.state.user.role === 'admin';
+    return is;
   }
 }

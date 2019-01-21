@@ -8,21 +8,21 @@
 </template>
 
 <script>
-import Personal from '@/components/karyawan/detail/personal'
-import Keluarga from '@/components/karyawan/detail/keluarga'
-import Kontak from '@/components/karyawan/detail/kontak'
-import KaryawanImage from '@/components/karyawan/detail/image'
+import Personal from '@/components/karyawan/detail/personal';
+import Keluarga from '@/components/karyawan/detail/keluarga';
+import Kontak from '@/components/karyawan/detail/kontak';
+import KaryawanImage from '@/components/karyawan/detail/image';
 
 export default {
-    middleware: ['auth'],
-    meta: {
-        guard: 'personalia'
-    },
-    components: {
-        Personal,
-        Keluarga,
-        Kontak,
-        KaryawanImage
-    }
-}
+  middleware: ['auth'],
+  meta: {
+    guard: 'personalia',
+  },
+  components: {
+    Personal,
+    Keluarga,
+    Kontak,
+    KaryawanImage,
+  },
+};
 </script>

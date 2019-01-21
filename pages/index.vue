@@ -5,10 +5,10 @@
 </template>
 
 <script>
-import Landing from '@/components/landing'
+import Landing from '@/components/landing';
 export default {
-    components: {
-        Landing
-    }
-}
+  components: {
+    Landing,
+  },
+};
 </script>

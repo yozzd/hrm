@@ -5,14 +5,14 @@
 </template>
 
 <script>
-import Profil from '@/components/profil'
+import Profil from '@/components/profil';
 export default {
-    middleware: ['auth'],
-    meta: {
-        guard: 'user'
-    },
-    components: {
-        Profil
-    }
-}
+  middleware: ['auth'],
+  meta: {
+    guard: 'user',
+  },
+  components: {
+    Profil,
+  },
+};
 </script>

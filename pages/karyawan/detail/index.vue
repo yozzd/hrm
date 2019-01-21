@@ -5,14 +5,14 @@
 </template>
 
 <script>
-import Detail from '@/components/karyawan/detail'
+import Detail from '@/components/karyawan/detail';
 export default {
-    middleware: ['auth'],
-    meta: {
-        guard: 'personalia'
-    },
-    components: {
-        Detail
-    }
-}
+  middleware: ['auth'],
+  meta: {
+    guard: 'personalia',
+  },
+  components: {
+    Detail,
+  },
+};
 </script>

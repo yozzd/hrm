@@ -45,72 +45,77 @@
 
 <script>
 export default {
-    data() {
-        return {
-            form: {
-                username: '',
-                password: ''
-            },
-            rules: {
-                username: [
-                    { required: true, message: 'Username tidak boleh kosong',
-                        trigger: 'blur' }
-                ],
-                password: [
-                    { required: true, message: 'Password tidak boleh kosong',
-                        trigger: 'blur' }
-                ]
-            },
-            error: ''
+  data() {
+    return {
+      form: {
+        username: '',
+        password: '',
+      },
+      rules: {
+        username: [
+          {
+            required: true,
+            message: 'Username tidak boleh kosong',
+            trigger: 'blur',
+          },
+        ],
+        password: [
+          {
+            required: true,
+            message: 'Password tidak boleh kosong',
+            trigger: 'blur',
+          },
+        ],
+      },
+      error: '',
+    };
+  },
+  methods: {
+    handleSubmit(form) {
+      this.error = '';
+      this.$refs[form].validate(async valid => {
+        if (valid) {
+          try {
+            await this.$auth.login({
+              username: this.form.username,
+              password: this.form.password,
+            });
+          } catch (err) {
+            this.error = err.graphQLErrors[0].message;
+          }
+        } else {
+          return false;
         }
+      });
     },
-    methods: {
-        handleSubmit(form) {
-            this.error = ''
-            this.$refs[form].validate(async (valid) => {
-                if(valid) {
-                    try {
-                        await this.$auth.login({
-                            username: this.form.username,
-                            password: this.form.password
-                        })
-                    } catch(err) {
-                        this.error = err.graphQLErrors[0].message
-                    }
-                } else {
-                    return false
-                }
-            })
-        },
-        handleErrorClose() {
-            this.error = ''
-        }
-    }
-}
+    handleErrorClose() {
+      this.error = '';
+    },
+  },
+};
 </script>
 
 <style scoped>
 .login {
-    height: calc(100vh - 137px);
+  height: calc(100vh - 137px);
 }
 p.title {
-    font-size: 28px;
+  font-size: 28px;
 }
 p.title-helper {
-    font-size: 14px;
+  font-size: 14px;
 }
 p.title,
 p.title-helper {
-    color: #606266;
+  color: #606266;
 }
 .header {
-    margin: 20px 0 10px;
+  margin: 20px 0 10px;
 }
 .header h2 {
-    text-align: center;
+  text-align: center;
 }
 .login-btn {
-    float: right;
+  float: right;
 }
 </style>
-

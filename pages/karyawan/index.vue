@@ -5,9 +5,9 @@
 
 <script>
 export default {
-    middleware: ['auth'],
-    meta: {
-        guard: 'personalia'
-    }
-}
+  middleware: ['auth'],
+  meta: {
+    guard: 'personalia',
+  },
+};
 </script>

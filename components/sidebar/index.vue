@@ -22,19 +22,21 @@
 
 <script>
 export default {
-    props: {
-        navs: {
-            type: Array
-        }
-    }
-}
+  props: {
+    navs: {
+      type: Array,
+    },
+  },
+};
 </script>
 
 <style scoped>
 /deep/ .ivu-menu-light {
-    background: transparent;
+  background: transparent;
 }
-/deep/ .ivu-menu-light.ivu-menu-vertical .ivu-menu-item-active:not(.ivu-menu-submenu) {
-    background: #e6f7ff;
+/deep/
+  .ivu-menu-light.ivu-menu-vertical
+  .ivu-menu-item-active:not(.ivu-menu-submenu) {
+  background: #e6f7ff;
 }
 </style>
