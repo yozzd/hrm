@@ -3,7 +3,6 @@ const Schema = mongoose.Schema;
 const uuidv1 = require('uuid/v1');
 const beautifyUnique = require('mongoose-beautiful-unique-validation');
 const timestamps = require('mongoose-timestamp');
-const { camelCase } = require('../global.methods');
 
 const AgamaSchema = new Schema({
   _id: {
@@ -15,10 +14,6 @@ const AgamaSchema = new Schema({
     unique: 'Agama "{VALUE}" sudah terdaftar',
   },
   value: Number,
-});
-
-AgamaSchema.pre('save', async function() {
-  //this.value = await camelCase(this.label);
 });
 
 AgamaSchema.plugin(beautifyUnique);
