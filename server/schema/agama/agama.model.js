@@ -14,11 +14,11 @@ const AgamaSchema = new Schema({
     type: String,
     unique: 'Agama "{VALUE}" sudah terdaftar',
   },
-  value: String,
+  value: Number,
 });
 
 AgamaSchema.pre('save', async function() {
-  this.value = await camelCase(this.label);
+  //this.value = await camelCase(this.label);
 });
 
 AgamaSchema.plugin(beautifyUnique);
