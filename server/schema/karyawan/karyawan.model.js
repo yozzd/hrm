@@ -60,10 +60,7 @@ const KaryawanSchema = new Schema({
       type: Number,
       enum: [0, 1],
     },
-    agama: {
-      type: Number,
-      enum: [0, 1, 2, 3],
-    },
+    agama: Number,
     statusPernikahan: {
       type: Number,
       enum: [0, 1, 2, 3, 4],

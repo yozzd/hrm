@@ -15,7 +15,7 @@ const field = {
     tanggalLahir: '1992-05-21',
     tanggalBergabung: '2018-10-15',
     jenisKelamin: 'L',
-    agama: 'Islam',
+    agama: 0,
     statusPernikahan: 'M1',
     alamatSekarang: '',
     alamatKTP: '',
@@ -28,7 +28,7 @@ const field = {
     tanggalLahir: '1992-05-21',
     tanggalBergabung: '2018-10-15',
     jenisKelamin: 'L',
-    agama: 'Islam',
+    agama: 0,
     statusPernikahan: 'M1',
     alamatSekarang:
       'perumahan mekar sari blok d no 40 rt 001 rw 005 kelurahan tiban lama kecamatan sekupang batam',

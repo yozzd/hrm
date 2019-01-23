@@ -43,6 +43,7 @@ import {
   KARYAWAN_CREATE,
   KARYAWAN_DELETE,
 } from '@/apollo/queries/karyawan';
+import { AGAMA_ALL } from '@/apollo/queries/agama';
 import {
   jenisKelamin,
   agama,
@@ -170,7 +171,19 @@ export default {
           },
         },
       ],
-      createForm: {
+    };
+  },
+  apollo: {
+    karyawanAll: {
+      query: KARYAWAN_ALL,
+    },
+    agamaAll: {
+      query: AGAMA_ALL,
+    },
+  },
+  computed: {
+    createForm() {
+      return {
         forms: [
           {
             prop: 'no',
@@ -258,7 +271,7 @@ export default {
             prop: 'agama',
             label: 'Agama',
             itemType: 'select',
-            options: agama.options,
+            options: this.agamaAll,
             filterable: true,
             rules: [
               { required: true, message: 'Pilih Agama', trigger: 'change' },
@@ -318,12 +331,7 @@ export default {
             ],
           },
         ],
-      },
-    };
-  },
-  apollo: {
-    karyawanAll: {
-      query: KARYAWAN_ALL,
+      };
     },
   },
   methods: {
@@ -361,7 +369,7 @@ export default {
                     new Date(form.model.tanggalBergabung),
                   ).format('YYYY-MM-DD'),
                   jenisKelamin: form.model.jenisKelamin,
-                  agama: form.model.agama,
+                  agama: parseInt(form.model.agama),
                   statusPernikahan: form.model.statusPernikahan,
                   alamatSekarang: form.model.alamatSekarang,
                   alamatKTP: form.model.alamatKTP,
@@ -390,7 +398,7 @@ export default {
                       new Date(form.model.tanggalBergabung),
                     ).format('YYYY-MM-DD'),
                     jenisKelamin: form.model.jenisKelamin,
-                    agama: form.model.agama,
+                    agama: parseInt(form.model.agama),
                     statusPernikahan: form.model.statusPernikahan,
                     alamatSekarang: form.model.alamatSekarang,
                     alamatKTP: form.model.alamatKTP,
