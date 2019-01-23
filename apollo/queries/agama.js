@@ -19,3 +19,13 @@ export const AGAMA_CREATE = gql`
     }
   }
 `;
+
+export const AGAMA_UPDATE = gql`
+  mutation agamaUpdate($id: String!, $label: String!) {
+    agamaUpdate(id: $id, label: $label) {
+      id
+      label
+      value
+    }
+  }
+`;

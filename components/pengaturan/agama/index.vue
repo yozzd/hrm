@@ -50,7 +50,7 @@
 </template>
 
 <script>
-import { AGAMA_ALL, AGAMA_CREATE } from '@/apollo/queries/agama';
+import { AGAMA_ALL, AGAMA_CREATE, AGAMA_UPDATE } from '@/apollo/queries/agama';
 import Crumb from '@/components/crumb';
 import DataTable from '@/components/data-table';
 import Drawer from '@/components/drawer';
@@ -196,7 +196,57 @@ export default {
         }
       });
     },
-    handleEdit(form) {},
+    handleEdit(form) {
+      this.errors = [];
+      form.validate(async valid => {
+        if (valid) {
+          try {
+            const { data } = await this.$apollo.mutate({
+              mutation: AGAMA_UPDATE,
+              variables: {
+                id: this.editRow.id,
+                label: form.model.label,
+              },
+              update: (store, { data: { agamaUpdate } }) => {
+                const data = store.readQuery({
+                  query: AGAMA_ALL,
+                });
+                const merge = _.merge(
+                  data,
+                  _.merge(data.agamaAll, agamaUpdate),
+                );
+                store.writeQuery({
+                  query: AGAMA_ALL,
+                  data: merge,
+                });
+              },
+              optimisticResponse: {
+                __typename: 'Mutation',
+                agamaUpdate: {
+                  __typename: 'AgamaType',
+                  id: this.editRow.id,
+                  label: form.model.label,
+                  value: -1,
+                },
+              },
+            });
+            if (data.agamaUpdate) {
+              form.resetFields();
+              this.isEdit = false;
+              this.editRow = '';
+              this.$Notice.success({
+                title: 'Success',
+                desc: `Data berhasil diperbaharui`,
+              });
+            }
+          } catch (err) {
+            this.errors = errorHandler(err);
+          }
+        } else {
+          return false;
+        }
+      });
+    },
     handleDelete() {},
   },
 };
