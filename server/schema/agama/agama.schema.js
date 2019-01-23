@@ -1,4 +1,9 @@
-const { GraphQLObjectType, GraphQLList, GraphQLString } = require('graphql');
+const {
+  GraphQLObjectType,
+  GraphQLList,
+  GraphQLString,
+  GraphQLInt,
+} = require('graphql');
 const { AgamaType } = require('./agama.type');
 const Agama = require('./agama.model');
 const { UserError } = require('graphql-errors');
@@ -23,14 +28,15 @@ const Mutation = {
     type: AgamaType,
     args: {
       label: { type: GraphQLString },
+      value: { type: GraphQLInt },
     },
     resolve: auth.hasRole('personalia', async (_, args, ctx) => {
       try {
         const newAgama = new Agama(args);
         return await newAgama.save();
       } catch (err) {
-        if (err.errors.no) {
-          throw new UserError(err.errors.no.message);
+        if (err.errors.label) {
+          throw new UserError(err.errors.label.message);
         }
         throw err;
       }

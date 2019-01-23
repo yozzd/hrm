@@ -36,8 +36,8 @@ describe('agama schema test', () => {
       .set('Authorization', `Bearer ${token}`)
       .send({
         query: `
-        mutation agamaCreate($label: String!) {
-          agamaCreate(label: $label) {
+        mutation agamaCreate($label: String!, $value: Int!) {
+          agamaCreate(label: $label, value: $value) {
             id
             label
             value
@@ -45,6 +45,7 @@ describe('agama schema test', () => {
         }`,
         variables: {
           label: 'Islam',
+          value: 0,
         },
       })
       .expect(200);
@@ -55,29 +56,29 @@ describe('agama schema test', () => {
     done();
   });
 
-  test('harusnya sukses create agama', async done => {
+  test('harusnya gagal create agama', async done => {
     const response = await request(uri)
       .post('/graphql')
       .set('Accept', 'application/json')
       .set('Authorization', `Bearer ${token}`)
       .send({
         query: `
-        mutation agamaCreate($label: String!) {
-          agamaCreate(label: $label) {
+        mutation agamaCreate($label: String!, $value: Int!) {
+          agamaCreate(label: $label, value: $value) {
             id
             label
             value
           }
         }`,
         variables: {
-          label: 'Kristen',
+          label: 'Islam',
+          value: 0,
         },
       })
       .expect(200);
 
-    const { data } = response.body;
-    id = data.agamaCreate.id;
-    expect(data.agamaCreate.label).toEqual('Kristen');
+    const { errors } = response.body;
+    expect(errors[0].message).toEqual(`Agama "Islam" sudah terdaftar`);
     done();
   });
 
