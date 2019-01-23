@@ -129,4 +129,27 @@ describe('agama schema test', () => {
     expect(data.agamaAll[0].label).toEqual('Islam');
     done();
   });
+
+  test('harusnya sukses delete agama', async done => {
+    const response = await request(uri)
+      .post('/graphql')
+      .set('Accept', 'application/json')
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        query: `
+        mutation agamaDelete($delete: [AgamaDeleteInputType]!) {
+          agamaDelete(delete: $delete) {
+            id
+          }
+        }`,
+        variables: {
+          delete: [{ id: id }],
+        },
+      })
+      .expect(200);
+
+    const { data } = response.body;
+    expect(data.agamaDelete[0].id).toEqual(id);
+    done();
+  });
 });

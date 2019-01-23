@@ -4,7 +4,7 @@ const {
   GraphQLString,
   GraphQLInt,
 } = require('graphql');
-const { AgamaType } = require('./agama.type');
+const { AgamaType, AgamaDeleteInputType } = require('./agama.type');
 const Agama = require('./agama.model');
 const { UserError } = require('graphql-errors');
 const auth = require('../auth/auth.service');
@@ -54,6 +54,24 @@ const Mutation = {
         const agama = await Agama.findById(args.id);
         const merge = ld.merge(agama, args);
         return await merge.save();
+      } catch (err) {
+        throw err;
+      }
+    }),
+  },
+  agamaDelete: {
+    type: new GraphQLList(AgamaType),
+    args: {
+      delete: { type: new GraphQLList(AgamaDeleteInputType) },
+    },
+    resolve: auth.hasRole('personal', async (_, args, ctx) => {
+      try {
+        await Promise.all(
+          args.delete.map(async val => {
+            await Agama.findOneAndDelete({ _id: val.id });
+          }),
+        );
+        return args.delete;
       } catch (err) {
         throw err;
       }
