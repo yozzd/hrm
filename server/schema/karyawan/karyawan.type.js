@@ -16,16 +16,6 @@ const JenisKelaminEnumType = new GraphQLEnumType({
   },
 });
 
-//const AgamaEnumType = new GraphQLEnumType({
-//  name: 'AgamaEnumType',
-//  values: {
-//    Budha: { value: 0 },
-//    Hindu: { value: 1 },
-//    Islam: { value: 2 },
-//    Kristen: { value: 3 },
-//  },
-//});
-
 const StatusPernikahanEnumType = new GraphQLEnumType({
   name: 'StatusPernikahanEnumType',
   values: {
@@ -72,7 +62,6 @@ const personal = () => ({
   tanggalLahir: { type: GraphQLDate },
   tanggalBergabung: { type: GraphQLDate },
   jenisKelamin: { type: JenisKelaminEnumType },
-  //agama: { type: AgamaEnumType },
   agama: { type: GraphQLInt },
   statusPernikahan: { type: StatusPernikahanEnumType },
   alamatSekarang: { type: GraphQLString },

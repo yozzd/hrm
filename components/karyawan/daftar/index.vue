@@ -44,11 +44,7 @@ import {
   KARYAWAN_DELETE,
 } from '@/apollo/queries/karyawan';
 import { AGAMA_ALL } from '@/apollo/queries/agama';
-import {
-  jenisKelamin,
-  agama,
-  statusPernikahan,
-} from '@/apollo/queries/options';
+import { jenisKelamin, statusPernikahan } from '@/apollo/queries/options';
 import * as _ from 'lodash';
 import Crumb from '@/components/crumb';
 import DataTable from '@/components/data-table';

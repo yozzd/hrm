@@ -20,15 +20,6 @@ export const jenisKelamin = {
   options: [{ label: 'L' }, { label: 'P' }],
 };
 
-export const agama = {
-  options: [
-    { value: 'Budha', label: 'Budha' },
-    { value: 'Hindu', label: 'Hindu' },
-    { value: 'Islam', label: 'Islam' },
-    { value: 'Kristen', label: 'Kristen' },
-  ],
-};
-
 export const statusPernikahan = {
   options: [
     { value: 'BM', label: 'Belum Menikah' },
