@@ -8,7 +8,9 @@
             :mask-closable="false"
             :styles="styles"
             @on-close="() => emitEventHandler('on-close')">
-            <Form ref="form" :model="params">
+            <Form ref="form"
+                  :model="params"
+                  @submit.native.prevent="() => emitEventHandler('action', $refs.form)">
                 <FormItem
                     v-for="(form, index) in formOptions.forms" :key="index"
                     :label="form.label"

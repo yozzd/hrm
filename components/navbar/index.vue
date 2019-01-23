@@ -18,6 +18,11 @@
                     <Icon custom="iconfont icon-wrench" size="18" />Pengaturan
                 </template>
                 <MenuItem
+                    name="/pengaturan/agama"
+                    to="/pengaturan/agama">
+                <Icon custom="iconfont icon-minus" size="18" />Agama
+                </MenuItem>
+                <MenuItem
                     name="/pengaturan/user"
                     to="/pengaturan/user"
                     v-if="$auth.hasRole('root')">

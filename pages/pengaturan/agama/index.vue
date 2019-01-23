@@ -1,18 +1,18 @@
 <template>
     <div>
-        <user/>
+        <agama/>
     </div>
 </template>
 
 <script>
-import User from '@/components/pengaturan/user';
+import Agama from '@/components/pengaturan/agama';
 export default {
   middleware: 'auth',
   meta: {
-    guard: 'admin',
+    guard: 'personalia',
   },
   components: {
-    User,
+    Agama,
   },
 };
 </script>

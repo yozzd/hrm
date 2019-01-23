@@ -82,17 +82,9 @@ export default {
     DataTable,
     Drawer,
   },
-  apollo: {
-    userAll: {
-      query: USER_ALL,
-    },
-  },
   data() {
     return {
-      breadcrumb: [
-        { label: 'Dashboard', to: '/dashboard' },
-        { label: 'Pengaturan User' },
-      ],
+      breadcrumb: [{ label: 'Dashboard', to: '/dashboard' }, { label: 'User' }],
       userAll: [],
       multipleSelection: [],
       cachedMultipleSelection: [],
@@ -221,6 +213,11 @@ export default {
         ],
       },
     };
+  },
+  apollo: {
+    userAll: {
+      query: USER_ALL,
+    },
   },
   methods: {
     handleSelectionChange(arr) {
