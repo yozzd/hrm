@@ -8,6 +8,7 @@ const { AgamaType } = require('./agama.type');
 const Agama = require('./agama.model');
 const { UserError } = require('graphql-errors');
 const auth = require('../auth/auth.service');
+const ld = require('lodash');
 
 const Query = {
   agamaAll: {
@@ -38,6 +39,22 @@ const Mutation = {
         if (err.errors.label) {
           throw new UserError(err.errors.label.message);
         }
+        throw err;
+      }
+    }),
+  },
+  agamaUpdate: {
+    type: AgamaType,
+    args: {
+      id: { type: GraphQLString },
+      label: { type: GraphQLString },
+    },
+    resolve: auth.hasRole('personalia', async (_, args, ctx) => {
+      try {
+        const agama = await Agama.findById(args.id);
+        const merge = ld.merge(agama, args);
+        return await merge.save();
+      } catch (err) {
         throw err;
       }
     }),

@@ -82,6 +82,32 @@ describe('agama schema test', () => {
     done();
   });
 
+  test('harusnya sukses update agama', async done => {
+    const response = await request(uri)
+      .post('/graphql')
+      .set('Accept', 'application/json')
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        query: `
+        mutation agamaUpdate($id: String!, $label: String!) {
+          agamaUpdate(id: $id, label: $label) {
+            id
+            label
+            value
+          }
+        }`,
+        variables: {
+          id: id,
+          label: 'Islam',
+        },
+      })
+      .expect(200);
+
+    const { data } = response.body;
+    expect(data.agamaUpdate.label).toEqual('Islam');
+    done();
+  });
+
   test('harusnya sukses query agama', async done => {
     const response = await request(uri)
       .post('/graphql')
