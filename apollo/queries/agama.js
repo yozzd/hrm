@@ -29,3 +29,11 @@ export const AGAMA_UPDATE = gql`
     }
   }
 `;
+
+export const AGAMA_DELETE = gql`
+  mutation agamaDelete($delete: [AgamaDeleteInputType]!) {
+    agamaDelete(delete: $delete) {
+      id
+    }
+  }
+`;

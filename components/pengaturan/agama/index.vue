@@ -50,7 +50,12 @@
 </template>
 
 <script>
-import { AGAMA_ALL, AGAMA_CREATE, AGAMA_UPDATE } from '@/apollo/queries/agama';
+import {
+  AGAMA_ALL,
+  AGAMA_CREATE,
+  AGAMA_UPDATE,
+  AGAMA_DELETE,
+} from '@/apollo/queries/agama';
 import Crumb from '@/components/crumb';
 import DataTable from '@/components/data-table';
 import Drawer from '@/components/drawer';
@@ -247,7 +252,45 @@ export default {
         }
       });
     },
-    handleDelete() {},
+    handleDelete() {
+      try {
+        this.$Modal.confirm({
+          title: 'PERHATIAN',
+          content:
+            '<p>Tindakan ini akan menghapus data secara permanen. Lanjutkan?</p>',
+          okText: 'YA',
+          cancelText: 'BATAL',
+          loading: true,
+          onOk: async () => {
+            const { data } = await this.$apollo.mutate({
+              mutation: AGAMA_DELETE,
+              variables: {
+                delete: this.multipleSelection,
+              },
+              update: async function(store, { data: { agamaDelete } }) {
+                const data = store.readQuery({ query: AGAMA_ALL });
+                _.pullAllBy(data.agamaAll, agamaDelete, 'id');
+                store.writeQuery({ query: AGAMA_ALL, data });
+              },
+              optimisticResponse: {
+                __typename: 'Mutation',
+                agamaDelete: this.cachedMultipleSelection,
+              },
+            });
+            if (data.agamaDelete) {
+              await this.$Modal.remove();
+              this.multipleSelection = [];
+              this.$Notice.success({
+                title: 'Deleted',
+                desc: 'Data succesfully deleted',
+              });
+            }
+          },
+        });
+      } catch (err) {
+        this.errors = errorHandler(err);
+      }
+    },
   },
 };
 </script>
