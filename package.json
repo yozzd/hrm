@@ -32,7 +32,7 @@
         "jsonwebtoken": "^8.4.0",
         "lodash": "^4.17.11",
         "moment": "^2.24.0",
-        "mongoose": "^5.4.5",
+        "mongoose": "^5.4.6",
         "mongoose-beautiful-unique-validation": "^7.1.1",
         "mongoose-timestamp": "^0.6.0",
         "nuxt": "^2.0.0",
@@ -45,7 +45,7 @@
     "devDependencies": {
         "jest": "^23.6.0",
         "nodemon": "^1.18.9",
-        "supertest": "^3.4.1"
+        "supertest": "^3.4.2"
     },
     "jest": {
         "testPathIgnorePatterns": [
