@@ -54,12 +54,6 @@ const Mutation = {
     },
     resolve: auth.hasRole('personalia', async (_, args, ctx) => {
       try {
-        args.personal.alamatSekarang = await capitalizeWords(
-          args.personal.alamatSekarang,
-        );
-        args.personal.alamatKTP = await capitalizeWords(
-          args.personal.alamatKTP,
-        );
         const newKaryawan = new Karyawan(args);
         return await newKaryawan.save();
       } catch (err) {
@@ -81,12 +75,6 @@ const Mutation = {
     resolve: auth.hasRole('personalia', async (_, args, ctx) => {
       try {
         const karyawan = await Karyawan.findById(args.id);
-        args.personal.alamatSekarang = await capitalizeWords(
-          args.personal.alamatSekarang,
-        );
-        args.personal.alamatKTP = await capitalizeWords(
-          args.personal.alamatKTP,
-        );
         const merge = ld.merge(karyawan, args);
         return await merge.save();
       } catch (err) {

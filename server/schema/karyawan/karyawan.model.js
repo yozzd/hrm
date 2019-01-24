@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 const uuidv1 = require('uuid/v1');
 const beautifyUnique = require('mongoose-beautiful-unique-validation');
 const timestamps = require('mongoose-timestamp');
+const { capitalizeWords } = require('../global.methods');
 
 const KeluargaSchema = new Schema({
   _id: {
@@ -77,6 +78,13 @@ const KaryawanSchema = new Schema({
     mimetype: String,
     encoding: String,
   },
+});
+
+KaryawanSchema.pre('save', async function(next) {
+  this.personal.alamatSekarang = await capitalizeWords(
+    this.personal.alamatSekarang,
+  );
+  this.personal.alamatKTP = await capitalizeWords(this.personal.alamatKTP);
 });
 
 KaryawanSchema.plugin(beautifyUnique);

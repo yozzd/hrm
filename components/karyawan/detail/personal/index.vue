@@ -33,11 +33,8 @@ import {
   KARYAWAN_PERSONAL,
   KARYAWAN_UPDATE_PERSONAL,
 } from '@/apollo/queries/karyawan';
-import {
-  jenisKelamin,
-  agama,
-  statusPernikahan,
-} from '@/apollo/queries/options';
+import { AGAMA_ALL } from '@/apollo/queries/agama';
+import { jenisKelamin, statusPernikahan } from '@/apollo/queries/options';
 import Drawer from '@/components/drawer';
 import InfoTable from '@/components/info-table';
 import ChildHeader from '@/components/karyawan/child-header';
@@ -52,6 +49,10 @@ export default {
   },
   data() {
     return {
+      karyawanDetail: {
+        personal: null,
+      },
+      agamaAll: [],
       errors: [],
       editRow: null,
       isEdit: false,
@@ -130,7 +131,24 @@ export default {
           },
         },
       ],
-      editForm: {
+    };
+  },
+  apollo: {
+    karyawanDetail: {
+      query: KARYAWAN_PERSONAL,
+      variables() {
+        return {
+          id: this.$route.params.id,
+        };
+      },
+    },
+    agamaAll: {
+      query: AGAMA_ALL,
+    },
+  },
+  computed: {
+    editForm() {
+      return {
         forms: [
           {
             prop: 'no',
@@ -223,11 +241,8 @@ export default {
             dotProp: 'personal.agama',
             label: 'Agama',
             itemType: 'select',
-            options: agama.options,
+            options: this.agamaAll,
             filterable: true,
-            rules: [
-              { required: true, message: 'Pilih Agama', trigger: 'change' },
-            ],
           },
           {
             prop: 'statusPernikahan',
@@ -285,17 +300,7 @@ export default {
             ],
           },
         ],
-      },
-    };
-  },
-  apollo: {
-    karyawanDetail: {
-      query: KARYAWAN_PERSONAL,
-      variables() {
-        return {
-          id: this.$route.params.id,
-        };
-      },
+      };
     },
   },
   methods: {

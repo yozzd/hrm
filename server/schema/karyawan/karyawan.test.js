@@ -17,8 +17,10 @@ const field = {
     jenisKelamin: 'L',
     agama: 0,
     statusPernikahan: 'M1',
-    alamatSekarang: '',
-    alamatKTP: '',
+    alamatSekarang:
+      'perumahan mekar sari blok d no 40 rt 001 rw 005 kelurahan tiban lama kecamatan sekupang batam',
+    alamatKTP:
+      'perumahan mekar sari blok d no 40 rt 001 rw 005 kelurahan tiban lama kecamatan sekupang batam',
     telepon: '082157777231',
   },
   update: {
@@ -465,11 +467,11 @@ describe('karyawan schema test', () => {
       .set('Authorization', `Bearer ${token}`)
       .send({
         query: `
-        mutation karyawanDelete($delete: [KaryawanDeleteInputType]!) {
-          karyawanDelete(delete: $delete) {
-            id
-          }
-        }`,
+          mutation karyawanDelete($delete: [KaryawanDeleteInputType]!) {
+            karyawanDelete(delete: $delete) {
+              id
+            }
+          }`,
         variables: {
           delete: [{ id: id }],
         },
