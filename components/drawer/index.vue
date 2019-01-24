@@ -151,6 +151,13 @@ export default {
       },
     };
   },
+  mounted() {
+    window.addEventListener('keyup', event => {
+      if (event.keyCode === 13) {
+        this.emitEventHandler('action', this.$refs.form);
+      }
+    });
+  },
   methods: {
     emitEventHandler(event) {
       this.$emit(event, ...Array.from(arguments).slice(1));
