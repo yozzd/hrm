@@ -269,9 +269,14 @@ export default {
             itemType: 'select',
             options: this.agamaAll,
             filterable: true,
-            //            rules: [
-            //              { required: true, message: 'Pilih Agama', trigger: 'change' },
-            //            ],
+            rules: [
+              {
+                required: true,
+                type: 'integer',
+                message: 'Pilih Agama',
+                trigger: 'change',
+              },
+            ],
           },
           {
             prop: 'statusPernikahan',
