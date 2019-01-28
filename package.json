@@ -12,7 +12,7 @@
     "build": "nuxt build",
     "start": "cross-env NODE_ENV=production node server/index.js",
     "generate": "nuxt generate",
-    "lint": "eslint ."
+    "lint": "eslint ./auth/auth.class.js"
   },
   "dependencies": {
     "@nuxtjs/apollo": "^4.0.0-rc2.3",
