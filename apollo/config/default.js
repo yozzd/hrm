@@ -1,25 +1,25 @@
-import { createHttpLink } from 'apollo-link-http'
-import { setContext } from 'apollo-link-context'
-import { InMemoryCache } from 'apollo-cache-inmemory'
+import { createHttpLink } from 'apollo-link-http';
+import { setContext } from 'apollo-link-context';
+import { InMemoryCache } from 'apollo-cache-inmemory';
 
 export default (ctx) => {
-  const httpLink = createHttpLink({ uri: '/graphql' })
+  const httpLink = createHttpLink({ uri: '/graphql' });
 
   const authLink = setContext((_, { headers }) => {
-    const token = ctx.app.$auth.token
+    const { token } = ctx.app.$auth;
     return {
       headers: {
         ...headers,
-        authorization: token ? `Bearer ${token}` : ''
-      }
-    }
-  })
+        authorization: token ? `Bearer ${token}` : '',
+      },
+    };
+  });
 
-  const link = authLink.concat(httpLink)
+  const link = authLink.concat(httpLink);
 
   return {
     link,
     cache: new InMemoryCache(),
-    defaultHttpLink: false
-  }
-}
+    defaultHttpLink: false,
+  };
+};
