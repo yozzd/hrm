@@ -1,4 +1,4 @@
-import { routeOption } from '@/auth/auth.utilities';
+import routeOption from '@/auth/auth.utilities';
 import { userRoles } from '@/auth/auth.roles';
 
 export default function(ctx) {

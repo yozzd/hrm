@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Cookies from 'js-cookie';
-import { routeOption } from './auth.utilities';
+import routeOption from './auth.utilities';
 import AUTH from '../apollo/queries/login';
 import { ME } from '../apollo/queries/user';
 import { userRoles } from './auth.roles';
