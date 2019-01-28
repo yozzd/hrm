@@ -1,18 +1,22 @@
-import * as _ from 'lodash'
+import * as _ from 'lodash';
 
 export default (err) => {
-  const { networkError, graphQLErrors } = err
+  const { networkError, graphQLErrors } = err;
 
-  let errors
-  if(networkError) {
-    errors = networkError.result.errors
+  let errors;
+  if (networkError) {
+    const { errors: e } = networkError.result;
+    errors = e;
   } else {
-    errors = graphQLErrors
+    errors = graphQLErrors;
   }
 
-  return _.reduce(errors, (r, v, k) => {
-    r[k] = v.message
-    return r
-  }, [])
-}
-
+  return _.reduce(
+    errors,
+    (r, v, k) => {
+      r[k] = v.message;
+      return r;
+    },
+    [],
+  );
+};
