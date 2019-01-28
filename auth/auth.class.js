@@ -58,10 +58,14 @@ export default class Auth {
     this._loggedInWatcher =
       this.loggedInWatcher ||
       this.watchState('loggedIn', () => {
+        const { loggedIn } = this.state;
         if (routeOption(this.$route, 'auth', false)) {
           return;
+        } else if (loggedIn) {
+          this.redirect('dashboard');
+        } else {
+          this.redirect('home');
         }
-        this.redirect('dashboard');
       });
   }
 
@@ -159,7 +163,6 @@ export default class Auth {
 
   async logout() {
     this.reset();
-    this.redirect('logout');
   }
 
   syncToken() {
