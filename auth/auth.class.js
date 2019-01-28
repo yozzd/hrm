@@ -5,12 +5,13 @@ import AUTH from '../apollo/queries/login';
 import { ME } from '../apollo/queries/user';
 import { userRoles } from './auth.roles';
 
-const RELATIVE_URL_REGEX = /^\/[a-zA-Z0-9@\-%_~][\/a-zA-Z0-9@\-%_~]{1,200}$/;
+const RELATIVE_URL_REGEX = /^\/[a-zA-Z0-9@\-%_~][a-zA-Z0-9@\-%_~]{1,200}$/;
 
 export default class Auth {
   constructor(ctx) {
     this.ctx = ctx;
     this.apolloClient = this.ctx.app.apolloProvider.defaultClient;
+    this.Cookies = Cookies;
 
     this.options = {
       namespace: 'auth',
@@ -27,15 +28,15 @@ export default class Auth {
   init() {
     Vue.set(this, 'token', null);
 
-    this._registerVuexStore();
+    this.registerVuexStore();
 
-    this._watchLoggedIn();
+    this.watchLoggedIn();
 
     this.syncToken();
     return this.state.user ? Promise.resolve() : this.fetchUser();
   }
 
-  _registerVuexStore() {
+  registerVuexStore() {
     const authModule = {
       namespaced: true,
       state: () => ({
@@ -54,24 +55,24 @@ export default class Auth {
     });
   }
 
-  _watchLoggedIn() {
-    this._loggedInWatcher =
-      this.loggedInWatcher ||
-      this.watchState('loggedIn', () => {
-        const { loggedIn } = this.state;
-        if (routeOption(this.$route, 'auth', false)) {
-          return;
-        } else if (loggedIn) {
-          this.redirect('dashboard');
-        } else {
-          this.redirect('home');
-        }
-      });
+  watchLoggedIn() {
+    this.loggedInWatcher = this.watchState('loggedIn', () => {
+      const { loggedIn } = this.state;
+      if (routeOption(this.$route, 'auth', false)) {
+        return;
+      }
+      if (loggedIn) {
+        this.redirect('dashboard');
+      } else {
+        this.redirect('home');
+      }
+    });
   }
 
+  // prettier-ignore
   watchState(key, fn) {
     return this.$store.watch(
-      (state) => [state[this.options.namespace]].map((v) => v[key]),
+      state => [state[this.options.namespace]].map(v => v[key]),
       fn,
     );
   }
@@ -94,7 +95,7 @@ export default class Auth {
       return;
     }
 
-    this.$store.commit(this.options.namespace + '/SET', { key, value });
+    this.$store.commit(`${this.options.namespace}/SET`, { key, value });
   }
 
   setToken(token) {
@@ -105,9 +106,9 @@ export default class Auth {
 
   setCookie(token) {
     if (token) {
-      Cookies.set('token', token);
+      this.Cookies.set('token', token);
     } else {
-      Cookies.remove('token');
+      this.Cookies.remove('token');
     }
   }
 
@@ -184,7 +185,7 @@ export default class Auth {
   }
 
   getCookie(name) {
-    return Cookies.get(name);
+    return this.Cookies.get(name);
   }
 
   redirect(name) {
@@ -196,7 +197,7 @@ export default class Auth {
     }
 
     if (name === 'login') {
-      to = to + '?redirect=' + encodeURIComponent(from);
+      to = `${to}?redirect=${encodeURIComponent(from)}`;
     }
 
     if (name === 'home' && this.$route.query.redirect) {
@@ -216,9 +217,8 @@ export default class Auth {
 
   hasRole(role) {
     if (!this.state.user) {
-      return;
+      return false;
     }
-
     return Boolean(
       userRoles.indexOf(this.state.user.role) >= userRoles.indexOf(role),
     );
@@ -226,9 +226,8 @@ export default class Auth {
 
   isAdmin() {
     if (!this.state.user) {
-      return;
+      return false;
     }
-
     const is = this.state.user.role === 'admin';
     return is;
   }
