@@ -3,7 +3,7 @@ import Cookies from 'js-cookie';
 import routeOption from './auth.utilities';
 import AUTH from '../apollo/queries/login';
 import { ME } from '../apollo/queries/user';
-import { userRoles } from './auth.roles';
+import userRoles from './auth.roles';
 
 const RELATIVE_URL_REGEX = /^\/[a-zA-Z0-9@\-%_~][a-zA-Z0-9@\-%_~]{1,200}$/;
 

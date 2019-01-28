@@ -1,5 +1,5 @@
 import routeOption from '@/auth/auth.utilities';
-import { userRoles } from '@/auth/auth.roles';
+import userRoles from '@/auth/auth.roles';
 
 export default function(ctx) {
   if (routeOption(ctx.route, 'auth', false)) {

@@ -60,7 +60,7 @@ import Crumb from '@/components/crumb';
 import DataTable from '@/components/data-table';
 import Drawer from '@/components/drawer';
 import _ from 'lodash';
-import { userRoles } from '@/auth/auth.roles';
+import userRoles from '@/auth/auth.roles';
 import errorHandler from '@/apollo/config/errorHandler';
 
 const roles = _.reduce(
@@ -221,7 +221,7 @@ export default {
   },
   methods: {
     handleSelectionChange(arr) {
-      this.multipleSelection = arr.map(v => ({ id: v.id }));
+      this.multipleSelection = arr.map((v) => ({ id: v.id }));
       this.cachedMultipleSelection = arr;
     },
     show(action, row) {
@@ -244,7 +244,7 @@ export default {
     },
     handleSave(form) {
       this.errors = [];
-      form.validate(async valid => {
+      form.validate(async (valid) => {
         if (valid) {
           try {
             const { data } = await this.$apollo.mutate({
@@ -328,7 +328,7 @@ export default {
     },
     handleEdit(form) {
       this.errors = [];
-      form.validate(async valid => {
+      form.validate(async (valid) => {
         if (valid) {
           try {
             const { data } = await this.$apollo.mutate({
