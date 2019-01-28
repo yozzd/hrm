@@ -9,7 +9,7 @@ import User from '@/components/pengaturan/user';
 export default {
   middleware: 'auth',
   meta: {
-    guard: 'admin',
+    guard: 'root',
   },
   components: {
     User,
