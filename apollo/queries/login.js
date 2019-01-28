@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
 
-export const AUTH = gql`
+const AUTH = gql`
   query auth($username: String!, $password: String!) {
     auth(username: $username, password: $password) {
       token
@@ -12,3 +12,5 @@ export const AUTH = gql`
     }
   }
 `;
+
+export default AUTH;

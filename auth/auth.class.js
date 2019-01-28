@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Cookies from 'js-cookie';
 import { routeOption } from './auth.utilities';
-import { AUTH } from '../apollo/queries/login';
+import AUTH from '../apollo/queries/login';
 import { ME } from '../apollo/queries/user';
 
 const RELATIVE_URL_REGEX = /^\/[a-zA-Z0-9@\-%_~][\/a-zA-Z0-9@\-%_~]{1,200}$/;
@@ -67,7 +67,7 @@ export default class Auth {
 
   watchState(key, fn) {
     return this.$store.watch(
-      state => [state[this.options.namespace]].map(v => v[key]),
+      (state) => [state[this.options.namespace]].map((v) => v[key]),
       fn,
     );
   }
