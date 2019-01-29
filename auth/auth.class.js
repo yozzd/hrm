@@ -11,7 +11,6 @@ export default class Auth {
   constructor(ctx) {
     this.ctx = ctx;
     this.apolloClient = this.ctx.app.apolloProvider.defaultClient;
-    this.Cookies = Cookies;
 
     this.options = {
       namespace: 'auth',
@@ -101,14 +100,14 @@ export default class Auth {
   setToken(token) {
     this.setState('token', token);
 
-    this.setCookie(token);
+    this.constructor.setCookie(token);
   }
 
-  setCookie(token) {
+  static setCookie(token) {
     if (token) {
-      this.Cookies.set('token', token);
+      Cookies.set('token', token);
     } else {
-      this.Cookies.remove('token');
+      Cookies.remove('token');
     }
   }
 
@@ -117,7 +116,7 @@ export default class Auth {
     this.setState('token', null);
     this.setState('user', null);
 
-    this.setCookie(null);
+    this.constructor.setCookie(null);
   }
 
   async fetchUser() {
@@ -170,7 +169,7 @@ export default class Auth {
     let token = this.getState('token');
 
     if (!token) {
-      token = this.getCookie('token');
+      token = this.constructor.getCookie('token');
     }
 
     this.setToken(token);
@@ -184,8 +183,8 @@ export default class Auth {
     return this.state[key];
   }
 
-  getCookie(name) {
-    return this.Cookies.get(name);
+  static getCookie(name) {
+    return Cookies.get(name);
   }
 
   redirect(name) {
